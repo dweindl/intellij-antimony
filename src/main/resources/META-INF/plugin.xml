@@ -10,6 +10,18 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.dweindl.intellijantimony.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <fileType
+                name="Antimony File"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyFileType"
+                fieldName="INSTANCE"
+                language="Antimony"
+                extensions="ant"/>
+        <lang.parserDefinition
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonySyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>

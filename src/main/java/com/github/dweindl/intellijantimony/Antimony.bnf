@@ -1,0 +1,30 @@
+{
+  parserClass="com.github.dweindl.intellijantimony.parser.AntimonyParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Antimony"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.dweindl.intellijantimony.psi"
+  psiImplPackage="com.github.dweindl.intellijantimony.psi.impl"
+
+  elementTypeHolderClass="com.github.dweindl.intellijantimony.psi.AntimonyTypes"
+  elementTypeClass="com.github.dweindl.intellijantimony.psi.AntimonyElementType"
+  tokenTypeClass="com.github.dweindl.intellijantimony.psi.AntimonyTokenType"
+
+  psiImplUtilClass="com.github.dweindl.intellijantimony.psi.impl.AntimonyPsiImplUtil"
+}
+
+antimonyFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY {
+  pin=3
+  recoverWhile="recover_property"
+  mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
+  implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
+  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+}
+
+private recover_property ::= !(KEY|SEPARATOR|COMMENT)
