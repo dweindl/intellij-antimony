@@ -23,6 +23,7 @@
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonySyntaxHighlighterFactory"/>
         <lang.braceMatcher language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
+        <colorSettingsPage implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
         <!-- TODO: code folding -->
     </extensions>
 

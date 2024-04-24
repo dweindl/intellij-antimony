@@ -23,10 +23,6 @@ public class AntimonySyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("ANTIMONY_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey SEPARATOR =
             createTextAttributesKey("ANTIMONY_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey KEY =
-            createTextAttributesKey("ANTIMONY_KEY", DefaultLanguageHighlighterColors.KEYWORD);
-    public static final TextAttributesKey VALUE =
-            createTextAttributesKey("ANTIMONY_VALUE", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey COMMENT =
             createTextAttributesKey("ANTIMONY_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BAD_CHARACTER =
@@ -36,11 +32,9 @@ public class AntimonySyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] ID_KEYS = new TextAttributesKey[]{ID};
     private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
-    private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEY};
+    private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-    private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
-    private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] PARENTHESIS_KEYS = new TextAttributesKey[]{PARENTHESIS};
 
@@ -104,6 +98,7 @@ public class AntimonySyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(AntimonyTypes.LPAREN) || tokenType.equals(AntimonyTypes.RPAREN)) {
             return PARENTHESIS_KEYS;
         }
+        // TODO FUNCTION_CALL
         if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
         }
