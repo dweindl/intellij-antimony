@@ -8,21 +8,21 @@ import com.intellij.psi.PsiFileFactory;
 
 public class AntimonyElementFactory {
 
-    public static AntimonyProperty createProperty(Project project, String name) {
+/*    public static AntimonyProperty createProperty(Project project, String name) {
         final AntimonyFile file = createFile(project, name);
         return (AntimonyProperty) file.getFirstChild();
-    }
+    }*/
 
     public static AntimonyFile createFile(Project project, String text) {
         String name = "dummy.ant";
         return (AntimonyFile) PsiFileFactory.getInstance(project).createFileFromText(name, AntimonyFileType.INSTANCE, text);
     }
-
+/*
     public static AntimonyProperty createProperty(Project project, String name, String value) {
         final AntimonyFile file = createFile(project, name + " = " + value);
         return (AntimonyProperty) file.getFirstChild();
     }
-
+*/
     public static PsiElement createCRLF(Project project) {
         final AntimonyFile file = createFile(project, "\n");
         return file.getFirstChild();

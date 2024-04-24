@@ -1,5 +1,5 @@
 package com.github.dweindl.intellijantimony.psi.impl;
-import com.github.dweindl.intellijantimony.psi.AntimonyProperty;
+// import com.github.dweindl.intellijantimony.psi.AntimonyProperty;
 import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
 import com.github.dweindl.intellijantimony.psi.AntimonyElementFactory;
 import com.intellij.lang.ASTNode;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class AntimonyPsiImplUtil {
-
+/*
     public static String getKey(AntimonyProperty element) {
         ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.KEY);
         if (keyNode != null) {
@@ -75,5 +75,7 @@ public class AntimonyPsiImplUtil {
             }
         };
     }
+
+ */
 
 }

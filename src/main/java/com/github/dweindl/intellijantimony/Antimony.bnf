@@ -1,5 +1,6 @@
 {
   parserClass="com.github.dweindl.intellijantimony.parser.AntimonyParser"
+  parserUtilClass="com.github.dweindl.intellijantimony.parser.AntimonyParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -13,18 +14,136 @@
   tokenTypeClass="com.github.dweindl.intellijantimony.psi.AntimonyTokenType"
 
   psiImplUtilClass="com.github.dweindl.intellijantimony.psi.impl.AntimonyPsiImplUtil"
+
+
+  tokens=[
+    SEMI=';'
+    COLON=':'
+    PRIME="'"
+    COMMA=','
+    MODEL='regexp:(model|module)'
+    END='end'
+    VAR='var'
+    CONST='const'
+    SPECIES='species'
+    COMPARTMENT='compartment'
+    IS='is'
+    IN='in'
+    AT='at'
+    NOTES='notes'
+    HAS='has'
+    UNIT_KEYWORD='unit'
+    EOL = "regexp:\s*(\n|\r\n)\s*"
+    WHITE_SPACE="regexp:[ \t\x0B\f\r]+"
+    line_comment = "regexp:(//|#).*"
+    // ".|\n" does not match all characters, because "." excludes all Unicode newline chars - use "[^]" instead
+    block_comment='regexp:/\*([^])*\*/'
+    PLUS='+'
+    MINUS='-'
+    MUL='*'
+    DIV='/'
+    POW='^'
+    LPAREN='('
+    RPAREN=')'
+    EQ='='
+    ASSIGN_EQ=':='
+    ID='regexp:[a-zA-Z_][a-zA-Z_0-9]*'
+    INT='regexp:\d+'
+    FLOAT='regexp:\d+\.\d*|\.\d+'
+    SCIENTIFIC='regexp:(\d+(\.\d*)?|\.\d+)[eE][-+]?\d+'
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    BACKSLASH='\'
+    // TODO: double-check operators
+  AND='&&'
+  OR='||'
+  NOT='!'
+  EQEQ='=='
+  NEQ='!='
+  LT='<'
+  LTE='<='
+  GT='>'
+  GTE='>='
+
+
+  ]
+    name(".*expr")='expression'
+    extends(".*expr")=expr
 }
 
-antimonyFile ::= item_*
+antimonyFile ::= root_item *
+private root_item    ::= (module | module_body)
+module       ::= MODEL ID "(" ")" module_body? END
+module_body  ::= module_body_item +
+private module_body_item ::=
+    EOL
+    | annotation
+    | assignment
+    | assignment_rule
+    | reaction
+    | unit_annotation
+    | annotation_is
+    | declaration
+    | unit_definition
+    | modifier_annotation
+    | event_definition
 
-private item_ ::= (property|COMMENT|CRLF)
+assignment ::= declaration "'"? EQ expr (SEMI | EOL | line_comment)
+assignment_rule ::= declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
+number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
-  pin=3
-  recoverWhile="recover_property"
-  mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
-  implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
-  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
-}
+declaration ::= ("var" | "const")? ( "compartment" | "species" )? ID ("in" compartment_id)? (SEMI | EOL)?
+compartment_id ::= ID
+annotation ::= ID "notes" string (SEMI | EOL)
+unit_annotation ::= ID "has" ID (SEMI | EOL)
+annotation_is::=ID "is" string (SEMI | EOL)
+// TODO: needs to have a unit included
+unit_definition ::= "unit" ID EQ expr (SEMI | EOL)
+modifier_annotation ::= (modifier_id ":")? ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
+modifier_id ::= ID
 
-private recover_property ::= !(KEY|SEPARATOR|COMMENT)
+
+expr ::= logical_expr | arithmetic_expr
+logical_expr ::= logical_term or_expr *
+left or_expr ::= OR logical_term
+logical_term ::= not_expr and_expr *
+left and_expr ::= AND not_expr
+not_expr ::= NOT? comparison_expr
+comparison_expr ::= arithmetic_expr comparison_op? arithmetic_expr
+comparison_op ::= EQEQ | NEQ | LT | LTE | GT | GTE
+
+arithmetic_expr ::= (BACKSLASH EOL)* factor plus_expr *left plus_expr ::= plus_op factor
+private plus_op ::= ('+'|'-') (BACKSLASH EOL)*
+private factor ::= primary mul_expr * (BACKSLASH EOL)*
+left mul_expr  ::= mul_op primary
+private mul_op ::= ('*'|'/') (BACKSLASH EOL)*
+private primary ::= primary_inner (BACKSLASH EOL)*  power_expr? factorial_expr ?
+left power_expr ::= '^' primary
+private primary_inner ::= ('+'|'-') ? (literal_expr | function_call | ref_expr | paren_expr)
+paren_expr ::= ('-(' | '(') expr ')' {pin=1}
+ref_expr ::= id
+literal_expr ::= number_literal unit ?
+unit ::= ID
+function_call ::= function_name '(' function_arguments? ')' {pin=2}
+function_arguments ::= expr (',' expr)*
+function_name ::= ID
+
+
+
+reaction ::= (reaction_id ":")? reactants ("->"|"=>") products SEMI rate_expr (SEMI | EOL | <<eof>>)
+reaction_id ::= ID
+reactants ::= list_of_reactants
+products::= list_of_reactants
+// TODO allow empty list
+private list_of_reactants ::= species_expr (PLUS species_expr)*
+species_expr ::= stoichiometry? species_id
+stoichiometry ::= number_literal
+species_id ::= ID
+rate_expr ::= expr
+
+event_definition ::= event_trigger ":" event_assignments (SEMI | EOL)
+event_trigger ::= "at" expr
+event_assignments ::= event_assignment ("," event_assignment)*
+event_assignment ::= ID EQ expr
+
+// TODO predefined units
+// TODO predefined functions - min max exp...

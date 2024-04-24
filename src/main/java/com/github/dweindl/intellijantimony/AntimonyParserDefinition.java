@@ -35,7 +35,7 @@ final class AntimonyParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
+        return AntimonyTokenSets.STRINGS;
     }
 
     @NotNull
