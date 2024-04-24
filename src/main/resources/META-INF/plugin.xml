@@ -22,6 +22,8 @@
         <lang.syntaxHighlighterFactory
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonySyntaxHighlighterFactory"/>
+        <lang.braceMatcher language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
+        <!-- TODO: code folding -->
     </extensions>
 
     <applicationListeners>
