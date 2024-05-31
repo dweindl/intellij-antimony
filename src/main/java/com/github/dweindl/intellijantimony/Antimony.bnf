@@ -135,7 +135,7 @@ identifier ::= ID {
 }
 
 
-reaction ::= (reaction_id ":")? reactants ("->"|"=>") products SEMI rate_expr (SEMI | EOL | <<eof>>)
+reaction ::= (reaction_id ":")? reactants? ("->"|"=>") products? SEMI rate_expr (SEMI | EOL | <<eof>>)
 reaction_id ::= identifier
 reactants ::= list_of_reactants
 products::= list_of_reactants

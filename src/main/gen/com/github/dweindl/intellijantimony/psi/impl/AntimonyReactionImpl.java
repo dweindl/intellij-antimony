@@ -34,15 +34,15 @@ public class AntimonyReactionImpl extends ASTWrapperPsiElement implements Antimo
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyProducts getProducts() {
-    return findNotNullChildByClass(AntimonyProducts.class);
+    return findChildByClass(AntimonyProducts.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyReactants getReactants() {
-    return findNotNullChildByClass(AntimonyReactants.class);
+    return findChildByClass(AntimonyReactants.class);
   }
 
   @Override

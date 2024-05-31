@@ -1226,15 +1226,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (reaction_id ":")? reactants ("->"|"=>") products SEMI rate_expr (SEMI | EOL | <<eof>>)
+  // (reaction_id ":")? reactants? ("->"|"=>") products? SEMI rate_expr (SEMI | EOL | <<eof>>)
   public static boolean reaction(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "reaction")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, REACTION, "<reaction>");
     r = reaction_0(b, l + 1);
-    r = r && reactants(b, l + 1);
+    r = r && reaction_1(b, l + 1);
     r = r && reaction_2(b, l + 1);
-    r = r && products(b, l + 1);
+    r = r && reaction_3(b, l + 1);
     r = r && consumeToken(b, SEMI);
     r = r && rate_expr(b, l + 1);
     r = r && reaction_6(b, l + 1);
@@ -1260,6 +1260,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // reactants?
+  private static boolean reaction_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "reaction_1")) return false;
+    reactants(b, l + 1);
+    return true;
+  }
+
   // "->"|"=>"
   private static boolean reaction_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "reaction_2")) return false;
@@ -1267,6 +1274,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, "->");
     if (!r) r = consumeToken(b, "=>");
     return r;
+  }
+
+  // products?
+  private static boolean reaction_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "reaction_3")) return false;
+    products(b, l + 1);
+    return true;
   }
 
   // SEMI | EOL | <<eof>>

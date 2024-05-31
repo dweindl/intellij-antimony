@@ -74,7 +74,6 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "<="                  { return LTE; }
   ">"                   { return GT; }
   ">="                  { return GTE; }
-  "identifier"          { return IDENTIFIER; }
 
   {MODEL}               { return MODEL; }
   {EOL}                 { return EOL; }

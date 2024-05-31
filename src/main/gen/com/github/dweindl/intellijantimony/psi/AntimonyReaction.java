@@ -10,10 +10,10 @@ public interface AntimonyReaction extends PsiElement {
   @NotNull
   AntimonyExpr getExpr();
 
-  @NotNull
+  @Nullable
   AntimonyProducts getProducts();
 
-  @NotNull
+  @Nullable
   AntimonyReactants getReactants();
 
   @Nullable
