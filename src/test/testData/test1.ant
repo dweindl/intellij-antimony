@@ -1,0 +1,114 @@
+# Comment
+
+/* multiline
+   comment
+*/
+
+p = 1
+// another comment
+
+# a reaction
+S1 -> S2; k1*S1
+
+S1 = 10
+S2 = 0
+k1 = 0.1
+
+# a reaction without products
+S4 -> ; k5*S4
+
+species s = 4
+compartment c = 5
+
+
+S1' = 0.4e3
+
+$s1 ->  S2; k1*S1
+S2 ->  S3; k2*S2
+S3 -> $s4; k3*S3
+
+const constSpecies1, constSpecies2
+
+
+substanceOnly species species_substance_only in C
+
+
+k2 = sin(0.5)
+
+k1 := piecewise(0.1, time > 50, 20)
+
+# some statements on the same line
+a = 1; b = 2; c = 3
+
+// an event
+at (x>5): y=3, x=r+2
+
+
+// a function definition
+function quadratic(x, a, b, c)
+  a*x^2 + b*x + c
+end
+
+
+//Species
+species Glcin in comp, MgATP in comp
+
+// CV terms:
+comp  identity "http://identifiers.org/go/GO:0005737"
+Glcin identity "http://identifiers.org/chebi/CHEBI:17234",
+               "http://identifiers.org/kegg.compound/C00293"
+MgATP part "http://identifiers.org/chebi/CHEBI:25107",
+           "http://identifiers.org/chebi/CHEBI:15422"
+
+model notes ```
+    <p>This model represents the inactive forms of CDC-2 Kinase and Cyclin
+    Protease as separate species, unlike the ODEs in the published paper, in
+    which the equations for the inactive forms are substituted into the
+    equations for the active forms using a mass conservation rule
+    M+MI=1,X+XI=1. Mass is still conserved in this model through the
+    explicit reactions M&lt;-&gt;MI and X&lt;-&gt;XI. The terms in the
+    kinetic laws are identical to the corresponding terms in the kinetic
+    laws in the published paper.</p>
+```
+
+model side_reaction(S, k1)
+  J0: S + E -> SE; k1*k2*S*E - k2*ES;
+  E = 3;
+  SE = E+S;
+  k2 = 0.4;
+end
+
+# In this model, 'side_reaction' is imported twice:
+model full_pathway
+    -> S1; k1
+  S1 -> S2; k2*S1
+  S2 ->   ; k3*S2
+
+  A: side_reaction(S1, k4)
+  B: side_reaction(S2, k5)
+
+  S1 = 0
+  S2 = 0
+  k1 = 0.3
+  k2 = 2.3
+  k3 = 3.5
+  k4 = 0.0004
+  k5 = 1
+
+end
+
+import "models1.txt"
+import "oscli.xml"
+
+model mod2()
+  A: mod1();
+  B: oscli();
+end
+
+
+mod2 creator1.givenName "John"
+mod2 creator1.familyName "Doe"
+mod2 creator1.email "a@b.c"
+
+mod2 creator2.givenName "A"
+mod2 creator2.familyName "B"

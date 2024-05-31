@@ -1,0 +1,13 @@
+model example1()
+  S1 -> S2; k1*S1
+  S1 = 10
+  S2 = 0
+  k1 = 0.1
+end
+
+example1 creator1.givenName "John"
+example1 creator1.familyName "Doe"
+example1 creator1.email "a@b.c"
+
+example1 creator2.givenName "A"
+example1 creator2.familyName "B"
