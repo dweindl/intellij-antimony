@@ -1,7 +1,9 @@
 package com.github.dweindl.intellijantimony.psi.impl;
 // import com.github.dweindl.intellijantimony.psi.AntimonyProperty;
+import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
 import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
 import com.github.dweindl.intellijantimony.psi.AntimonyElementFactory;
+import com.github.dweindl.intellijantimony.psi.AntimonyUnit;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
@@ -31,29 +33,32 @@ public class AntimonyPsiImplUtil {
         }
     }
 
-    public static String getName(AntimonyProperty element) {
+    public static String getName(AntimonyIdentifier element) {
         return getKey(element);
     }
-
-    public static PsiElement setName(AntimonyProperty element, String newName) {
+*/
+    public static PsiElement setName(AntimonyIdentifier element, String newName) {
+        /*
         ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.KEY);
         if (keyNode != null) {
             AntimonyProperty property = AntimonyElementFactory.createProperty(element.getProject(), newName);
             ASTNode newKeyNode = property.getFirstChild().getNode();
             element.getNode().replaceChild(keyNode, newKeyNode);
         }
+        */
         return element;
+
     }
 
-    public static PsiElement getNameIdentifier(AntimonyProperty element) {
-        ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.KEY);
+    public static PsiElement getNameIdentifier(AntimonyIdentifier element) {
+        ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.ID);
         if (keyNode != null) {
             return keyNode.getPsi();
         } else {
             return null;
         }
     }
-
+/*
     public static ItemPresentation getPresentation(final AntimonyProperty element) {
         return new ItemPresentation() {
             @Nullable
