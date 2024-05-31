@@ -140,7 +140,7 @@ stoichiometry ::= number_literal
 species_id ::= identifier
 rate_expr ::= expr
 
-event_definition ::= event_trigger ":" event_assignments (SEMI | EOL)
+event_definition ::= event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
 event_trigger ::= "at" expr
 event_assignments ::= event_assignment ("," event_assignment)*
 event_assignment ::= identifier EQ expr
