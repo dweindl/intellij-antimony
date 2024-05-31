@@ -142,7 +142,7 @@ rate_expr ::= expr
 
 event_definition ::= event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
 event_trigger ::= "at" expr
-event_assignments ::= event_assignment ("," event_assignment)*
+event_assignments ::= event_assignment ("," (BACKSLASH EOL)* event_assignment)*
 event_assignment ::= identifier EQ expr
 
 // TODO predefined units
