@@ -136,8 +136,8 @@ function_name ::= identifier
 identifier ::= ID {
     mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
     implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
-    // methods=[ getName setName getNameIdentifier getPresentation]
-    methods=[getNameIdentifier setName]
+    // methods=[ getPresentation]
+    methods=[getNameIdentifier getName setName]
 }
 
 

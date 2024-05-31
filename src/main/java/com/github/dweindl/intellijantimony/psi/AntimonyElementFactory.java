@@ -8,10 +8,10 @@ import com.intellij.psi.PsiFileFactory;
 
 public class AntimonyElementFactory {
 
-/*    public static AntimonyProperty createProperty(Project project, String name) {
-        final AntimonyFile file = createFile(project, name);
-        return (AntimonyProperty) file.getFirstChild();
-    }*/
+    public static AntimonyIdentifier createIdentifier(Project project, String name) {
+        final AntimonyFile file = createFile(project, name + " = 0");
+        return (AntimonyIdentifier) file.getFirstChild().getFirstChild().getFirstChild().getFirstChild();
+    }
 
     public static AntimonyFile createFile(Project project, String text) {
         String name = "dummy.ant";

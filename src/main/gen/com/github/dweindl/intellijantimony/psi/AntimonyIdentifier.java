@@ -12,6 +12,8 @@ public interface AntimonyIdentifier extends AntimonyNamedElement {
 
   PsiElement getNameIdentifier();
 
+  String getName();
+
   PsiElement setName(String newName);
 
 }

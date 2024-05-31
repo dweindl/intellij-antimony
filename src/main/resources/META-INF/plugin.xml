@@ -36,6 +36,7 @@
         <completion.contributor
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyCompletionContributor"/>
+        <renamePsiElementProcessor implementation="com.github.dweindl.intellijantimony.AntimonyRenameProcessor"/>
     </extensions>
 
     <applicationListeners>

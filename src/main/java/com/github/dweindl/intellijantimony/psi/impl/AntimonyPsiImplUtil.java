@@ -1,9 +1,6 @@
 package com.github.dweindl.intellijantimony.psi.impl;
 // import com.github.dweindl.intellijantimony.psi.AntimonyProperty;
-import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
-import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
-import com.github.dweindl.intellijantimony.psi.AntimonyElementFactory;
-import com.github.dweindl.intellijantimony.psi.AntimonyUnit;
+import com.github.dweindl.intellijantimony.psi.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
@@ -32,28 +29,26 @@ public class AntimonyPsiImplUtil {
             return null;
         }
     }
-
-    public static String getName(AntimonyIdentifier element) {
-        return getKey(element);
-    }
 */
+    public static String getName(AntimonyIdentifier element) {
+        return element.getNode().getText();
+    }
+
     public static PsiElement setName(AntimonyIdentifier element, String newName) {
-        /*
-        ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.KEY);
-        if (keyNode != null) {
-            AntimonyProperty property = AntimonyElementFactory.createProperty(element.getProject(), newName);
-            ASTNode newKeyNode = property.getFirstChild().getNode();
-            element.getNode().replaceChild(keyNode, newKeyNode);
+        ASTNode idNode = element.getNode().findChildByType(AntimonyTypes.ID);
+        if (idNode != null) {
+            AntimonyIdentifier identifier = AntimonyElementFactory.createIdentifier(element.getProject(), newName);
+            ASTNode newIdNode = identifier.getFirstChild().getNode();
+            element.getNode().replaceChild(idNode, newIdNode);
         }
-        */
         return element;
 
     }
 
     public static PsiElement getNameIdentifier(AntimonyIdentifier element) {
-        ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.ID);
-        if (keyNode != null) {
-            return keyNode.getPsi();
+        ASTNode idNode = element.getNode().findChildByType(AntimonyTypes.ID);
+        if (idNode != null) {
+            return idNode.getPsi();
         } else {
             return null;
         }

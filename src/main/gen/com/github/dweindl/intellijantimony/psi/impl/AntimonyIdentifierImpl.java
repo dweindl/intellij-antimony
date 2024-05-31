@@ -38,6 +38,11 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   }
 
   @Override
+  public String getName() {
+    return AntimonyPsiImplUtil.getName(this);
+  }
+
+  @Override
   public PsiElement setName(String newName) {
     return AntimonyPsiImplUtil.setName(this, newName);
   }
