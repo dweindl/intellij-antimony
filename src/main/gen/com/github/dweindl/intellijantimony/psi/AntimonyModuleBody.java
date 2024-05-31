@@ -29,6 +29,9 @@ public interface AntimonyModuleBody extends PsiElement {
   List<AntimonyModifierAnnotation> getModifierAnnotationList();
 
   @NotNull
+  List<AntimonyRateRule> getRateRuleList();
+
+  @NotNull
   List<AntimonyReaction> getReactionList();
 
   @NotNull

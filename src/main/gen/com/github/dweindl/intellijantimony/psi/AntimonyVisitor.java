@@ -147,6 +147,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitRateRule(@NotNull AntimonyRateRule o) {
+    visitPsiElement(o);
+  }
+
   public void visitReactants(@NotNull AntimonyReactants o) {
     visitPsiElement(o);
   }

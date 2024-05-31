@@ -78,6 +78,7 @@ private module_body_item ::=
     EOL
     | annotation
     | assignment
+    | rate_rule
     | assignment_rule
     | reaction
     | unit_annotation
@@ -87,6 +88,7 @@ private module_body_item ::=
     | modifier_annotation
     | event_definition
 
+rate_rule ::= identifier "'" EQ expr (SEMI | EOL | LINE_COMMENT) {pin=2}
 assignment ::= declaration "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
 assignment_rule ::= declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)

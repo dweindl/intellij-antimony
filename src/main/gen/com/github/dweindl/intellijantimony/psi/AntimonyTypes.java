@@ -43,6 +43,7 @@ public interface AntimonyTypes {
   IElementType POWER_EXPR = new AntimonyElementType("POWER_EXPR");
   IElementType PRODUCTS = new AntimonyElementType("PRODUCTS");
   IElementType RATE_EXPR = new AntimonyElementType("RATE_EXPR");
+  IElementType RATE_RULE = new AntimonyElementType("RATE_RULE");
   IElementType REACTANTS = new AntimonyElementType("REACTANTS");
   IElementType REACTION = new AntimonyElementType("REACTION");
   IElementType REACTION_ID = new AntimonyElementType("REACTION_ID");
@@ -199,6 +200,9 @@ public interface AntimonyTypes {
       }
       else if (type == PRODUCTS) {
         return new AntimonyProductsImpl(node);
+      }
+      else if (type == RATE_RULE) {
+        return new AntimonyRateRuleImpl(node);
       }
       else if (type == REACTANTS) {
         return new AntimonyReactantsImpl(node);

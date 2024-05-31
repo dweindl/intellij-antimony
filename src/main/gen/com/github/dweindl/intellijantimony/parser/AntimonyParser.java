@@ -159,30 +159,22 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
+  // declaration EQ expr (SEMI | EOL | LINE_COMMENT)
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
     r = declaration(b, l + 1);
-    r = r && assignment_1(b, l + 1);
     r = r && consumeToken(b, EQ);
     r = r && expr(b, l + 1);
-    r = r && assignment_4(b, l + 1);
+    r = r && assignment_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // "'"?
-  private static boolean assignment_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_1")) return false;
-    consumeToken(b, PRIME);
-    return true;
-  }
-
   // SEMI | EOL | LINE_COMMENT
-  private static boolean assignment_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_4")) return false;
+  private static boolean assignment_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_3")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
@@ -869,6 +861,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   // EOL
   //     | annotation
   //     | assignment
+  //     | rate_rule
   //     | assignment_rule
   //     | reaction
   //     | unit_annotation
@@ -883,6 +876,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, EOL);
     if (!r) r = annotation(b, l + 1);
     if (!r) r = assignment(b, l + 1);
+    if (!r) r = rate_rule(b, l + 1);
     if (!r) r = assignment_rule(b, l + 1);
     if (!r) r = reaction(b, l + 1);
     if (!r) r = unit_annotation(b, l + 1);
@@ -1211,6 +1205,31 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _COLLAPSE_, RATE_EXPR, "<expression>");
     r = expr(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier "'" EQ expr (SEMI | EOL | LINE_COMMENT)
+  public static boolean rate_rule(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rate_rule")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && consumeTokens(b, 0, PRIME, EQ);
+    r = r && expr(b, l + 1);
+    r = r && rate_rule_4(b, l + 1);
+    exit_section_(b, m, RATE_RULE, r);
+    return r;
+  }
+
+  // SEMI | EOL | LINE_COMMENT
+  private static boolean rate_rule_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rate_rule_4")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    if (!r) r = consumeToken(b, LINE_COMMENT);
     return r;
   }
 
