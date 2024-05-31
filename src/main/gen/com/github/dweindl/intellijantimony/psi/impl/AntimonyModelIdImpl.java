@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyAssignmentRuleImpl extends ASTWrapperPsiElement implements AntimonyAssignmentRule {
+public class AntimonyModelIdImpl extends ASTWrapperPsiElement implements AntimonyModelId {
 
-  public AntimonyAssignmentRuleImpl(@NotNull ASTNode node) {
+  public AntimonyModelIdImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitAssignmentRule(this);
+    visitor.visitModelId(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class AntimonyAssignmentRuleImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public AntimonyDeclarationBody getDeclarationBody() {
-    return findNotNullChildByClass(AntimonyDeclarationBody.class);
-  }
-
-  @Override
-  @NotNull
-  public AntimonyExpr getExpr() {
-    return findNotNullChildByClass(AntimonyExpr.class);
+  public AntimonyIdentifier getIdentifier() {
+    return findNotNullChildByClass(AntimonyIdentifier.class);
   }
 
 }

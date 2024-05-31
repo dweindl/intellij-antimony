@@ -11,6 +11,7 @@ public interface AntimonyTypes {
   IElementType AND_EXPR = new AntimonyElementType("AND_EXPR");
   IElementType ANNOTATION = new AntimonyElementType("ANNOTATION");
   IElementType ANNOTATION_IS = new AntimonyElementType("ANNOTATION_IS");
+  IElementType ANNOTATION_TYPE = new AntimonyElementType("ANNOTATION_TYPE");
   IElementType ARITHMETIC_EXPR = new AntimonyElementType("ARITHMETIC_EXPR");
   IElementType ASSIGNMENT = new AntimonyElementType("ASSIGNMENT");
   IElementType ASSIGNMENT_RULE = new AntimonyElementType("ASSIGNMENT_RULE");
@@ -18,6 +19,7 @@ public interface AntimonyTypes {
   IElementType COMPARISON_OP = new AntimonyElementType("COMPARISON_OP");
   IElementType COMPARTMENT_ID = new AntimonyElementType("COMPARTMENT_ID");
   IElementType DECLARATION = new AntimonyElementType("DECLARATION");
+  IElementType DECLARATION_BODY = new AntimonyElementType("DECLARATION_BODY");
   IElementType EVENT_ASSIGNMENT = new AntimonyElementType("EVENT_ASSIGNMENT");
   IElementType EVENT_ASSIGNMENTS = new AntimonyElementType("EVENT_ASSIGNMENTS");
   IElementType EVENT_DEFINITION = new AntimonyElementType("EVENT_DEFINITION");
@@ -30,6 +32,8 @@ public interface AntimonyTypes {
   IElementType LITERAL_EXPR = new AntimonyElementType("LITERAL_EXPR");
   IElementType LOGICAL_EXPR = new AntimonyElementType("LOGICAL_EXPR");
   IElementType LOGICAL_TERM = new AntimonyElementType("LOGICAL_TERM");
+  IElementType MODEL_ANNOTATION = new AntimonyElementType("MODEL_ANNOTATION");
+  IElementType MODEL_ID = new AntimonyElementType("MODEL_ID");
   IElementType MODIFIER_ANNOTATION = new AntimonyElementType("MODIFIER_ANNOTATION");
   IElementType MODIFIER_ID = new AntimonyElementType("MODIFIER_ID");
   IElementType MODULE = new AntimonyElementType("MODULE");
@@ -65,6 +69,7 @@ public interface AntimonyTypes {
   IElementType COMPARTMENT = new AntimonyTokenType("compartment");
   IElementType CONST = new AntimonyTokenType("const");
   IElementType DIV = new AntimonyTokenType("/");
+  IElementType DOT = new AntimonyTokenType(".");
   IElementType END = new AntimonyTokenType("end");
   IElementType EOL = new AntimonyTokenType("EOL");
   IElementType EQ = new AntimonyTokenType("=");
@@ -111,6 +116,9 @@ public interface AntimonyTypes {
       else if (type == ANNOTATION_IS) {
         return new AntimonyAnnotationIsImpl(node);
       }
+      else if (type == ANNOTATION_TYPE) {
+        return new AntimonyAnnotationTypeImpl(node);
+      }
       else if (type == ARITHMETIC_EXPR) {
         return new AntimonyArithmeticExprImpl(node);
       }
@@ -131,6 +139,9 @@ public interface AntimonyTypes {
       }
       else if (type == DECLARATION) {
         return new AntimonyDeclarationImpl(node);
+      }
+      else if (type == DECLARATION_BODY) {
+        return new AntimonyDeclarationBodyImpl(node);
       }
       else if (type == EVENT_ASSIGNMENT) {
         return new AntimonyEventAssignmentImpl(node);
@@ -164,6 +175,12 @@ public interface AntimonyTypes {
       }
       else if (type == LOGICAL_TERM) {
         return new AntimonyLogicalTermImpl(node);
+      }
+      else if (type == MODEL_ANNOTATION) {
+        return new AntimonyModelAnnotationImpl(node);
+      }
+      else if (type == MODEL_ID) {
+        return new AntimonyModelIdImpl(node);
       }
       else if (type == MODIFIER_ANNOTATION) {
         return new AntimonyModifierAnnotationImpl(node);

@@ -29,8 +29,8 @@ public class AntimonyModuleImpl extends ASTWrapperPsiElement implements Antimony
 
   @Override
   @NotNull
-  public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
+  public AntimonyModelId getModelId() {
+    return findNotNullChildByClass(AntimonyModelId.class);
   }
 
   @Override

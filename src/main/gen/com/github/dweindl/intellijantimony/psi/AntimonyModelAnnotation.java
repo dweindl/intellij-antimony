@@ -5,15 +5,18 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AntimonyModule extends PsiElement {
+public interface AntimonyModelAnnotation extends PsiElement {
+
+  @NotNull
+  AntimonyAnnotationType getAnnotationType();
 
   @NotNull
   AntimonyModelId getModelId();
 
   @Nullable
-  AntimonyModuleBody getModuleBody();
+  PsiElement getEol();
 
   @NotNull
-  PsiElement getModel();
+  PsiElement getString();
 
 }

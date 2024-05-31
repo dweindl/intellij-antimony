@@ -102,6 +102,20 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // identifier "." identifier
+  public static boolean annotation_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_type")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && consumeToken(b, DOT);
+    r = r && identifier(b, l + 1);
+    exit_section_(b, m, ANNOTATION_TYPE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // root_item *
   static boolean antimonyFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "antimonyFile")) return false;
@@ -159,22 +173,30 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration EQ expr (SEMI | EOL | LINE_COMMENT)
+  // declaration_body "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
-    r = declaration(b, l + 1);
+    r = declaration_body(b, l + 1);
+    r = r && assignment_1(b, l + 1);
     r = r && consumeToken(b, EQ);
     r = r && expr(b, l + 1);
-    r = r && assignment_3(b, l + 1);
+    r = r && assignment_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // "'"?
+  private static boolean assignment_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_1")) return false;
+    consumeToken(b, PRIME);
+    return true;
+  }
+
   // SEMI | EOL | LINE_COMMENT
-  private static boolean assignment_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_3")) return false;
+  private static boolean assignment_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_4")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
@@ -183,12 +205,12 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
+  // declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
   public static boolean assignment_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_rule")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_RULE, "<assignment rule>");
-    r = declaration(b, l + 1);
+    r = declaration_body(b, l + 1);
     r = r && assignment_rule_1(b, l + 1);
     r = r && expr(b, l + 1);
     r = r && assignment_rule_3(b, l + 1);
@@ -308,30 +330,51 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+  // declaration_body (SEMI | EOL)
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION, "<declaration>");
-    r = declaration_0(b, l + 1);
+    r = declaration_body(b, l + 1);
     r = r && declaration_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean declaration_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_1")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+  public static boolean declaration_body(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, DECLARATION_BODY, "<declaration body>");
+    r = declaration_body_0(b, l + 1);
+    r = r && declaration_body_1(b, l + 1);
     r = r && identifier(b, l + 1);
-    r = r && declaration_3(b, l + 1);
-    r = r && declaration_4(b, l + 1);
+    r = r && declaration_body_3(b, l + 1);
+    r = r && declaration_body_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // ("var" | "const")?
-  private static boolean declaration_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_0")) return false;
-    declaration_0_0(b, l + 1);
+  private static boolean declaration_body_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_0")) return false;
+    declaration_body_0_0(b, l + 1);
     return true;
   }
 
   // "var" | "const"
-  private static boolean declaration_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_0_0")) return false;
+  private static boolean declaration_body_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_0_0")) return false;
     boolean r;
     r = consumeToken(b, VAR);
     if (!r) r = consumeToken(b, CONST);
@@ -339,15 +382,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   // ( "compartment" | "species" )?
-  private static boolean declaration_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_1")) return false;
-    declaration_1_0(b, l + 1);
+  private static boolean declaration_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_1")) return false;
+    declaration_body_1_0(b, l + 1);
     return true;
   }
 
   // "compartment" | "species"
-  private static boolean declaration_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_1_0")) return false;
+  private static boolean declaration_body_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_1_0")) return false;
     boolean r;
     r = consumeToken(b, COMPARTMENT);
     if (!r) r = consumeToken(b, SPECIES);
@@ -355,15 +398,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   // ("in" compartment_id)?
-  private static boolean declaration_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_3")) return false;
-    declaration_3_0(b, l + 1);
+  private static boolean declaration_body_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_3")) return false;
+    declaration_body_3_0(b, l + 1);
     return true;
   }
 
   // "in" compartment_id
-  private static boolean declaration_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_3_0")) return false;
+  private static boolean declaration_body_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, IN);
@@ -373,15 +416,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   // (SEMI | EOL)?
-  private static boolean declaration_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_4")) return false;
-    declaration_4_0(b, l + 1);
+  private static boolean declaration_body_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_4")) return false;
+    declaration_body_4_0(b, l + 1);
     return true;
   }
 
   // SEMI | EOL
-  private static boolean declaration_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_4_0")) return false;
+  private static boolean declaration_body_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_body_4_0")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
@@ -756,6 +799,42 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // model_id annotation_type string (SEMI | EOL)
+  public static boolean model_annotation(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_annotation")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_id(b, l + 1);
+    r = r && annotation_type(b, l + 1);
+    r = r && consumeToken(b, STRING);
+    r = r && model_annotation_3(b, l + 1);
+    exit_section_(b, m, MODEL_ANNOTATION, r);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean model_annotation_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_annotation_3")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier
+  public static boolean model_id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_id")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    exit_section_(b, m, MODEL_ID, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (modifier_id ":")? ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
   public static boolean modifier_annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "modifier_annotation")) return false;
@@ -819,14 +898,14 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MODEL identifier "(" ")" module_body? END
+  // MODEL model_id "(" ")" module_body? END
   public static boolean module(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module")) return false;
     if (!nextTokenIs(b, MODEL)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, MODEL);
-    r = r && identifier(b, l + 1);
+    r = r && model_id(b, l + 1);
     r = r && consumeTokens(b, 0, LPAREN, RPAREN);
     r = r && module_4(b, l + 1);
     r = r && consumeToken(b, END);
@@ -1213,14 +1292,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   public static boolean rate_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rate_rule")) return false;
     if (!nextTokenIs(b, ID)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RATE_RULE, null);
     r = identifier(b, l + 1);
-    r = r && consumeTokens(b, 0, PRIME, EQ);
-    r = r && expr(b, l + 1);
-    r = r && rate_rule_4(b, l + 1);
-    exit_section_(b, m, RATE_RULE, r);
-    return r;
+    r = r && consumeTokens(b, 1, PRIME, EQ);
+    p = r; // pin = 2
+    r = r && report_error_(b, expr(b, l + 1));
+    r = p && rate_rule_4(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // SEMI | EOL | LINE_COMMENT
@@ -1339,12 +1419,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // module | module_body
+  // module | module_body | model_annotation
   static boolean root_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_item")) return false;
     boolean r;
     r = module(b, l + 1);
     if (!r) r = module_body(b, l + 1);
+    if (!r) r = model_annotation(b, l + 1);
     return r;
   }
 

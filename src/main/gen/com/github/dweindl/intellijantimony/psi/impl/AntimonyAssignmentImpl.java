@@ -29,8 +29,8 @@ public class AntimonyAssignmentImpl extends ASTWrapperPsiElement implements Anti
 
   @Override
   @NotNull
-  public AntimonyDeclaration getDeclaration() {
-    return findNotNullChildByClass(AntimonyDeclaration.class);
+  public AntimonyDeclarationBody getDeclarationBody() {
+    return findNotNullChildByClass(AntimonyDeclarationBody.class);
   }
 
   @Override

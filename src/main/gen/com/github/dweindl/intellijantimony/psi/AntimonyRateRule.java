@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface AntimonyRateRule extends PsiElement {
 
-  @NotNull
+  @Nullable
   AntimonyExpr getExpr();
 
   @NotNull

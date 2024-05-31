@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyAssignmentRuleImpl extends ASTWrapperPsiElement implements AntimonyAssignmentRule {
+public class AntimonyRateRuleImpl extends ASTWrapperPsiElement implements AntimonyRateRule {
 
-  public AntimonyAssignmentRuleImpl(@NotNull ASTNode node) {
+  public AntimonyRateRuleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitAssignmentRule(this);
+    visitor.visitRateRule(this);
   }
 
   @Override
@@ -28,15 +28,27 @@ public class AntimonyAssignmentRuleImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
-  public AntimonyDeclarationBody getDeclarationBody() {
-    return findNotNullChildByClass(AntimonyDeclarationBody.class);
+  @Nullable
+  public AntimonyExpr getExpr() {
+    return findChildByClass(AntimonyExpr.class);
   }
 
   @Override
   @NotNull
-  public AntimonyExpr getExpr() {
-    return findNotNullChildByClass(AntimonyExpr.class);
+  public AntimonyIdentifier getIdentifier() {
+    return findNotNullChildByClass(AntimonyIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEol() {
+    return findChildByType(EOL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLineComment() {
+    return findChildByType(LINE_COMMENT);
   }
 
 }

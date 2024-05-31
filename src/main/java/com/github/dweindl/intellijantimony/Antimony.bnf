@@ -53,6 +53,7 @@
     SCIENTIFIC='regexp:(\d+(\.\d*)?|\.\d+)[eE][-+]?\d+'
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
     BACKSLASH='\'
+    DOT='.'
     // TODO: double-check operators
   AND='&&'
   OR='||'
@@ -71,8 +72,9 @@
 }
 
 antimonyFile ::= root_item *
-private root_item    ::= (module | module_body)
-module       ::= MODEL identifier "(" ")" module_body? END
+private root_item    ::= (module | module_body | model_annotation)
+module       ::= MODEL model_id "(" ")" module_body? END
+model_id     ::= identifier
 module_body  ::= module_body_item +
 private module_body_item ::=
     EOL
@@ -89,11 +91,12 @@ private module_body_item ::=
     | event_definition
 
 rate_rule ::= identifier "'" EQ expr (SEMI | EOL | LINE_COMMENT) {pin=2}
-assignment ::= declaration "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
-assignment_rule ::= declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
+assignment ::= declaration_body "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
+assignment_rule ::= declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
-declaration ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+declaration ::= declaration_body (SEMI | EOL)
+declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
 compartment_id ::= identifier
 annotation ::= identifier "notes" string (SEMI | EOL)
 unit_annotation ::= identifier "has" unit (SEMI | EOL)
@@ -153,5 +156,8 @@ event_trigger ::= "at" expr
 event_assignments ::= event_assignment ("," (BACKSLASH EOL)* event_assignment)*
 event_assignment ::= identifier EQ expr
 
+
+model_annotation ::= model_id annotation_type string (SEMI | EOL)
+annotation_type ::= identifier "." identifier
 // TODO predefined units
 // TODO predefined functions - min max exp...

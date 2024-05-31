@@ -28,15 +28,9 @@ public class AntimonyDeclarationImpl extends ASTWrapperPsiElement implements Ant
   }
 
   @Override
-  @Nullable
-  public AntimonyCompartmentId getCompartmentId() {
-    return findChildByClass(AntimonyCompartmentId.class);
-  }
-
-  @Override
   @NotNull
-  public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
+  public AntimonyDeclarationBody getDeclarationBody() {
+    return findNotNullChildByClass(AntimonyDeclarationBody.class);
   }
 
   @Override

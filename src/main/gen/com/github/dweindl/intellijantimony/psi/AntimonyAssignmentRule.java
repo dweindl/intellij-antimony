@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface AntimonyAssignmentRule extends PsiElement {
 
   @NotNull
-  AntimonyDeclaration getDeclaration();
+  AntimonyDeclarationBody getDeclarationBody();
 
   @NotNull
   AntimonyExpr getExpr();

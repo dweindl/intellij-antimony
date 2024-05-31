@@ -19,6 +19,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAnnotationType(@NotNull AntimonyAnnotationType o) {
+    visitPsiElement(o);
+  }
+
   public void visitArithmeticExpr(@NotNull AntimonyArithmeticExpr o) {
     visitExpr(o);
   }
@@ -44,6 +48,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
   }
 
   public void visitDeclaration(@NotNull AntimonyDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDeclarationBody(@NotNull AntimonyDeclarationBody o) {
     visitPsiElement(o);
   }
 
@@ -92,6 +100,14 @@ public class AntimonyVisitor extends PsiElementVisitor {
   }
 
   public void visitLogicalTerm(@NotNull AntimonyLogicalTerm o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModelAnnotation(@NotNull AntimonyModelAnnotation o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModelId(@NotNull AntimonyModelId o) {
     visitPsiElement(o);
   }
 
