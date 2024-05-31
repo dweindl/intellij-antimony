@@ -72,7 +72,7 @@
 
 antimonyFile ::= root_item *
 private root_item    ::= (module | module_body)
-module       ::= MODEL ID "(" ")" module_body? END
+module       ::= MODEL identifier "(" ")" module_body? END
 module_body  ::= module_body_item +
 private module_body_item ::=
     EOL
@@ -91,15 +91,15 @@ assignment ::= declaration "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
 assignment_rule ::= declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
-declaration ::= ("var" | "const")? ( "compartment" | "species" )? ID ("in" compartment_id)? (SEMI | EOL)?
-compartment_id ::= ID
-annotation ::= ID "notes" string (SEMI | EOL)
-unit_annotation ::= ID "has" ID (SEMI | EOL)
-annotation_is::=ID "is" string (SEMI | EOL)
+declaration ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+compartment_id ::= identifier
+annotation ::= identifier "notes" string (SEMI | EOL)
+unit_annotation ::= identifier "has" unit (SEMI | EOL)
+annotation_is::=identifier "is" string (SEMI | EOL)
 // TODO: needs to have a unit included
-unit_definition ::= "unit" ID EQ expr (SEMI | EOL)
+unit_definition ::= "unit" identifier EQ expr (SEMI | EOL)
 modifier_annotation ::= (modifier_id ":")? ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
-modifier_id ::= ID
+modifier_id ::= identifier
 
 
 expr ::= logical_expr | arithmetic_expr
@@ -116,34 +116,34 @@ private plus_op ::= ('+'|'-') (BACKSLASH EOL)*
 private factor ::= primary mul_expr * (BACKSLASH EOL)*
 left mul_expr  ::= mul_op primary
 private mul_op ::= ('*'|'/') (BACKSLASH EOL)*
-private primary ::= primary_inner (BACKSLASH EOL)*  power_expr? factorial_expr ?
+private primary ::= primary_inner (BACKSLASH EOL)*  power_expr? // factorial_expr ?
 left power_expr ::= '^' primary
 private primary_inner ::= ('+'|'-') ? (literal_expr | function_call | ref_expr | paren_expr)
 paren_expr ::= ('-(' | '(') expr ')' {pin=1}
-ref_expr ::= id
+ref_expr ::= identifier
 literal_expr ::= number_literal unit ?
-unit ::= ID
+unit ::= identifier
 function_call ::= function_name '(' function_arguments? ')' {pin=2}
 function_arguments ::= expr (',' expr)*
-function_name ::= ID
+function_name ::= identifier
 
 
 
 reaction ::= (reaction_id ":")? reactants ("->"|"=>") products SEMI rate_expr (SEMI | EOL | <<eof>>)
-reaction_id ::= ID
+reaction_id ::= identifier
 reactants ::= list_of_reactants
 products::= list_of_reactants
 // TODO allow empty list
 private list_of_reactants ::= species_expr (PLUS species_expr)*
 species_expr ::= stoichiometry? species_id
 stoichiometry ::= number_literal
-species_id ::= ID
+species_id ::= identifier
 rate_expr ::= expr
 
 event_definition ::= event_trigger ":" event_assignments (SEMI | EOL)
 event_trigger ::= "at" expr
 event_assignments ::= event_assignment ("," event_assignment)*
-event_assignment ::= ID EQ expr
+event_assignment ::= identifier EQ expr
 
 // TODO predefined units
 // TODO predefined functions - min max exp...
