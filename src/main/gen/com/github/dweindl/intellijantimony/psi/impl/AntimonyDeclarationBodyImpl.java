@@ -34,9 +34,9 @@ public class AntimonyDeclarationBodyImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
+    return findChildByClass(AntimonyIdentifier.class);
   }
 
   @Override

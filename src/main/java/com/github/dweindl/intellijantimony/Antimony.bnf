@@ -74,7 +74,7 @@
 
 antimonyFile ::= root_item *
 private root_item    ::= (module | module_body | model_annotation)
-module       ::= MODEL model_id "(" ")" module_body? END
+module       ::= MODEL model_id "(" ")" module_body? END {pin=1}
 model_id     ::= identifier
 module_body  ::= module_body_item +
 private module_body_item ::=
@@ -97,13 +97,13 @@ assignment_rule ::= declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 declaration ::= declaration_body (SEMI | EOL)
-declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)? {pin=1}
 compartment_id ::= identifier
-annotation ::= identifier "notes" string (SEMI | EOL)
-unit_annotation ::= identifier "has" unit (SEMI | EOL)
-annotation_is::=identifier "is" string (SEMI | EOL)
+annotation ::= identifier "notes" string (SEMI | EOL) {pin=2}
+unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}
+annotation_is::=identifier "is" string (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
-unit_definition ::= "unit" identifier EQ expr (SEMI | EOL)
+unit_definition ::= "unit" identifier EQ expr (SEMI | EOL) {pin=1}
 modifier_annotation ::= (modifier_id ":")? ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
 modifier_id ::= identifier
 

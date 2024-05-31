@@ -10,7 +10,7 @@ public interface AntimonyUnitAnnotation extends PsiElement {
   @NotNull
   AntimonyIdentifier getIdentifier();
 
-  @NotNull
+  @Nullable
   AntimonyUnit getUnit();
 
   @Nullable

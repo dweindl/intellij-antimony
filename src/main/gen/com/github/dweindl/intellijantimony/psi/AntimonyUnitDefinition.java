@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface AntimonyUnitDefinition extends PsiElement {
 
-  @NotNull
+  @Nullable
   AntimonyExpr getExpr();
 
-  @NotNull
+  @Nullable
   AntimonyIdentifier getIdentifier();
 
   @Nullable

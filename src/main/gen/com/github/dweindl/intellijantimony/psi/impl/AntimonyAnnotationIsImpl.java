@@ -40,9 +40,9 @@ public class AntimonyAnnotationIsImpl extends ASTWrapperPsiElement implements An
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getString() {
-    return findNotNullChildByType(STRING);
+    return findChildByType(STRING);
   }
 
 }

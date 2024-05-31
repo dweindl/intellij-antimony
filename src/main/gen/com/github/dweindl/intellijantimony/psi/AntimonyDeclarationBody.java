@@ -10,7 +10,7 @@ public interface AntimonyDeclarationBody extends PsiElement {
   @Nullable
   AntimonyCompartmentId getCompartmentId();
 
-  @NotNull
+  @Nullable
   AntimonyIdentifier getIdentifier();
 
   @Nullable

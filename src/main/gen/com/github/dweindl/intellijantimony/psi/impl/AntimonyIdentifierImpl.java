@@ -12,7 +12,7 @@ import com.github.dweindl.intellijantimony.psi.*;
 
 public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements AntimonyIdentifier {
 
-  public AntimonyIdentifierImpl(ASTNode node) {
+  public AntimonyIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 

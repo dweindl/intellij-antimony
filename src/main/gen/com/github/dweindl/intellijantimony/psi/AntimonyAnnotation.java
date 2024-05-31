@@ -13,7 +13,7 @@ public interface AntimonyAnnotation extends PsiElement {
   @Nullable
   PsiElement getEol();
 
-  @NotNull
+  @Nullable
   PsiElement getString();
 
 }

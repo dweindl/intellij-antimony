@@ -34,9 +34,9 @@ public class AntimonyUnitAnnotationImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyUnit getUnit() {
-    return findNotNullChildByClass(AntimonyUnit.class);
+    return findChildByClass(AntimonyUnit.class);
   }
 
   @Override
