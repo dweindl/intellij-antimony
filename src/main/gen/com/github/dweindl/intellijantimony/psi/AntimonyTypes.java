@@ -69,6 +69,7 @@ public interface AntimonyTypes {
   IElementType COMPARTMENT = new AntimonyTokenType("compartment");
   IElementType CONST = new AntimonyTokenType("const");
   IElementType DIV = new AntimonyTokenType("/");
+  IElementType DOLLAR = new AntimonyTokenType("$");
   IElementType DOT = new AntimonyTokenType(".");
   IElementType END = new AntimonyTokenType("end");
   IElementType EOL = new AntimonyTokenType("EOL");

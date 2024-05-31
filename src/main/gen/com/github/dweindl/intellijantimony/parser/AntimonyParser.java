@@ -1430,12 +1430,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // stoichiometry? species_id
+  // stoichiometry? "$"? species_id
   public static boolean species_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "species_expr")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SPECIES_EXPR, "<expression>");
     r = species_expr_0(b, l + 1);
+    r = r && species_expr_1(b, l + 1);
     r = r && species_id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -1445,6 +1446,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   private static boolean species_expr_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "species_expr_0")) return false;
     stoichiometry(b, l + 1);
+    return true;
+  }
+
+  // "$"?
+  private static boolean species_expr_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_expr_1")) return false;
+    consumeToken(b, DOLLAR);
     return true;
   }
 

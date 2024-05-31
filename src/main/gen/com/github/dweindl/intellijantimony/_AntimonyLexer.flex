@@ -66,6 +66,7 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   ":="                  { return ASSIGN_EQ; }
   "\\"                  { return BACKSLASH; }
   "."                   { return DOT; }
+  "$"                   { return DOLLAR; }
   "&&"                  { return AND; }
   "||"                  { return OR; }
   "!"                   { return NOT; }

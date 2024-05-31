@@ -54,6 +54,7 @@
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
     BACKSLASH='\'
     DOT='.'
+    DOLLAR='$'
     // TODO: double-check operators
   AND='&&'
   OR='||'
@@ -146,7 +147,7 @@ reactants ::= list_of_reactants
 products::= list_of_reactants
 // TODO allow empty list
 private list_of_reactants ::= species_expr (PLUS species_expr)*
-species_expr ::= stoichiometry? species_id
+species_expr ::= stoichiometry? "$"? species_id
 stoichiometry ::= number_literal
 species_id ::= identifier
 rate_expr ::= expr
