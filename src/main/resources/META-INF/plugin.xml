@@ -25,6 +25,7 @@
         <lang.braceMatcher language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
         <colorSettingsPage implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
         <!-- TODO: code folding -->
+        <lang.commenter language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyCommenter"/>
     </extensions>
 
     <applicationListeners>
