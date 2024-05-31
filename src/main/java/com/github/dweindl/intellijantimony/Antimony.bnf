@@ -35,9 +35,9 @@
     UNIT_KEYWORD='unit'
     EOL = "regexp:\s*(\n|\r\n)\s*"
     WHITE_SPACE="regexp:[ \t\x0B\f\r]+"
-    line_comment = "regexp:(//|#).*"
+    LINE_COMMENT = "regexp:(//|#).*"
     // ".|\n" does not match all characters, because "." excludes all Unicode newline chars - use "[^]" instead
-    block_comment='regexp:/\*([^])*\*/'
+    BLOCK_COMMENT='regexp:/\*([^])*\*/'
     PLUS='+'
     MINUS='-'
     MUL='*'
@@ -87,7 +87,7 @@ private module_body_item ::=
     | modifier_annotation
     | event_definition
 
-assignment ::= declaration "'"? EQ expr (SEMI | EOL | line_comment)
+assignment ::= declaration "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
 assignment_rule ::= declaration (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
