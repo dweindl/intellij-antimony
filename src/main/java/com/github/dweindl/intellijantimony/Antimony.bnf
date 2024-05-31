@@ -127,6 +127,12 @@ function_call ::= function_name '(' function_arguments? ')' {pin=2}
 function_arguments ::= expr (',' expr)*
 function_name ::= identifier
 
+identifier ::= ID {
+    mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
+    implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
+    // methods=[ getName setName getNameIdentifier getPresentation]
+    methods=[getNameIdentifier setName]
+}
 
 
 reaction ::= (reaction_id ":")? reactants ("->"|"=>") products SEMI rate_expr (SEMI | EOL | <<eof>>)
