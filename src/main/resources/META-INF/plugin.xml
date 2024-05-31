@@ -9,7 +9,9 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.dweindl.intellijantimony.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow
+                factoryClass="com.github.dweindl.intellijantimony.toolWindow.MyToolWindowFactory"
+                id="MyToolWindow"/>
         <fileType
                 name="Antimony File"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyFileType"
@@ -22,13 +24,22 @@
         <lang.syntaxHighlighterFactory
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonySyntaxHighlighterFactory"/>
-        <lang.braceMatcher language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
-        <colorSettingsPage implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
+        <lang.braceMatcher
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
+        <colorSettingsPage
+                implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
         <!-- TODO: code folding -->
-        <lang.commenter language="Antimony" implementationClass="com.github.dweindl.intellijantimony.AntimonyCommenter"/>
+        <lang.commenter
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyCommenter"/>
+        <completion.contributor
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyCompletionContributor"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.dweindl.intellijantimony.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.dweindl.intellijantimony.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>
