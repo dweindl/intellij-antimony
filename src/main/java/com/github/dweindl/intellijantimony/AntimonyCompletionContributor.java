@@ -4,7 +4,6 @@ import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
 import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.icons.AllIcons;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -12,6 +11,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.util.Collection;
 
 final class AntimonyCompletionContributor extends CompletionContributor {
@@ -47,10 +47,12 @@ final class AntimonyCompletionContributor extends CompletionContributor {
                         if (parent != null) {
                             PsiElement grandParent = parent.getParent();
                             if (grandParent != null && grandParent.getNode().getElementType() == AntimonyTypes.UNIT) {
+                                IconCreator iconCreator = new IconCreator();
+                                Icon icon = iconCreator.createIconFromString("U");
+
                                 for (String unit : predefined_units_sbml) {
                                     resultSet.addElement(LookupElementBuilder.create(unit)
-                                            // TODO replace dummy icon
-                                            .withIcon(AllIcons.FileTypes.Xml));
+                                            .withIcon(icon));
                                 }
                             }
                         }
