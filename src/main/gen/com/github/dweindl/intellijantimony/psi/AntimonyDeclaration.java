@@ -13,4 +13,7 @@ public interface AntimonyDeclaration extends PsiElement {
   @Nullable
   PsiElement getEol();
 
+  @Nullable
+  PsiElement getLineComment();
+
 }

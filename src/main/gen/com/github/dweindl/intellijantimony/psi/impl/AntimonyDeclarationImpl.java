@@ -39,4 +39,10 @@ public class AntimonyDeclarationImpl extends ASTWrapperPsiElement implements Ant
     return findChildByType(EOL);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLineComment() {
+    return findChildByType(LINE_COMMENT);
+  }
+
 }

@@ -332,7 +332,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration_body (SEMI | EOL)
+  // declaration_body (SEMI | EOL | LINE_COMMENT)
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
@@ -343,12 +343,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SEMI | EOL
+  // SEMI | EOL | LINE_COMMENT
   private static boolean declaration_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration_1")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
+    if (!r) r = consumeToken(b, LINE_COMMENT);
     return r;
   }
 
