@@ -1424,11 +1424,12 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // module | module_body | model_annotation
+  // EOL | module | module_body | model_annotation
   static boolean root_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_item")) return false;
     boolean r;
-    r = module(b, l + 1);
+    r = consumeToken(b, EOL);
+    if (!r) r = module(b, l + 1);
     if (!r) r = module_body(b, l + 1);
     if (!r) r = model_annotation(b, l + 1);
     return r;

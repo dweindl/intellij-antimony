@@ -56,24 +56,22 @@
     DOT='.'
     DOLLAR='$'
     // TODO: double-check operators
-  AND='&&'
-  OR='||'
-  NOT='!'
-  EQEQ='=='
-  NEQ='!='
-  LT='<'
-  LTE='<='
-  GT='>'
-  GTE='>='
-
-
+    AND='&&'
+    OR='||'
+    NOT='!'
+    EQEQ='=='
+    NEQ='!='
+    LT='<'
+    LTE='<='
+    GT='>'
+    GTE='>='
   ]
     name(".*expr")='expression'
     extends(".*expr")=expr
 }
 
 antimonyFile ::= root_item *
-private root_item    ::= (module | module_body | model_annotation)
+private root_item    ::= (EOL | module | module_body | model_annotation)
 module       ::= MODEL model_id "(" ")" module_body? END {pin=1}
 model_id     ::= identifier
 module_body  ::= module_body_item +
