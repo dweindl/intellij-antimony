@@ -9,6 +9,8 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.github.dweindl.intellijantimony.psi.*;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiReference;
 
 public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements AntimonyIdentifier {
 
@@ -45,6 +47,21 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   @Override
   public PsiElement setName(String newName) {
     return AntimonyPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiReference getReference() {
+    return AntimonyPsiImplUtil.getReference(this);
+  }
+
+  @Override
+  public PsiReference @NotNull [] getReferences() {
+    return AntimonyPsiImplUtil.getReferences(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return AntimonyPsiImplUtil.getPresentation(this);
   }
 
 }

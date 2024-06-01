@@ -1,3 +1,4 @@
+// See https://github.com/JetBrains/Grammar-Kit/tree/master
 {
   parserClass="com.github.dweindl.intellijantimony.parser.AntimonyParser"
   parserUtilClass="com.github.dweindl.intellijantimony.parser.AntimonyParserUtil"
@@ -134,8 +135,7 @@ function_name ::= identifier
 identifier ::= ID {
     mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
     implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
-    // methods=[ getPresentation]
-    methods=[getNameIdentifier getName setName]
+    methods=[getNameIdentifier getName setName getReference getReferences getPresentation]
 }
 
 

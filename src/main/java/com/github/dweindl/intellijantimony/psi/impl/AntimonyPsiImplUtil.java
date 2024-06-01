@@ -1,35 +1,25 @@
 package com.github.dweindl.intellijantimony.psi.impl;
-// import com.github.dweindl.intellijantimony.psi.AntimonyProperty;
-import com.github.dweindl.intellijantimony.psi.*;
+
+import com.github.dweindl.intellijantimony.AntimonyReference;
+import com.github.dweindl.intellijantimony.psi.AntimonyElementFactory;
+import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
+import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 public class AntimonyPsiImplUtil {
-/*
-    public static String getKey(AntimonyProperty element) {
-        ASTNode keyNode = element.getNode().findChildByType(AntimonyTypes.KEY);
-        if (keyNode != null) {
-            // IMPORTANT: Convert embedded escaped spaces to simple spaces
-            return keyNode.getText().replaceAll("\\\\ ", " ");
-        } else {
-            return null;
-        }
-    }
 
-    public static String getValue(AntimonyProperty element) {
-        ASTNode valueNode = element.getNode().findChildByType(AntimonyTypes.VALUE);
-        if (valueNode != null) {
-            return valueNode.getText();
-        } else {
-            return null;
-        }
-    }
-*/
     public static String getName(AntimonyIdentifier element) {
         return element.getNode().getText();
     }
@@ -53,20 +43,40 @@ public class AntimonyPsiImplUtil {
             return null;
         }
     }
-/*
-    public static ItemPresentation getPresentation(final AntimonyProperty element) {
+
+    public static PsiReference getReference(AntimonyIdentifier element) {
+        return new AntimonyReference(element, new TextRange(0, element.getTextLength()));
+    }
+
+    public static PsiReference @NotNull [] getReferences(@NotNull AntimonyIdentifier element) {
+        return new PsiReference[]{new AntimonyReference(element, new TextRange(0, element.getTextLength()))};
+    }
+
+    public static ItemPresentation getPresentation(final AntimonyIdentifier element) {
+        // e.g. used for "choose declaration" popup
         return new ItemPresentation() {
             @Nullable
             @Override
             public String getPresentableText() {
-                return element.getKey();
+                return element.getName();
             }
 
             @Nullable
             @Override
             public String getLocationString() {
                 PsiFile containingFile = element.getContainingFile();
-                return containingFile == null ? null : containingFile.getName();
+                if (containingFile == null) {
+                    return null;
+                } else {
+                    Project project = element.getProject();
+                    PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
+                    Document document = psiDocumentManager.getDocument(containingFile);
+                    if (document == null) {
+                        return null;
+                    }
+                    int lineNumber = document.getLineNumber(element.getTextOffset()) + 1; // +1 because line numbers are 0-based
+                    return containingFile.getName() + " (line " + lineNumber + ")";
+                }
             }
 
             @Override
@@ -75,7 +85,4 @@ public class AntimonyPsiImplUtil {
             }
         };
     }
-
- */
-
 }
