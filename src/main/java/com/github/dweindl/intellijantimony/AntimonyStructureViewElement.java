@@ -1,9 +1,6 @@
 package com.github.dweindl.intellijantimony;
 
-import com.github.dweindl.intellijantimony.psi.AntimonyFile;
-import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
-import com.github.dweindl.intellijantimony.psi.AntimonyModule;
-import com.github.dweindl.intellijantimony.psi.AntimonyModuleBody;
+import com.github.dweindl.intellijantimony.psi.*;
 import com.github.dweindl.intellijantimony.psi.impl.AntimonyIdentifierImpl;
 import com.github.dweindl.intellijantimony.psi.impl.AntimonyModuleBodyImpl;
 import com.intellij.ide.projectView.PresentationData;
@@ -61,13 +58,18 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
         if (presentation != null)
             return presentation;
 
-        // try to find enclosing module
-        AntimonyModule module = PsiTreeUtil.getParentOfType(myElement, AntimonyModule.class);
-        // find its ID
-        AntimonyIdentifier id = module != null ? PsiTreeUtil.findChildOfType(module, AntimonyIdentifier.class) : null;
-        String moduleName = id != null ? id.getName() : "__main";
+        if (myElement instanceof AntimonyModuleBody) {
+            // try to find enclosing module
+            AntimonyModule module = PsiTreeUtil.getParentOfType(myElement, AntimonyModule.class);
+            // find its ID
+            AntimonyIdentifier id = module != null ? PsiTreeUtil.findChildOfType(module, AntimonyIdentifier.class) : null;
 
-        return new PresentationData(moduleName, null, null, null);
+            String moduleName = id != null ? id.getName() : "__main";
+            return new PresentationData(moduleName, null, null, null);
+        } else if (myElement instanceof AntimonyIdentifier) {
+            return new PresentationData(myElement.getName(), null, null, null);
+        }
+        return new PresentationData();
     }
 
     @Override
@@ -78,6 +80,18 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
             for (AntimonyModuleBody module : modules) {
                 treeElements.add(new AntimonyStructureViewElement((AntimonyModuleBodyImpl) module));
             }
+            return treeElements.toArray(new TreeElement[0]);
+        }
+        if (myElement instanceof AntimonyModuleBody) {
+            @NotNull Collection<AntimonyIdentifier> identifiers = PsiTreeUtil.findChildrenOfType(myElement, AntimonyIdentifier.class);
+            List<TreeElement> treeElements = new ArrayList<>(identifiers.size());
+            for (AntimonyIdentifier identifier : identifiers) {
+                // only show declarations, not references from expressions
+                if(PsiTreeUtil.getParentOfType(identifier, AntimonyExpr.class) != null)
+                    continue;
+                treeElements.add(new AntimonyStructureViewElement((AntimonyIdentifierImpl) identifier));
+            }
+            // TODO add unnamed reactions
             return treeElements.toArray(new TreeElement[0]);
         }
         return EMPTY_ARRAY;

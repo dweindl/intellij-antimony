@@ -31,13 +31,13 @@ public class AntimonyStructureViewModel extends StructureViewModelBase implement
 
     @Override
     public boolean isAlwaysLeaf(StructureViewTreeElement element) {
-        return element.getValue() instanceof AntimonyModuleBody;
+        return element.getValue() instanceof AntimonyIdentifier;
     }
 
     @Override
     protected Class<?> @NotNull [] getSuitableClasses() {
         // TODO functions?
-        return new Class[]{AntimonyModuleBody.class};
+        return new Class[]{AntimonyModuleBody.class, AntimonyIdentifier.class};
     }
 
 }
