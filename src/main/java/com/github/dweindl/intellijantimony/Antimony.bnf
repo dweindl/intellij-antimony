@@ -43,8 +43,7 @@
     EOL = "regexp:\s*(\n|\r\n)\s*"
     WHITE_SPACE="regexp:[ \t\x0B\f\r]+"
     LINE_COMMENT = "regexp:(//|#).*"
-    // ".|\n" does not match all characters, because "." excludes all Unicode newline chars - use "[^]" instead
-    BLOCK_COMMENT="regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
+    BLOCK_COMMENT="regexp:/\*([^*]|\*+[^*/])*(\*+/)"
     PLUS='+'
     MINUS='-'
     MUL='*'
