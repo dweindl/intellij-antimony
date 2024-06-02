@@ -17,7 +17,13 @@ public interface AntimonyModuleBody extends PsiElement {
   List<AntimonyEventDefinition> getEventDefinitionList();
 
   @NotNull
+  List<AntimonyFileImport> getFileImportList();
+
+  @NotNull
   List<AntimonyFunctionDefinition> getFunctionDefinitionList();
+
+  @NotNull
+  List<AntimonyModelImport> getModelImportList();
 
   @NotNull
   List<AntimonyModifierAnnotation> getModifierAnnotationList();

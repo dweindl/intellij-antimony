@@ -59,6 +59,9 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "notes"               { return NOTES; }
   "has"                 { return HAS; }
   "unit"                { return UNIT_KEYWORD; }
+  "import"              { return IMPORT; }
+  "timeconv"            { return TIMECONV; }
+  "extentconv"          { return EXTENTCONV; }
   "+"                   { return PLUS; }
   "-"                   { return MINUS; }
   "*"                   { return MUL; }

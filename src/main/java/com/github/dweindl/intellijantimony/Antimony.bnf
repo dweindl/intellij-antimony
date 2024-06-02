@@ -37,6 +37,9 @@
     NOTES='notes'
     HAS='has'
     UNIT_KEYWORD='unit'
+    IMPORT='import'
+    TIMECONV='timeconv'
+    EXTENTCONV='extentconv'
     EOL = "regexp:\s*(\n|\r\n)\s*"
     WHITE_SPACE="regexp:[ \t\x0B\f\r]+"
     LINE_COMMENT = "regexp:(//|#).*"
@@ -76,7 +79,7 @@
 
 antimonyFile ::= root_item * <<eof>>
 private root_item ::= (EOL | module | module_body | model_annotation)
-module       ::= MODEL model_id "(" ")" module_body? END {pin=1}
+module       ::= MODEL model_id ("(" function_signature_arguments? ")")? module_body? END {pin=1}
 model_id     ::= identifier
 module_body  ::= module_body_item +
 private module_body_item ::=
@@ -89,6 +92,8 @@ private module_body_item ::=
     | modifier_annotation
     | event_definition
     | function_definition
+    | model_import
+    | file_import
 
 
 declaration ::= declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
@@ -168,5 +173,16 @@ annotation_type ::= identifier "." identifier
 function_definition ::= "function" function_id "(" function_signature_arguments? ")" (SEMI | EOL) expr (SEMI | EOL) "end" {pin=1}
 function_signature_arguments ::= function_signature_argument ("," function_signature_argument)*
 function_signature_argument ::= identifier
+
+model_import ::= (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL)
+file_import ::= "import" filename (SEMI | EOL)
+filename ::= string
+
 // TODO predefined units
 // TODO predefined functions - min max exp...
+// TODO: dotted IDs for imports
+// TODO: conversion factors with "is" keyword
+// TODO: "delete" keyword
+// TODO: clearing rules
+// TODO: $ for const species
+// TODO: fbc, distrib, ...

@@ -600,6 +600,41 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // "import" filename (SEMI | EOL)
+  public static boolean file_import(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "file_import")) return false;
+    if (!nextTokenIs(b, IMPORT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IMPORT);
+    r = r && filename(b, l + 1);
+    r = r && file_import_2(b, l + 1);
+    exit_section_(b, m, FILE_IMPORT, r);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean file_import_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "file_import_2")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // string
+  public static boolean filename(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "filename")) return false;
+    if (!nextTokenIs(b, STRING)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING);
+    exit_section_(b, m, FILENAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // expr (',' expr)*
   public static boolean function_arguments(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_arguments")) return false;
@@ -940,6 +975,112 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL)
+  public static boolean model_import(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_import_0(b, l + 1);
+    r = r && model_id(b, l + 1);
+    r = r && model_import_2(b, l + 1);
+    r = r && model_import_3(b, l + 1);
+    r = r && model_import_4(b, l + 1);
+    r = r && model_import_5(b, l + 1);
+    exit_section_(b, m, MODEL_IMPORT, r);
+    return r;
+  }
+
+  // (model_id ":")?
+  private static boolean model_import_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_0")) return false;
+    model_import_0_0(b, l + 1);
+    return true;
+  }
+
+  // model_id ":"
+  private static boolean model_import_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_id(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ("(" function_signature_arguments? ")")?
+  private static boolean model_import_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_2")) return false;
+    model_import_2_0(b, l + 1);
+    return true;
+  }
+
+  // "(" function_signature_arguments? ")"
+  private static boolean model_import_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && model_import_2_0_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // function_signature_arguments?
+  private static boolean model_import_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_2_0_1")) return false;
+    function_signature_arguments(b, l + 1);
+    return true;
+  }
+
+  // ("," "timeconv" "=" expr)?
+  private static boolean model_import_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_3")) return false;
+    model_import_3_0(b, l + 1);
+    return true;
+  }
+
+  // "," "timeconv" "=" expr
+  private static boolean model_import_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMA, TIMECONV, EQ);
+    r = r && expr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ("," "extentconv" "=" expr)?
+  private static boolean model_import_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_4")) return false;
+    model_import_4_0(b, l + 1);
+    return true;
+  }
+
+  // "," "extentconv" "=" expr
+  private static boolean model_import_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMA, EXTENTCONV, EQ);
+    r = r && expr(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean model_import_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_import_5")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (modifier_id ":")? species_id ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
   public static boolean modifier_annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "modifier_annotation")) return false;
@@ -1005,7 +1146,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MODEL model_id "(" ")" module_body? END
+  // MODEL model_id ("(" function_signature_arguments? ")")? module_body? END
   public static boolean module(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module")) return false;
     if (!nextTokenIs(b, MODEL)) return false;
@@ -1014,16 +1155,42 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, MODEL);
     p = r; // pin = 1
     r = r && report_error_(b, model_id(b, l + 1));
-    r = p && report_error_(b, consumeTokens(b, -1, LPAREN, RPAREN)) && r;
-    r = p && report_error_(b, module_4(b, l + 1)) && r;
+    r = p && report_error_(b, module_2(b, l + 1)) && r;
+    r = p && report_error_(b, module_3(b, l + 1)) && r;
     r = p && consumeToken(b, END) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // ("(" function_signature_arguments? ")")?
+  private static boolean module_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_2")) return false;
+    module_2_0(b, l + 1);
+    return true;
+  }
+
+  // "(" function_signature_arguments? ")"
+  private static boolean module_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && module_2_0_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // function_signature_arguments?
+  private static boolean module_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_2_0_1")) return false;
+    function_signature_arguments(b, l + 1);
+    return true;
+  }
+
   // module_body?
-  private static boolean module_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_4")) return false;
+  private static boolean module_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_3")) return false;
     module_body(b, l + 1);
     return true;
   }
@@ -1054,6 +1221,8 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   //     | modifier_annotation
   //     | event_definition
   //     | function_definition
+  //     | model_import
+  //     | file_import
   static boolean module_body_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_body_item")) return false;
     boolean r;
@@ -1066,6 +1235,8 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     if (!r) r = modifier_annotation(b, l + 1);
     if (!r) r = event_definition(b, l + 1);
     if (!r) r = function_definition(b, l + 1);
+    if (!r) r = model_import(b, l + 1);
+    if (!r) r = file_import(b, l + 1);
     return r;
   }
 

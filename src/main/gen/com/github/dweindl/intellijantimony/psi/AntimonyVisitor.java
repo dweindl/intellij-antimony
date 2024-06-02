@@ -71,6 +71,14 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFileImport(@NotNull AntimonyFileImport o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFilename(@NotNull AntimonyFilename o) {
+    visitPsiElement(o);
+  }
+
   public void visitFunctionArguments(@NotNull AntimonyFunctionArguments o) {
     visitPsiElement(o);
   }
@@ -120,6 +128,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
   }
 
   public void visitModelId(@NotNull AntimonyModelId o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModelImport(@NotNull AntimonyModelImport o) {
     visitPsiElement(o);
   }
 

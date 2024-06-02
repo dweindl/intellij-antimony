@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyModuleImpl extends ASTWrapperPsiElement implements AntimonyModule {
+public class AntimonyModelImportImpl extends ASTWrapperPsiElement implements AntimonyModelImport {
 
-  public AntimonyModuleImpl(@NotNull ASTNode node) {
+  public AntimonyModelImportImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitModule(this);
+    visitor.visitModelImport(this);
   }
 
   @Override
@@ -28,27 +28,27 @@ public class AntimonyModuleImpl extends ASTWrapperPsiElement implements Antimony
   }
 
   @Override
+  @NotNull
+  public List<AntimonyExpr> getExprList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyExpr.class);
+  }
+
+  @Override
   @Nullable
   public AntimonyFunctionSignatureArguments getFunctionSignatureArguments() {
     return findChildByClass(AntimonyFunctionSignatureArguments.class);
   }
 
   @Override
-  @Nullable
-  public AntimonyModelId getModelId() {
-    return findChildByClass(AntimonyModelId.class);
-  }
-
-  @Override
-  @Nullable
-  public AntimonyModuleBody getModuleBody() {
-    return findChildByClass(AntimonyModuleBody.class);
-  }
-
-  @Override
   @NotNull
-  public PsiElement getModel() {
-    return findNotNullChildByType(MODEL);
+  public List<AntimonyModelId> getModelIdList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyModelId.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEol() {
+    return findChildByType(EOL);
   }
 
 }

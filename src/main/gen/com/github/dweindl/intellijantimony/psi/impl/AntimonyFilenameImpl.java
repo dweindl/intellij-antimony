@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyModuleImpl extends ASTWrapperPsiElement implements AntimonyModule {
+public class AntimonyFilenameImpl extends ASTWrapperPsiElement implements AntimonyFilename {
 
-  public AntimonyModuleImpl(@NotNull ASTNode node) {
+  public AntimonyFilenameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitModule(this);
+    visitor.visitFilename(this);
   }
 
   @Override
@@ -28,27 +28,9 @@ public class AntimonyModuleImpl extends ASTWrapperPsiElement implements Antimony
   }
 
   @Override
-  @Nullable
-  public AntimonyFunctionSignatureArguments getFunctionSignatureArguments() {
-    return findChildByClass(AntimonyFunctionSignatureArguments.class);
-  }
-
-  @Override
-  @Nullable
-  public AntimonyModelId getModelId() {
-    return findChildByClass(AntimonyModelId.class);
-  }
-
-  @Override
-  @Nullable
-  public AntimonyModuleBody getModuleBody() {
-    return findChildByClass(AntimonyModuleBody.class);
-  }
-
-  @Override
   @NotNull
-  public PsiElement getModel() {
-    return findNotNullChildByType(MODEL);
+  public PsiElement getString() {
+    return findNotNullChildByType(STRING);
   }
 
 }

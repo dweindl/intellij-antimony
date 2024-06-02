@@ -24,6 +24,8 @@ public interface AntimonyTypes {
   IElementType EVENT_DEFINITION = new AntimonyElementType("EVENT_DEFINITION");
   IElementType EVENT_TRIGGER = new AntimonyElementType("EVENT_TRIGGER");
   IElementType EXPR = new AntimonyElementType("EXPR");
+  IElementType FILENAME = new AntimonyElementType("FILENAME");
+  IElementType FILE_IMPORT = new AntimonyElementType("FILE_IMPORT");
   IElementType FUNCTION_ARGUMENTS = new AntimonyElementType("FUNCTION_ARGUMENTS");
   IElementType FUNCTION_CALL = new AntimonyElementType("FUNCTION_CALL");
   IElementType FUNCTION_DEFINITION = new AntimonyElementType("FUNCTION_DEFINITION");
@@ -37,6 +39,7 @@ public interface AntimonyTypes {
   IElementType LOGICAL_TERM = new AntimonyElementType("LOGICAL_TERM");
   IElementType MODEL_ANNOTATION = new AntimonyElementType("MODEL_ANNOTATION");
   IElementType MODEL_ID = new AntimonyElementType("MODEL_ID");
+  IElementType MODEL_IMPORT = new AntimonyElementType("MODEL_IMPORT");
   IElementType MODIFIER_ANNOTATION = new AntimonyElementType("MODIFIER_ANNOTATION");
   IElementType MODIFIER_ID = new AntimonyElementType("MODIFIER_ID");
   IElementType MODULE = new AntimonyElementType("MODULE");
@@ -81,6 +84,7 @@ public interface AntimonyTypes {
   IElementType EOL = new AntimonyTokenType("EOL");
   IElementType EQ = new AntimonyTokenType("=");
   IElementType EQEQ = new AntimonyTokenType("==");
+  IElementType EXTENTCONV = new AntimonyTokenType("extentconv");
   IElementType FLOAT = new AntimonyTokenType("FLOAT");
   IElementType FUNCTION = new AntimonyTokenType("function");
   IElementType GT = new AntimonyTokenType(">");
@@ -88,6 +92,7 @@ public interface AntimonyTypes {
   IElementType HAS = new AntimonyTokenType("has");
   IElementType ID = new AntimonyTokenType("ID");
   IElementType IDENTITY = new AntimonyTokenType("identity");
+  IElementType IMPORT = new AntimonyTokenType("import");
   IElementType IN = new AntimonyTokenType("in");
   IElementType INT = new AntimonyTokenType("INT");
   IElementType IS = new AntimonyTokenType("is");
@@ -112,6 +117,7 @@ public interface AntimonyTypes {
   IElementType SPECIES = new AntimonyTokenType("species");
   IElementType STRING = new AntimonyTokenType("string");
   IElementType SUBSTANCE_ONLY = new AntimonyTokenType("substanceOnly");
+  IElementType TIMECONV = new AntimonyTokenType("timeconv");
   IElementType UNIT_KEYWORD = new AntimonyTokenType("unit");
   IElementType VAR = new AntimonyTokenType("var");
 
@@ -163,6 +169,12 @@ public interface AntimonyTypes {
       else if (type == EVENT_TRIGGER) {
         return new AntimonyEventTriggerImpl(node);
       }
+      else if (type == FILENAME) {
+        return new AntimonyFilenameImpl(node);
+      }
+      else if (type == FILE_IMPORT) {
+        return new AntimonyFileImportImpl(node);
+      }
       else if (type == FUNCTION_ARGUMENTS) {
         return new AntimonyFunctionArgumentsImpl(node);
       }
@@ -201,6 +213,9 @@ public interface AntimonyTypes {
       }
       else if (type == MODEL_ID) {
         return new AntimonyModelIdImpl(node);
+      }
+      else if (type == MODEL_IMPORT) {
+        return new AntimonyModelImportImpl(node);
       }
       else if (type == MODIFIER_ANNOTATION) {
         return new AntimonyModifierAnnotationImpl(node);
