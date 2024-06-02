@@ -105,13 +105,13 @@ public class _AntimonyLexer implements FlexLexer {
     "\1\1\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
     "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
     "\1\26\1\27\1\30\15\26\1\1\1\31\1\0\1\32"+
-    "\1\0\1\33\2\0\1\34\2\0\1\35\1\36\1\37"+
-    "\1\40\1\41\7\26\1\42\1\43\10\26\1\44\2\0"+
-    "\1\45\2\26\1\46\2\26\1\47\11\26\1\50\1\51"+
-    "\11\26\1\52\3\26\1\53\1\26\1\54\4\26\1\55"+
-    "\1\26\1\56\7\26\1\57\7\26\1\60\4\26\1\61"+
-    "\1\62\1\26\1\63\4\26\1\64\1\26\1\65\2\26"+
-    "\1\66";
+    "\1\0\1\33\2\0\1\34\1\35\1\0\1\36\1\37"+
+    "\1\40\1\41\1\42\7\26\1\43\1\44\10\26\1\45"+
+    "\2\0\1\46\2\26\1\47\2\26\1\50\11\26\1\51"+
+    "\1\35\11\26\1\52\3\26\1\53\1\26\1\54\4\26"+
+    "\1\55\1\26\1\56\7\26\1\57\7\26\1\60\4\26"+
+    "\1\61\1\62\1\26\1\63\4\26\1\64\1\26\1\65"+
+    "\2\26\1\66";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[151];
@@ -150,7 +150,7 @@ public class _AntimonyLexer implements FlexLexer {
     "\0\u0330\0\u0891\0\u08c4\0\u08f7\0\u092a\0\u095d\0\u0990\0\u09c3"+
     "\0\u09f6\0\63\0\u0a29\0\u0a5c\0\u0a5c\0\u0a8f\0\u0ac2\0\u0330"+
     "\0\u0af5\0\u0b28\0\u0330\0\u0b5b\0\u0b8e\0\u0bc1\0\u0bf4\0\u0c27"+
-    "\0\u0c5a\0\u0c8d\0\u0cc0\0\u0cf3\0\u0330\0\u06c6\0\u0d26\0\u0d59"+
+    "\0\u0c5a\0\u0c8d\0\u0cc0\0\u0cf3\0\u0330\0\63\0\u0d26\0\u0d59"+
     "\0\u0d8c\0\u0dbf\0\u0df2\0\u0e25\0\u0e58\0\u0e8b\0\u0ebe\0\u0330"+
     "\0\u0ef1\0\u0f24\0\u0f57\0\u0330\0\u0f8a\0\u0330\0\u0fbd\0\u0ff0"+
     "\0\u1023\0\u1056\0\u0330\0\u1089\0\u0330\0\u10bc\0\u10ef\0\u1122"+
@@ -328,7 +328,8 @@ public class _AntimonyLexer implements FlexLexer {
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\5\1\1\11\2\1\6\11\4\1\1\11"+
     "\4\1\2\11\16\1\1\11\1\0\1\11\1\0\1\11"+
-    "\2\0\1\1\2\0\4\11\22\1\1\11\2\0\113\1";
+    "\2\0\2\1\1\0\4\11\22\1\1\11\2\0\21\1"+
+    "\1\11\71\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[151];
@@ -786,67 +787,67 @@ public class _AntimonyLexer implements FlexLexer {
           // fall through
           case 82: break;
           case 29:
-            { return ASSIGN_EQ;
+            { return BLOCK_COMMENT;
             }
           // fall through
           case 83: break;
           case 30:
-            { return LTE;
+            { return ASSIGN_EQ;
             }
           // fall through
           case 84: break;
           case 31:
-            { return EQEQ;
+            { return LTE;
             }
           // fall through
           case 85: break;
           case 32:
-            { return GTE;
+            { return EQEQ;
             }
           // fall through
           case 86: break;
           case 33:
-            { return AT;
+            { return GTE;
             }
           // fall through
           case 87: break;
           case 34:
-            { return IN;
+            { return AT;
             }
           // fall through
           case 88: break;
           case 35:
-            { return IS;
+            { return IN;
             }
           // fall through
           case 89: break;
           case 36:
-            { return OR;
+            { return IS;
             }
           // fall through
           case 90: break;
           case 37:
-            { return SCIENTIFIC;
+            { return OR;
             }
           // fall through
           case 91: break;
           case 38:
-            { return END;
+            { return SCIENTIFIC;
             }
           // fall through
           case 92: break;
           case 39:
-            { return HAS;
+            { return END;
             }
           // fall through
           case 93: break;
           case 40:
-            { return VAR;
+            { return HAS;
             }
           // fall through
           case 94: break;
           case 41:
-            { return BLOCK_COMMENT;
+            { return VAR;
             }
           // fall through
           case 95: break;
