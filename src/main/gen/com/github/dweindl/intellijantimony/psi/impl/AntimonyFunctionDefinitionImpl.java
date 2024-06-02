@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyFunctionCallImpl extends ASTWrapperPsiElement implements AntimonyFunctionCall {
+public class AntimonyFunctionDefinitionImpl extends ASTWrapperPsiElement implements AntimonyFunctionDefinition {
 
-  public AntimonyFunctionCallImpl(@NotNull ASTNode node) {
+  public AntimonyFunctionDefinitionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitFunctionCall(this);
+    visitor.visitFunctionDefinition(this);
   }
 
   @Override
@@ -29,14 +29,20 @@ public class AntimonyFunctionCallImpl extends ASTWrapperPsiElement implements An
 
   @Override
   @Nullable
-  public AntimonyFunctionArguments getFunctionArguments() {
-    return findChildByClass(AntimonyFunctionArguments.class);
+  public AntimonyExpr getExpr() {
+    return findChildByClass(AntimonyExpr.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyFunctionId getFunctionId() {
-    return findNotNullChildByClass(AntimonyFunctionId.class);
+    return findChildByClass(AntimonyFunctionId.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonyFunctionSignatureArguments getFunctionSignatureArguments() {
+    return findChildByClass(AntimonyFunctionSignatureArguments.class);
   }
 
 }

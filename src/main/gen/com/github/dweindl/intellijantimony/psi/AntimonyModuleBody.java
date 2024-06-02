@@ -20,6 +20,9 @@ public interface AntimonyModuleBody extends PsiElement {
   List<AntimonyEventDefinition> getEventDefinitionList();
 
   @NotNull
+  List<AntimonyFunctionDefinition> getFunctionDefinitionList();
+
+  @NotNull
   List<AntimonyModifierAnnotation> getModifierAnnotationList();
 
   @NotNull

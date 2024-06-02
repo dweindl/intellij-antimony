@@ -83,7 +83,19 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFunctionName(@NotNull AntimonyFunctionName o) {
+  public void visitFunctionDefinition(@NotNull AntimonyFunctionDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionId(@NotNull AntimonyFunctionId o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionSignatureArgument(@NotNull AntimonyFunctionSignatureArgument o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionSignatureArguments(@NotNull AntimonyFunctionSignatureArguments o) {
     visitPsiElement(o);
   }
 

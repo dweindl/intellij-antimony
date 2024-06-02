@@ -50,6 +50,7 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "species"             { return SPECIES; }
   "compartment"         { return COMPARTMENT; }
   "substanceOnly"       { return SUBSTANCE_ONLY; }
+  "function"            { return FUNCTION; }
   "is"                  { return IS; }
   "in"                  { return IN; }
   "at"                  { return AT; }

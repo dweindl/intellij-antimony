@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AntimonyFunctionCall extends PsiElement {
+public interface AntimonyFunctionDefinition extends PsiElement {
 
   @Nullable
-  AntimonyFunctionArguments getFunctionArguments();
+  AntimonyExpr getExpr();
 
-  @NotNull
+  @Nullable
   AntimonyFunctionId getFunctionId();
+
+  @Nullable
+  AntimonyFunctionSignatureArguments getFunctionSignatureArguments();
 
 }

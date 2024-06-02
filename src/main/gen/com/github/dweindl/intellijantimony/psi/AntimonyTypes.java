@@ -27,7 +27,10 @@ public interface AntimonyTypes {
   IElementType EXPR = new AntimonyElementType("EXPR");
   IElementType FUNCTION_ARGUMENTS = new AntimonyElementType("FUNCTION_ARGUMENTS");
   IElementType FUNCTION_CALL = new AntimonyElementType("FUNCTION_CALL");
-  IElementType FUNCTION_NAME = new AntimonyElementType("FUNCTION_NAME");
+  IElementType FUNCTION_DEFINITION = new AntimonyElementType("FUNCTION_DEFINITION");
+  IElementType FUNCTION_ID = new AntimonyElementType("FUNCTION_ID");
+  IElementType FUNCTION_SIGNATURE_ARGUMENT = new AntimonyElementType("FUNCTION_SIGNATURE_ARGUMENT");
+  IElementType FUNCTION_SIGNATURE_ARGUMENTS = new AntimonyElementType("FUNCTION_SIGNATURE_ARGUMENTS");
   IElementType IDENTIFIER = new AntimonyElementType("IDENTIFIER");
   IElementType JUST_DECLARATION = new AntimonyElementType("JUST_DECLARATION");
   IElementType LITERAL_EXPR = new AntimonyElementType("LITERAL_EXPR");
@@ -80,6 +83,7 @@ public interface AntimonyTypes {
   IElementType EQ = new AntimonyTokenType("=");
   IElementType EQEQ = new AntimonyTokenType("==");
   IElementType FLOAT = new AntimonyTokenType("FLOAT");
+  IElementType FUNCTION = new AntimonyTokenType("function");
   IElementType GT = new AntimonyTokenType(">");
   IElementType GTE = new AntimonyTokenType(">=");
   IElementType HAS = new AntimonyTokenType("has");
@@ -167,8 +171,17 @@ public interface AntimonyTypes {
       else if (type == FUNCTION_CALL) {
         return new AntimonyFunctionCallImpl(node);
       }
-      else if (type == FUNCTION_NAME) {
-        return new AntimonyFunctionNameImpl(node);
+      else if (type == FUNCTION_DEFINITION) {
+        return new AntimonyFunctionDefinitionImpl(node);
+      }
+      else if (type == FUNCTION_ID) {
+        return new AntimonyFunctionIdImpl(node);
+      }
+      else if (type == FUNCTION_SIGNATURE_ARGUMENT) {
+        return new AntimonyFunctionSignatureArgumentImpl(node);
+      }
+      else if (type == FUNCTION_SIGNATURE_ARGUMENTS) {
+        return new AntimonyFunctionSignatureArgumentsImpl(node);
       }
       else if (type == IDENTIFIER) {
         return new AntimonyIdentifierImpl(node);

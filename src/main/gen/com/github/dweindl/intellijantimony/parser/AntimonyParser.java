@@ -615,13 +615,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // function_name '(' function_arguments? ')'
+  // function_id '(' function_arguments? ')'
   public static boolean function_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_call")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_CALL, null);
-    r = function_name(b, l + 1);
+    r = function_id(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     p = r; // pin = 2
     r = r && report_error_(b, function_call_2(b, l + 1));
@@ -638,14 +638,107 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // "function" function_id "(" function_signature_arguments? ")" (SEMI | EOL) expr (SEMI | EOL) "end"
+  public static boolean function_definition(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition")) return false;
+    if (!nextTokenIs(b, FUNCTION)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FUNCTION_DEFINITION, null);
+    r = consumeToken(b, FUNCTION);
+    p = r; // pin = 1
+    r = r && report_error_(b, function_id(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, LPAREN)) && r;
+    r = p && report_error_(b, function_definition_3(b, l + 1)) && r;
+    r = p && report_error_(b, consumeToken(b, RPAREN)) && r;
+    r = p && report_error_(b, function_definition_5(b, l + 1)) && r;
+    r = p && report_error_(b, expr(b, l + 1)) && r;
+    r = p && report_error_(b, function_definition_7(b, l + 1)) && r;
+    r = p && consumeToken(b, END) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // function_signature_arguments?
+  private static boolean function_definition_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_3")) return false;
+    function_signature_arguments(b, l + 1);
+    return true;
+  }
+
+  // SEMI | EOL
+  private static boolean function_definition_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_5")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean function_definition_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_definition_7")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
   // identifier
-  public static boolean function_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_name")) return false;
+  public static boolean function_id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_id")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = identifier(b, l + 1);
-    exit_section_(b, m, FUNCTION_NAME, r);
+    exit_section_(b, m, FUNCTION_ID, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier
+  public static boolean function_signature_argument(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_argument")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    exit_section_(b, m, FUNCTION_SIGNATURE_ARGUMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // function_signature_argument ("," function_signature_argument)*
+  public static boolean function_signature_arguments(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_arguments")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = function_signature_argument(b, l + 1);
+    r = r && function_signature_arguments_1(b, l + 1);
+    exit_section_(b, m, FUNCTION_SIGNATURE_ARGUMENTS, r);
+    return r;
+  }
+
+  // ("," function_signature_argument)*
+  private static boolean function_signature_arguments_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_arguments_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!function_signature_arguments_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_signature_arguments_1", c)) break;
+    }
+    return true;
+  }
+
+  // "," function_signature_argument
+  private static boolean function_signature_arguments_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_arguments_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && function_signature_argument(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -940,6 +1033,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   //     | unit_definition
   //     | modifier_annotation
   //     | event_definition
+  //     | function_definition
   static boolean module_body_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_body_item")) return false;
     boolean r;
@@ -952,6 +1046,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     if (!r) r = unit_definition(b, l + 1);
     if (!r) r = modifier_annotation(b, l + 1);
     if (!r) r = event_definition(b, l + 1);
+    if (!r) r = function_definition(b, l + 1);
     return r;
   }
 

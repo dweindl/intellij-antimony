@@ -16,7 +16,6 @@
 
   psiImplUtilClass="com.github.dweindl.intellijantimony.psi.impl.AntimonyPsiImplUtil"
 
-
   tokens=[
     SEMI=';'
     COLON=':'
@@ -29,6 +28,7 @@
     SPECIES='species'
     COMPARTMENT='compartment'
     SUBSTANCE_ONLY='substanceOnly'
+    FUNCTION='function'
     IS='is'
     IN='in'
     AT='at'
@@ -73,7 +73,7 @@
 }
 
 antimonyFile ::= root_item * <<eof>>
-private root_item    ::= (EOL | module | module_body | model_annotation)
+private root_item ::= (EOL | module | module_body | model_annotation)
 module       ::= MODEL model_id "(" ")" module_body? END {pin=1}
 model_id     ::= identifier
 module_body  ::= module_body_item +
@@ -87,6 +87,7 @@ private module_body_item ::=
     | unit_definition
     | modifier_annotation
     | event_definition
+    | function_definition
 
 
 declaration ::= declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
@@ -133,9 +134,9 @@ paren_expr ::= ('-(' | '(') expr ')' {pin=1}
 ref_expr ::= identifier
 literal_expr ::= number_literal unit ?
 unit ::= identifier
-function_call ::= function_name '(' function_arguments? ')' {pin=2}
+function_call ::= function_id '(' function_arguments? ')' {pin=2}
 function_arguments ::= expr (',' expr)*
-function_name ::= identifier
+function_id ::= identifier
 
 identifier ::= ID {
     mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
@@ -163,5 +164,9 @@ event_assignment ::= identifier EQ expr
 
 model_annotation ::= model_id annotation_type string (SEMI | EOL)
 annotation_type ::= identifier "." identifier
+
+function_definition ::= "function" function_id "(" function_signature_arguments? ")" (SEMI | EOL) expr (SEMI | EOL) "end" {pin=1}
+function_signature_arguments ::= function_signature_argument ("," function_signature_argument)*
+function_signature_argument ::= identifier
 // TODO predefined units
 // TODO predefined functions - min max exp...
