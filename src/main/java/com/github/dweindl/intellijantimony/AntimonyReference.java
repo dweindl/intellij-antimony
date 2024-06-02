@@ -42,7 +42,15 @@ public final class AntimonyReference extends PsiReferenceBase<PsiElement> implem
     @Override
     public PsiElement resolve() {
         ResolveResult[] resolveResults = multiResolve(false);
-        return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
+        /*
+        What is to be considered the declaration in Antimony?
+        For now, we use the first occurrence of the identifier in the file?
+        */
+        // This will show the "Choose declaration" popup, but it will break "find usages"
+        // return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
+
+        // "Find usages" works only if resolve() returns a single element (independent of multiResolve())
+        return resolveResults.length >= 1 ? resolveResults[0].getElement() : null;
     }
 
     @Override
