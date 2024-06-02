@@ -51,6 +51,8 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "compartment"         { return COMPARTMENT; }
   "substanceOnly"       { return SUBSTANCE_ONLY; }
   "function"            { return FUNCTION; }
+  "identity"            { return IDENTITY; }
+  "part"                { return PART; }
   "is"                  { return IS; }
   "in"                  { return IN; }
   "at"                  { return AT; }

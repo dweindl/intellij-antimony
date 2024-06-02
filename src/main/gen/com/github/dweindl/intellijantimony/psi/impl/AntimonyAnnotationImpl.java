@@ -33,16 +33,4 @@ public class AntimonyAnnotationImpl extends ASTWrapperPsiElement implements Anti
     return findNotNullChildByClass(AntimonyIdentifier.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getEol() {
-    return findChildByType(EOL);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
-  }
-
 }

@@ -40,6 +40,12 @@ public class AntimonyModifierAnnotationImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
+  @NotNull
+  public AntimonySpeciesId getSpeciesId() {
+    return findNotNullChildByClass(AntimonySpeciesId.class);
+  }
+
+  @Override
   @Nullable
   public PsiElement getEol() {
     return findChildByType(EOL);

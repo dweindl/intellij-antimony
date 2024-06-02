@@ -10,7 +10,6 @@ public interface AntimonyTypes {
 
   IElementType AND_EXPR = new AntimonyElementType("AND_EXPR");
   IElementType ANNOTATION = new AntimonyElementType("ANNOTATION");
-  IElementType ANNOTATION_IS = new AntimonyElementType("ANNOTATION_IS");
   IElementType ANNOTATION_TYPE = new AntimonyElementType("ANNOTATION_TYPE");
   IElementType ARITHMETIC_EXPR = new AntimonyElementType("ARITHMETIC_EXPR");
   IElementType ASSIGNMENT = new AntimonyElementType("ASSIGNMENT");
@@ -88,6 +87,7 @@ public interface AntimonyTypes {
   IElementType GTE = new AntimonyTokenType(">=");
   IElementType HAS = new AntimonyTokenType("has");
   IElementType ID = new AntimonyTokenType("ID");
+  IElementType IDENTITY = new AntimonyTokenType("identity");
   IElementType IN = new AntimonyTokenType("in");
   IElementType INT = new AntimonyTokenType("INT");
   IElementType IS = new AntimonyTokenType("is");
@@ -102,6 +102,7 @@ public interface AntimonyTypes {
   IElementType NOT = new AntimonyTokenType("!");
   IElementType NOTES = new AntimonyTokenType("notes");
   IElementType OR = new AntimonyTokenType("||");
+  IElementType PART = new AntimonyTokenType("part");
   IElementType PLUS = new AntimonyTokenType("+");
   IElementType POW = new AntimonyTokenType("^");
   IElementType PRIME = new AntimonyTokenType("'");
@@ -122,9 +123,6 @@ public interface AntimonyTypes {
       }
       else if (type == ANNOTATION) {
         return new AntimonyAnnotationImpl(node);
-      }
-      else if (type == ANNOTATION_IS) {
-        return new AntimonyAnnotationIsImpl(node);
       }
       else if (type == ANNOTATION_TYPE) {
         return new AntimonyAnnotationTypeImpl(node);

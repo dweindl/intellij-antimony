@@ -29,6 +29,8 @@
     COMPARTMENT='compartment'
     SUBSTANCE_ONLY='substanceOnly'
     FUNCTION='function'
+    IDENTITY='identity'
+    PART='part'
     IS='is'
     IN='in'
     AT='at'
@@ -82,7 +84,6 @@ private module_body_item ::=
     | annotation
     | reaction
     | unit_annotation
-    | annotation_is
     | declaration
     | unit_definition
     | modifier_annotation
@@ -104,12 +105,11 @@ assignment_rule ::= identifier ("in" compartment_id)? ":=" expr {pin=3}
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 compartment_id ::= identifier
-annotation ::= identifier "notes" string (SEMI | EOL) {pin=2}
+annotation ::= identifier ("notes" | "is" | "identity" | "part") string ("," EOL? string)* (SEMI | EOL) {pin=2}
 unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}
-annotation_is::=identifier "is" string (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
 unit_definition ::= "unit" identifier EQ expr (SEMI | EOL) {pin=1}
-modifier_annotation ::= (modifier_id ":")? ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
+modifier_annotation ::= (modifier_id ":")? species_id ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
 modifier_id ::= identifier
 
 

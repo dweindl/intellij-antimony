@@ -35,12 +35,6 @@ public class AntimonyModuleBodyImpl extends ASTWrapperPsiElement implements Anti
 
   @Override
   @NotNull
-  public List<AntimonyAnnotationIs> getAnnotationIsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyAnnotationIs.class);
-  }
-
-  @Override
-  @NotNull
   public List<AntimonyDeclaration> getDeclarationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyDeclaration.class);
   }

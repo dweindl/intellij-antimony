@@ -15,10 +15,6 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAnnotationIs(@NotNull AntimonyAnnotationIs o) {
-    visitPsiElement(o);
-  }
-
   public void visitAnnotationType(@NotNull AntimonyAnnotationType o) {
     visitPsiElement(o);
   }

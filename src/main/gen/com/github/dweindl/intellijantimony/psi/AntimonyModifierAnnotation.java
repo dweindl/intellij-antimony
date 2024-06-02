@@ -13,6 +13,9 @@ public interface AntimonyModifierAnnotation extends PsiElement {
   @NotNull
   AntimonyReactionId getReactionId();
 
+  @NotNull
+  AntimonySpeciesId getSpeciesId();
+
   @Nullable
   PsiElement getEol();
 
