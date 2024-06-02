@@ -33,4 +33,10 @@ public class AntimonyAnnotationImpl extends ASTWrapperPsiElement implements Anti
     return findNotNullChildByClass(AntimonyIdentifier.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getMultilineString() {
+    return findChildByType(MULTILINE_STRING);
+  }
+
 }

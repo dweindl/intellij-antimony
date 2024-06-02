@@ -103,6 +103,7 @@ public interface AntimonyTypes {
   IElementType MINUS = new AntimonyTokenType("-");
   IElementType MODEL = new AntimonyTokenType("MODEL");
   IElementType MUL = new AntimonyTokenType("*");
+  IElementType MULTILINE_STRING = new AntimonyTokenType("MULTILINE_STRING");
   IElementType NEQ = new AntimonyTokenType("!=");
   IElementType NOT = new AntimonyTokenType("!");
   IElementType NOTES = new AntimonyTokenType("notes");

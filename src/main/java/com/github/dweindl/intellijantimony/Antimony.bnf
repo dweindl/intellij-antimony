@@ -154,7 +154,6 @@ reaction ::= (reaction_id ":")? reactants? ("->"|"=>") products? SEMI rate_expr 
 reaction_id ::= identifier
 reactants ::= list_of_reactants
 products::= list_of_reactants
-// TODO allow empty list
 private list_of_reactants ::= species_expr (PLUS species_expr)*
 species_expr ::= stoichiometry? "$"? species_id
 stoichiometry ::= number_literal
@@ -188,3 +187,4 @@ filename ::= string
 // TODO: fbc, distrib, ...
 // TODO: ``` for multiline strings
 // TODO: "formula" keyword
+// TODO: model annotations following "model" keyword
