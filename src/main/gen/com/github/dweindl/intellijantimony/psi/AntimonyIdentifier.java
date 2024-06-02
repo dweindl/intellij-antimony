@@ -6,6 +6,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
+import javax.swing.Icon;
 
 public interface AntimonyIdentifier extends AntimonyNamedElement {
 
@@ -23,5 +24,7 @@ public interface AntimonyIdentifier extends AntimonyNamedElement {
   PsiReference @NotNull [] getReferences();
 
   ItemPresentation getPresentation();
+
+  @Nullable Icon getIcon(int flags);
 
 }

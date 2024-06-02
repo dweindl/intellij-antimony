@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 public class IconCreator {
 
-    public Icon createIconFromString(String text) {
+    public static Icon createIconFromString(String text) {
         int width = 16;
         int height = 16;
 

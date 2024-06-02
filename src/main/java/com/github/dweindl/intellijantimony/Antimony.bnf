@@ -140,7 +140,7 @@ function_name ::= identifier
 identifier ::= ID {
     mixin="com.github.dweindl.intellijantimony.psi.impl.AntimonyNamedElementImpl"
     implements="com.github.dweindl.intellijantimony.psi.AntimonyNamedElement"
-    methods=[getNameIdentifier getName setName getReference getReferences getPresentation]
+    methods=[getNameIdentifier getName setName getReference getReferences getPresentation getIcon]
 }
 
 

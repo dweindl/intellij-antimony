@@ -11,6 +11,7 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.github.dweindl.intellijantimony.psi.*;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
+import javax.swing.Icon;
 
 public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements AntimonyIdentifier {
 
@@ -62,6 +63,11 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   @Override
   public ItemPresentation getPresentation() {
     return AntimonyPsiImplUtil.getPresentation(this);
+  }
+
+  @Override
+  public @Nullable Icon getIcon(int flags) {
+    return AntimonyPsiImplUtil.getIcon(this, flags);
   }
 
 }

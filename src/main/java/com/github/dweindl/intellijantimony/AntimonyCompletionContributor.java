@@ -38,7 +38,9 @@ final class AntimonyCompletionContributor extends CompletionContributor {
 
                         // For each AntimonyIdentifier, add a completion option to the resultSet
                         for (PsiElement identifier : identifiers) {
-                            resultSet.addElement(LookupElementBuilder.create(identifier.getText()));
+                            resultSet.addElement(LookupElementBuilder.create(identifier.getText()).withIcon(
+                                    AntimonyIcons.getIcon(AntimonyUtil.getModelEntityType((AntimonyIdentifier) identifier))
+                            ));
                         }
 
                         // If a unit is expected, suggest predefined units
@@ -47,8 +49,7 @@ final class AntimonyCompletionContributor extends CompletionContributor {
                         if (parent != null) {
                             PsiElement grandParent = parent.getParent();
                             if (grandParent != null && grandParent.getNode().getElementType() == AntimonyTypes.UNIT) {
-                                IconCreator iconCreator = new IconCreator();
-                                Icon icon = iconCreator.createIconFromString("U");
+                                Icon icon = AntimonyIcons.getIcon(AntimonyUtil.ModelEntity.UNIT);
 
                                 for (String unit : predefined_units_sbml) {
                                     resultSet.addElement(LookupElementBuilder.create(unit)

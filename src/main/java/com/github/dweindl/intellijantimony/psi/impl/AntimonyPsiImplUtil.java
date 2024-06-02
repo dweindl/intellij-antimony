@@ -1,6 +1,8 @@
 package com.github.dweindl.intellijantimony.psi.impl;
 
+import com.github.dweindl.intellijantimony.AntimonyIcons;
 import com.github.dweindl.intellijantimony.AntimonyReference;
+import com.github.dweindl.intellijantimony.AntimonyUtil;
 import com.github.dweindl.intellijantimony.psi.AntimonyElementFactory;
 import com.github.dweindl.intellijantimony.psi.AntimonyIdentifier;
 import com.github.dweindl.intellijantimony.psi.AntimonyTypes;
@@ -50,6 +52,10 @@ public class AntimonyPsiImplUtil {
 
     public static PsiReference @NotNull [] getReferences(@NotNull AntimonyIdentifier element) {
         return new PsiReference[]{new AntimonyReference(element, new TextRange(0, element.getTextLength()))};
+    }
+
+    public static @Nullable Icon getIcon(final AntimonyIdentifier element, int flags) {
+        return AntimonyIcons.getIcon(AntimonyUtil.getModelEntityType(element));
     }
 
     public static ItemPresentation getPresentation(final AntimonyIdentifier element) {
