@@ -29,7 +29,6 @@
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
         <colorSettingsPage
                 implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
-        <!-- TODO: code folding -->
         <lang.commenter
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyCommenter"/>
@@ -37,6 +36,11 @@
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyCompletionContributor"/>
         <renamePsiElementProcessor implementation="com.github.dweindl.intellijantimony.AntimonyRenameProcessor"/>
+        <lang.findUsagesProvider
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyFindUsagesProvider"/>
+        <!-- TODO: code folding -->
+        <!-- TODO: icon provider -->
     </extensions>
 
     <applicationListeners>
