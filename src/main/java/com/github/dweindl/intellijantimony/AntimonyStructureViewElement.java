@@ -89,6 +89,10 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
                 // only show declarations, not references from expressions
                 if(PsiTreeUtil.getParentOfType(identifier, AntimonyExpr.class) != null)
                     continue;
+                // skip units from "a has b" declarations
+                if(PsiTreeUtil.getParentOfType(identifier, AntimonyUnit.class) != null
+                        && PsiTreeUtil.getParentOfType(identifier, AntimonyUnitAnnotation.class) != null)
+                    continue;
                 treeElements.add(new AntimonyStructureViewElement((AntimonyIdentifierImpl) identifier));
             }
             // TODO add unnamed reactions
