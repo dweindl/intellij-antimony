@@ -39,6 +39,9 @@
         <lang.findUsagesProvider
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijantimony.AntimonyFindUsagesProvider"/>
+        <lang.psiStructureViewFactory
+                language="Antimony"
+                implementationClass="com.github.dweindl.intellijantimony.AntimonyStructureViewFactory"/>
         <!-- TODO: code folding -->
         <!-- TODO: icon provider -->
     </extensions>
