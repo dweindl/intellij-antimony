@@ -5,12 +5,13 @@ import com.github.dweindl.intellijantimony.AntimonyFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.util.PsiTreeUtil;
 
 public class AntimonyElementFactory {
 
     public static AntimonyIdentifier createIdentifier(Project project, String name) {
-        final AntimonyFile file = createFile(project, name + " = 0");
-        return (AntimonyIdentifier) file.getFirstChild().getFirstChild().getFirstChild().getFirstChild();
+        final AntimonyFile file = createFile(project, name + " = 0;");
+        return PsiTreeUtil.findChildOfType(file, AntimonyIdentifier.class);
     }
 
     public static AntimonyFile createFile(Project project, String text) {
