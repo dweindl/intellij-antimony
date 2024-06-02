@@ -43,15 +43,15 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCompartmentDeclarationPrefix(@NotNull AntimonyCompartmentDeclarationPrefix o) {
+    visitPsiElement(o);
+  }
+
   public void visitCompartmentId(@NotNull AntimonyCompartmentId o) {
     visitPsiElement(o);
   }
 
   public void visitDeclaration(@NotNull AntimonyDeclaration o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDeclarationBody(@NotNull AntimonyDeclarationBody o) {
     visitPsiElement(o);
   }
 
@@ -89,6 +89,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
 
   public void visitIdentifier(@NotNull AntimonyIdentifier o) {
     visitNamedElement(o);
+  }
+
+  public void visitJustDeclaration(@NotNull AntimonyJustDeclaration o) {
+    visitPsiElement(o);
   }
 
   public void visitLiteralExpr(@NotNull AntimonyLiteralExpr o) {
@@ -143,6 +147,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitExpr(o);
   }
 
+  public void visitOtherDeclarationPrefix(@NotNull AntimonyOtherDeclarationPrefix o) {
+    visitPsiElement(o);
+  }
+
   public void visitParenExpr(@NotNull AntimonyParenExpr o) {
     visitExpr(o);
   }
@@ -181,6 +189,14 @@ public class AntimonyVisitor extends PsiElementVisitor {
 
   public void visitRefExpr(@NotNull AntimonyRefExpr o) {
     visitExpr(o);
+  }
+
+  public void visitRuleOrAssignment(@NotNull AntimonyRuleOrAssignment o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSpeciesDeclarationPrefix(@NotNull AntimonySpeciesDeclarationPrefix o) {
+    visitPsiElement(o);
   }
 
   public void visitSpeciesExpr(@NotNull AntimonySpeciesExpr o) {

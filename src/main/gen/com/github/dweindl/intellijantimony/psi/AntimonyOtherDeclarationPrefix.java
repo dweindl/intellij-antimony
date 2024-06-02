@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AntimonyAssignment extends PsiElement {
-
-  @Nullable
-  AntimonyCompartmentId getCompartmentId();
-
-  @Nullable
-  AntimonyExpr getExpr();
-
-  @NotNull
-  AntimonyIdentifier getIdentifier();
+public interface AntimonyOtherDeclarationPrefix extends PsiElement {
 
 }

@@ -28,6 +28,7 @@
     CONST='const'
     SPECIES='species'
     COMPARTMENT='compartment'
+    SUBSTANCE_ONLY='substanceOnly'
     IS='is'
     IN='in'
     AT='at'
@@ -79,9 +80,6 @@ module_body  ::= module_body_item +
 private module_body_item ::=
     EOL
     | annotation
-    | assignment
-    | rate_rule
-    | assignment_rule
     | reaction
     | unit_annotation
     | annotation_is
@@ -90,13 +88,20 @@ private module_body_item ::=
     | modifier_annotation
     | event_definition
 
-rate_rule ::= identifier "'" EQ expr (SEMI | EOL | LINE_COMMENT) {pin=2}
-assignment ::= declaration_body "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
-assignment_rule ::= declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
+
+declaration ::= declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
+private declaration_prefix ::= species_declaration_prefix | compartment_declaration_prefix | other_declaration_prefix
+species_declaration_prefix ::= ("substanceOnly" "species") | (("var" | "const")? "species")
+compartment_declaration_prefix ::=  ("var" | "const")? "compartment"
+other_declaration_prefix ::=  ("var" | "const")?
+
+rule_or_assignment ::= rate_rule | assignment | assignment_rule | just_declaration
+rate_rule ::= identifier "'" EQ expr {pin=2}
+assignment ::= identifier ("in" compartment_id)? "=" expr {pin=3}
+just_declaration ::= identifier ("in" compartment_id)?
+assignment_rule ::= identifier ("in" compartment_id)? ":=" expr {pin=3}
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
-declaration ::= declaration_body (SEMI | EOL | LINE_COMMENT)
-declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? {pin=1}
 compartment_id ::= identifier
 annotation ::= identifier "notes" string (SEMI | EOL) {pin=2}
 unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}

@@ -13,10 +13,4 @@ public interface AntimonyRateRule extends PsiElement {
   @NotNull
   AntimonyIdentifier getIdentifier();
 
-  @Nullable
-  PsiElement getEol();
-
-  @Nullable
-  PsiElement getLineComment();
-
 }

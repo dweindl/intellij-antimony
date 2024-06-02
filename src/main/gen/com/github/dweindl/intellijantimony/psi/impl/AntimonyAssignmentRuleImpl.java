@@ -28,15 +28,21 @@ public class AntimonyAssignmentRuleImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @NotNull
-  public AntimonyDeclarationBody getDeclarationBody() {
-    return findNotNullChildByClass(AntimonyDeclarationBody.class);
+  @Nullable
+  public AntimonyCompartmentId getCompartmentId() {
+    return findChildByClass(AntimonyCompartmentId.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonyExpr getExpr() {
+    return findChildByClass(AntimonyExpr.class);
   }
 
   @Override
   @NotNull
-  public AntimonyExpr getExpr() {
-    return findNotNullChildByClass(AntimonyExpr.class);
+  public AntimonyIdentifier getIdentifier() {
+    return findNotNullChildByClass(AntimonyIdentifier.class);
   }
 
 }

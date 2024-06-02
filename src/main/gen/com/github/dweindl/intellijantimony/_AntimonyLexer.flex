@@ -49,6 +49,7 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "const"               { return CONST; }
   "species"             { return SPECIES; }
   "compartment"         { return COMPARTMENT; }
+  "substanceOnly"       { return SUBSTANCE_ONLY; }
   "is"                  { return IS; }
   "in"                  { return IN; }
   "at"                  { return AT; }

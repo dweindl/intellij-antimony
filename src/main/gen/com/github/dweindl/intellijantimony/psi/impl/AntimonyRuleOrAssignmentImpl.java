@@ -11,14 +11,14 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyRateRuleImpl extends ASTWrapperPsiElement implements AntimonyRateRule {
+public class AntimonyRuleOrAssignmentImpl extends ASTWrapperPsiElement implements AntimonyRuleOrAssignment {
 
-  public AntimonyRateRuleImpl(@NotNull ASTNode node) {
+  public AntimonyRuleOrAssignmentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitRateRule(this);
+    visitor.visitRuleOrAssignment(this);
   }
 
   @Override
@@ -29,14 +29,26 @@ public class AntimonyRateRuleImpl extends ASTWrapperPsiElement implements Antimo
 
   @Override
   @Nullable
-  public AntimonyExpr getExpr() {
-    return findChildByClass(AntimonyExpr.class);
+  public AntimonyAssignment getAssignment() {
+    return findChildByClass(AntimonyAssignment.class);
   }
 
   @Override
-  @NotNull
-  public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
+  @Nullable
+  public AntimonyAssignmentRule getAssignmentRule() {
+    return findChildByClass(AntimonyAssignmentRule.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonyJustDeclaration getJustDeclaration() {
+    return findChildByClass(AntimonyJustDeclaration.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonyRateRule getRateRule() {
+    return findChildByClass(AntimonyRateRule.class);
   }
 
 }

@@ -11,32 +11,20 @@ import static com.github.dweindl.intellijantimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijantimony.psi.*;
 
-public class AntimonyRateRuleImpl extends ASTWrapperPsiElement implements AntimonyRateRule {
+public class AntimonyOtherDeclarationPrefixImpl extends ASTWrapperPsiElement implements AntimonyOtherDeclarationPrefix {
 
-  public AntimonyRateRuleImpl(@NotNull ASTNode node) {
+  public AntimonyOtherDeclarationPrefixImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitRateRule(this);
+    visitor.visitOtherDeclarationPrefix(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AntimonyVisitor) accept((AntimonyVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public AntimonyExpr getExpr() {
-    return findChildByClass(AntimonyExpr.class);
-  }
-
-  @Override
-  @NotNull
-  public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
   }
 
 }

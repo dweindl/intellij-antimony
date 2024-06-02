@@ -7,8 +7,17 @@ import com.intellij.psi.PsiElement;
 
 public interface AntimonyDeclaration extends PsiElement {
 
+  @Nullable
+  AntimonyCompartmentDeclarationPrefix getCompartmentDeclarationPrefix();
+
+  @Nullable
+  AntimonyOtherDeclarationPrefix getOtherDeclarationPrefix();
+
   @NotNull
-  AntimonyDeclarationBody getDeclarationBody();
+  List<AntimonyRuleOrAssignment> getRuleOrAssignmentList();
+
+  @Nullable
+  AntimonySpeciesDeclarationPrefix getSpeciesDeclarationPrefix();
 
   @Nullable
   PsiElement getEol();

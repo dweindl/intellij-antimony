@@ -28,9 +28,27 @@ public class AntimonyDeclarationImpl extends ASTWrapperPsiElement implements Ant
   }
 
   @Override
+  @Nullable
+  public AntimonyCompartmentDeclarationPrefix getCompartmentDeclarationPrefix() {
+    return findChildByClass(AntimonyCompartmentDeclarationPrefix.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonyOtherDeclarationPrefix getOtherDeclarationPrefix() {
+    return findChildByClass(AntimonyOtherDeclarationPrefix.class);
+  }
+
+  @Override
   @NotNull
-  public AntimonyDeclarationBody getDeclarationBody() {
-    return findNotNullChildByClass(AntimonyDeclarationBody.class);
+  public List<AntimonyRuleOrAssignment> getRuleOrAssignmentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyRuleOrAssignment.class);
+  }
+
+  @Override
+  @Nullable
+  public AntimonySpeciesDeclarationPrefix getSpeciesDeclarationPrefix() {
+    return findChildByClass(AntimonySpeciesDeclarationPrefix.class);
   }
 
   @Override

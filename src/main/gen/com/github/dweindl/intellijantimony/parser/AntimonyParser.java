@@ -186,110 +186,69 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration_body "'"? EQ expr (SEMI | EOL | LINE_COMMENT)
+  // identifier ("in" compartment_id)? "=" expr
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
-    r = declaration_body(b, l + 1);
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, null);
+    r = identifier(b, l + 1);
     r = r && assignment_1(b, l + 1);
     r = r && consumeToken(b, EQ);
+    p = r; // pin = 3
     r = r && expr(b, l + 1);
-    r = r && assignment_4(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // "'"?
+  // ("in" compartment_id)?
   private static boolean assignment_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_1")) return false;
-    consumeToken(b, PRIME);
+    assignment_1_0(b, l + 1);
     return true;
   }
 
-  // SEMI | EOL | LINE_COMMENT
-  private static boolean assignment_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_4")) return false;
+  // "in" compartment_id
+  private static boolean assignment_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_1_0")) return false;
     boolean r;
-    r = consumeToken(b, SEMI);
-    if (!r) r = consumeToken(b, EOL);
-    if (!r) r = consumeToken(b, LINE_COMMENT);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && compartment_id(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL+ | <<eof>>)
+  // identifier ("in" compartment_id)? ":=" expr
   public static boolean assignment_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_rule")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_RULE, "<assignment rule>");
-    r = declaration_body(b, l + 1);
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_RULE, null);
+    r = identifier(b, l + 1);
     r = r && assignment_rule_1(b, l + 1);
+    r = r && consumeToken(b, ASSIGN_EQ);
+    p = r; // pin = 3
     r = r && expr(b, l + 1);
-    r = r && assignment_rule_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // ":=" | "="
+  // ("in" compartment_id)?
   private static boolean assignment_rule_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_rule_1")) return false;
-    boolean r;
-    r = consumeToken(b, ASSIGN_EQ);
-    if (!r) r = consumeToken(b, EQ);
-    return r;
+    assignment_rule_1_0(b, l + 1);
+    return true;
   }
 
-  // (SEMI EOL+) | SEMI | EOL+ | <<eof>>
-  private static boolean assignment_rule_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_3")) return false;
+  // "in" compartment_id
+  private static boolean assignment_rule_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_rule_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = assignment_rule_3_0(b, l + 1);
-    if (!r) r = consumeToken(b, SEMI);
-    if (!r) r = assignment_rule_3_2(b, l + 1);
-    if (!r) r = eof(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // SEMI EOL+
-  private static boolean assignment_rule_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, SEMI);
-    r = r && assignment_rule_3_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // EOL+
-  private static boolean assignment_rule_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_3_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EOL);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, EOL)) break;
-      if (!empty_element_parsed_guard_(b, "assignment_rule_3_0_1", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // EOL+
-  private static boolean assignment_rule_3_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_3_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EOL);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, EOL)) break;
-      if (!empty_element_parsed_guard_(b, "assignment_rule_3_2", c)) break;
-    }
+    r = consumeToken(b, IN);
+    r = r && compartment_id(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -331,6 +290,34 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ("var" | "const")? "compartment"
+  public static boolean compartment_declaration_prefix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "compartment_declaration_prefix")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, COMPARTMENT_DECLARATION_PREFIX, "<compartment declaration prefix>");
+    r = compartment_declaration_prefix_0(b, l + 1);
+    r = r && consumeToken(b, COMPARTMENT);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ("var" | "const")?
+  private static boolean compartment_declaration_prefix_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "compartment_declaration_prefix_0")) return false;
+    compartment_declaration_prefix_0_0(b, l + 1);
+    return true;
+  }
+
+  // "var" | "const"
+  private static boolean compartment_declaration_prefix_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "compartment_declaration_prefix_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, VAR);
+    if (!r) r = consumeToken(b, CONST);
+    return r;
+  }
+
+  /* ********************************************************** */
   // identifier
   public static boolean compartment_id(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "compartment_id")) return false;
@@ -343,20 +330,51 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration_body (SEMI | EOL | LINE_COMMENT)
+  // declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION, "<declaration>");
-    r = declaration_body(b, l + 1);
-    r = r && declaration_1(b, l + 1);
+    r = declaration_0(b, l + 1);
+    r = r && rule_or_assignment(b, l + 1);
+    r = r && declaration_2(b, l + 1);
+    r = r && declaration_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // declaration_prefix?
+  private static boolean declaration_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_0")) return false;
+    declaration_prefix(b, l + 1);
+    return true;
+  }
+
+  // ("," rule_or_assignment)*
+  private static boolean declaration_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!declaration_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "declaration_2", c)) break;
+    }
+    return true;
+  }
+
+  // "," rule_or_assignment
+  private static boolean declaration_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && rule_or_assignment(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // SEMI | EOL | LINE_COMMENT
-  private static boolean declaration_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_1")) return false;
+  private static boolean declaration_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_3")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
@@ -365,67 +383,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)?
-  public static boolean declaration_body(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, DECLARATION_BODY, "<declaration body>");
-    r = declaration_body_0(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, declaration_body_1(b, l + 1));
-    r = p && report_error_(b, identifier(b, l + 1)) && r;
-    r = p && declaration_body_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // ("var" | "const")?
-  private static boolean declaration_body_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_0")) return false;
-    declaration_body_0_0(b, l + 1);
-    return true;
-  }
-
-  // "var" | "const"
-  private static boolean declaration_body_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_0_0")) return false;
+  // species_declaration_prefix | compartment_declaration_prefix | other_declaration_prefix
+  static boolean declaration_prefix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "declaration_prefix")) return false;
     boolean r;
-    r = consumeToken(b, VAR);
-    if (!r) r = consumeToken(b, CONST);
-    return r;
-  }
-
-  // ( "compartment" | "species" )?
-  private static boolean declaration_body_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_1")) return false;
-    declaration_body_1_0(b, l + 1);
-    return true;
-  }
-
-  // "compartment" | "species"
-  private static boolean declaration_body_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_1_0")) return false;
-    boolean r;
-    r = consumeToken(b, COMPARTMENT);
-    if (!r) r = consumeToken(b, SPECIES);
-    return r;
-  }
-
-  // ("in" compartment_id)?
-  private static boolean declaration_body_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_3")) return false;
-    declaration_body_3_0(b, l + 1);
-    return true;
-  }
-
-  // "in" compartment_id
-  private static boolean declaration_body_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IN);
-    r = r && compartment_id(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = species_declaration_prefix(b, l + 1);
+    if (!r) r = compartment_declaration_prefix(b, l + 1);
+    if (!r) r = other_declaration_prefix(b, l + 1);
     return r;
   }
 
@@ -698,6 +662,37 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // identifier ("in" compartment_id)?
+  public static boolean just_declaration(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && just_declaration_1(b, l + 1);
+    exit_section_(b, m, JUST_DECLARATION, r);
+    return r;
+  }
+
+  // ("in" compartment_id)?
+  private static boolean just_declaration_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration_1")) return false;
+    just_declaration_1_0(b, l + 1);
+    return true;
+  }
+
+  // "in" compartment_id
+  private static boolean just_declaration_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && compartment_id(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // species_expr (PLUS species_expr)*
   static boolean list_of_reactants(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list_of_reactants")) return false;
@@ -938,9 +933,6 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // EOL
   //     | annotation
-  //     | assignment
-  //     | rate_rule
-  //     | assignment_rule
   //     | reaction
   //     | unit_annotation
   //     | annotation_is
@@ -953,9 +945,6 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, EOL);
     if (!r) r = annotation(b, l + 1);
-    if (!r) r = assignment(b, l + 1);
-    if (!r) r = rate_rule(b, l + 1);
-    if (!r) r = assignment_rule(b, l + 1);
     if (!r) r = reaction(b, l + 1);
     if (!r) r = unit_annotation(b, l + 1);
     if (!r) r = annotation_is(b, l + 1);
@@ -1089,6 +1078,25 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, OR);
     r = r && logical_term(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ("var" | "const")?
+  public static boolean other_declaration_prefix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "other_declaration_prefix")) return false;
+    Marker m = enter_section_(b, l, _NONE_, OTHER_DECLARATION_PREFIX, "<other declaration prefix>");
+    other_declaration_prefix_0(b, l + 1);
+    exit_section_(b, l, m, true, false, null);
+    return true;
+  }
+
+  // "var" | "const"
+  private static boolean other_declaration_prefix_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "other_declaration_prefix_0")) return false;
+    boolean r;
+    r = consumeToken(b, VAR);
+    if (!r) r = consumeToken(b, CONST);
     return r;
   }
 
@@ -1287,7 +1295,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier "'" EQ expr (SEMI | EOL | LINE_COMMENT)
+  // identifier "'" EQ expr
   public static boolean rate_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rate_rule")) return false;
     if (!nextTokenIs(b, ID)) return false;
@@ -1296,20 +1304,9 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeTokens(b, 1, PRIME, EQ);
     p = r; // pin = 2
-    r = r && report_error_(b, expr(b, l + 1));
-    r = p && rate_rule_4(b, l + 1) && r;
+    r = r && expr(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
-  }
-
-  // SEMI | EOL | LINE_COMMENT
-  private static boolean rate_rule_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rate_rule_4")) return false;
-    boolean r;
-    r = consumeToken(b, SEMI);
-    if (!r) r = consumeToken(b, EOL);
-    if (!r) r = consumeToken(b, LINE_COMMENT);
-    return r;
   }
 
   /* ********************************************************** */
@@ -1426,6 +1423,70 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     if (!r) r = module(b, l + 1);
     if (!r) r = module_body(b, l + 1);
     if (!r) r = model_annotation(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // rate_rule | assignment | assignment_rule | just_declaration
+  public static boolean rule_or_assignment(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "rule_or_assignment")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = rate_rule(b, l + 1);
+    if (!r) r = assignment(b, l + 1);
+    if (!r) r = assignment_rule(b, l + 1);
+    if (!r) r = just_declaration(b, l + 1);
+    exit_section_(b, m, RULE_OR_ASSIGNMENT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ("substanceOnly" "species") | (("var" | "const")? "species")
+  public static boolean species_declaration_prefix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_declaration_prefix")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, SPECIES_DECLARATION_PREFIX, "<species declaration prefix>");
+    r = species_declaration_prefix_0(b, l + 1);
+    if (!r) r = species_declaration_prefix_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // "substanceOnly" "species"
+  private static boolean species_declaration_prefix_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_declaration_prefix_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SUBSTANCE_ONLY, SPECIES);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ("var" | "const")? "species"
+  private static boolean species_declaration_prefix_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_declaration_prefix_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = species_declaration_prefix_1_0(b, l + 1);
+    r = r && consumeToken(b, SPECIES);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ("var" | "const")?
+  private static boolean species_declaration_prefix_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_declaration_prefix_1_0")) return false;
+    species_declaration_prefix_1_0_0(b, l + 1);
+    return true;
+  }
+
+  // "var" | "const"
+  private static boolean species_declaration_prefix_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "species_declaration_prefix_1_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, VAR);
+    if (!r) r = consumeToken(b, CONST);
     return r;
   }
 

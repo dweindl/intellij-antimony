@@ -41,18 +41,6 @@ public class AntimonyModuleBodyImpl extends ASTWrapperPsiElement implements Anti
 
   @Override
   @NotNull
-  public List<AntimonyAssignment> getAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AntimonyAssignmentRule> getAssignmentRuleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyAssignmentRule.class);
-  }
-
-  @Override
-  @NotNull
   public List<AntimonyDeclaration> getDeclarationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyDeclaration.class);
   }
@@ -67,12 +55,6 @@ public class AntimonyModuleBodyImpl extends ASTWrapperPsiElement implements Anti
   @NotNull
   public List<AntimonyModifierAnnotation> getModifierAnnotationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyModifierAnnotation.class);
-  }
-
-  @Override
-  @NotNull
-  public List<AntimonyRateRule> getRateRuleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, AntimonyRateRule.class);
   }
 
   @Override

@@ -17,9 +17,9 @@ public interface AntimonyTypes {
   IElementType ASSIGNMENT_RULE = new AntimonyElementType("ASSIGNMENT_RULE");
   IElementType COMPARISON_EXPR = new AntimonyElementType("COMPARISON_EXPR");
   IElementType COMPARISON_OP = new AntimonyElementType("COMPARISON_OP");
+  IElementType COMPARTMENT_DECLARATION_PREFIX = new AntimonyElementType("COMPARTMENT_DECLARATION_PREFIX");
   IElementType COMPARTMENT_ID = new AntimonyElementType("COMPARTMENT_ID");
   IElementType DECLARATION = new AntimonyElementType("DECLARATION");
-  IElementType DECLARATION_BODY = new AntimonyElementType("DECLARATION_BODY");
   IElementType EVENT_ASSIGNMENT = new AntimonyElementType("EVENT_ASSIGNMENT");
   IElementType EVENT_ASSIGNMENTS = new AntimonyElementType("EVENT_ASSIGNMENTS");
   IElementType EVENT_DEFINITION = new AntimonyElementType("EVENT_DEFINITION");
@@ -29,6 +29,7 @@ public interface AntimonyTypes {
   IElementType FUNCTION_CALL = new AntimonyElementType("FUNCTION_CALL");
   IElementType FUNCTION_NAME = new AntimonyElementType("FUNCTION_NAME");
   IElementType IDENTIFIER = new AntimonyElementType("IDENTIFIER");
+  IElementType JUST_DECLARATION = new AntimonyElementType("JUST_DECLARATION");
   IElementType LITERAL_EXPR = new AntimonyElementType("LITERAL_EXPR");
   IElementType LOGICAL_EXPR = new AntimonyElementType("LOGICAL_EXPR");
   IElementType LOGICAL_TERM = new AntimonyElementType("LOGICAL_TERM");
@@ -42,6 +43,7 @@ public interface AntimonyTypes {
   IElementType NOT_EXPR = new AntimonyElementType("NOT_EXPR");
   IElementType NUMBER_LITERAL = new AntimonyElementType("NUMBER_LITERAL");
   IElementType OR_EXPR = new AntimonyElementType("OR_EXPR");
+  IElementType OTHER_DECLARATION_PREFIX = new AntimonyElementType("OTHER_DECLARATION_PREFIX");
   IElementType PAREN_EXPR = new AntimonyElementType("PAREN_EXPR");
   IElementType PLUS_EXPR = new AntimonyElementType("PLUS_EXPR");
   IElementType POWER_EXPR = new AntimonyElementType("POWER_EXPR");
@@ -52,6 +54,8 @@ public interface AntimonyTypes {
   IElementType REACTION = new AntimonyElementType("REACTION");
   IElementType REACTION_ID = new AntimonyElementType("REACTION_ID");
   IElementType REF_EXPR = new AntimonyElementType("REF_EXPR");
+  IElementType RULE_OR_ASSIGNMENT = new AntimonyElementType("RULE_OR_ASSIGNMENT");
+  IElementType SPECIES_DECLARATION_PREFIX = new AntimonyElementType("SPECIES_DECLARATION_PREFIX");
   IElementType SPECIES_EXPR = new AntimonyElementType("SPECIES_EXPR");
   IElementType SPECIES_ID = new AntimonyElementType("SPECIES_ID");
   IElementType STOICHIOMETRY = new AntimonyElementType("STOICHIOMETRY");
@@ -102,6 +106,7 @@ public interface AntimonyTypes {
   IElementType SEMI = new AntimonyTokenType(";");
   IElementType SPECIES = new AntimonyTokenType("species");
   IElementType STRING = new AntimonyTokenType("string");
+  IElementType SUBSTANCE_ONLY = new AntimonyTokenType("substanceOnly");
   IElementType UNIT_KEYWORD = new AntimonyTokenType("unit");
   IElementType VAR = new AntimonyTokenType("var");
 
@@ -135,14 +140,14 @@ public interface AntimonyTypes {
       else if (type == COMPARISON_OP) {
         return new AntimonyComparisonOpImpl(node);
       }
+      else if (type == COMPARTMENT_DECLARATION_PREFIX) {
+        return new AntimonyCompartmentDeclarationPrefixImpl(node);
+      }
       else if (type == COMPARTMENT_ID) {
         return new AntimonyCompartmentIdImpl(node);
       }
       else if (type == DECLARATION) {
         return new AntimonyDeclarationImpl(node);
-      }
-      else if (type == DECLARATION_BODY) {
-        return new AntimonyDeclarationBodyImpl(node);
       }
       else if (type == EVENT_ASSIGNMENT) {
         return new AntimonyEventAssignmentImpl(node);
@@ -167,6 +172,9 @@ public interface AntimonyTypes {
       }
       else if (type == IDENTIFIER) {
         return new AntimonyIdentifierImpl(node);
+      }
+      else if (type == JUST_DECLARATION) {
+        return new AntimonyJustDeclarationImpl(node);
       }
       else if (type == LITERAL_EXPR) {
         return new AntimonyLiteralExprImpl(node);
@@ -207,6 +215,9 @@ public interface AntimonyTypes {
       else if (type == OR_EXPR) {
         return new AntimonyOrExprImpl(node);
       }
+      else if (type == OTHER_DECLARATION_PREFIX) {
+        return new AntimonyOtherDeclarationPrefixImpl(node);
+      }
       else if (type == PAREN_EXPR) {
         return new AntimonyParenExprImpl(node);
       }
@@ -233,6 +244,12 @@ public interface AntimonyTypes {
       }
       else if (type == REF_EXPR) {
         return new AntimonyRefExprImpl(node);
+      }
+      else if (type == RULE_OR_ASSIGNMENT) {
+        return new AntimonyRuleOrAssignmentImpl(node);
+      }
+      else if (type == SPECIES_DECLARATION_PREFIX) {
+        return new AntimonySpeciesDeclarationPrefixImpl(node);
       }
       else if (type == SPECIES_EXPR) {
         return new AntimonySpeciesExprImpl(node);
