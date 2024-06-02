@@ -68,6 +68,14 @@ public class AntimonySyntaxHighlighter extends SyntaxHighlighterBase {
                 || tokenType.equals(AntimonyTypes.SPECIES)
                 || tokenType.equals(AntimonyTypes.COMPARTMENT)
                 || tokenType.equals(AntimonyTypes.CONST)
+                || tokenType.equals(AntimonyTypes.SUBSTANCE_ONLY)
+                || tokenType.equals(AntimonyTypes.FUNCTION)
+                || tokenType.equals(AntimonyTypes.IDENTITY)
+                || tokenType.equals(AntimonyTypes.PART)
+                || tokenType.equals(AntimonyTypes.IMPORT)
+                || tokenType.equals(AntimonyTypes.TIMECONV)
+                || tokenType.equals(AntimonyTypes.EXTENTCONV)
+            // TODO : use tokensets?
         ) {
             return KEYWORD_KEYS;
         }
