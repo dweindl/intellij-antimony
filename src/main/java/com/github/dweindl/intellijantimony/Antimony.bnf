@@ -57,7 +57,7 @@
     INT='regexp:\d+'
     FLOAT='regexp:\d+\.\d*|\.\d+'
     SCIENTIFIC='regexp:(\d+(\.\d*)?|\.\d+)[eE][-+]?\d+'
-    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    string="regexp:(\"([^\"\\]|\\.)*\")"
     BACKSLASH='\'
     DOT='.'
     DOLLAR='$'
@@ -186,3 +186,4 @@ filename ::= string
 // TODO: $ for const species
 // TODO: fbc, distrib, ...
 // TODO: ``` for multiline strings
+// TODO: "formula" keyword
