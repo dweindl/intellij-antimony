@@ -39,10 +39,4 @@ public class AntimonyDeclarationBodyImpl extends ASTWrapperPsiElement implements
     return findChildByClass(AntimonyIdentifier.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getEol() {
-    return findChildByType(EOL);
-  }
-
 }

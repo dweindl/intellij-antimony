@@ -71,7 +71,7 @@
     extends(".*expr")=expr
 }
 
-antimonyFile ::= root_item *
+antimonyFile ::= root_item * <<eof>>
 private root_item    ::= (EOL | module | module_body | model_annotation)
 module       ::= MODEL model_id "(" ")" module_body? END {pin=1}
 model_id     ::= identifier
@@ -96,7 +96,7 @@ assignment_rule ::= declaration_body (":=" | "=") expr ((SEMI EOL+) | SEMI | EOL
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 declaration ::= declaration_body (SEMI | EOL | LINE_COMMENT)
-declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)? {pin=1}
+declaration_body ::= ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? {pin=1}
 compartment_id ::= identifier
 annotation ::= identifier "notes" string (SEMI | EOL) {pin=2}
 unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}

@@ -118,13 +118,24 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // root_item *
+  // root_item * <<eof>>
   static boolean antimonyFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "antimonyFile")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = antimonyFile_0(b, l + 1);
+    r = r && eof(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // root_item *
+  private static boolean antimonyFile_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "antimonyFile_0")) return false;
     while (true) {
       int c = current_position_(b);
       if (!root_item(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "antimonyFile", c)) break;
+      if (!empty_element_parsed_guard_(b, "antimonyFile_0", c)) break;
     }
     return true;
   }
@@ -354,7 +365,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)? (SEMI | EOL)?
+  // ("var" | "const")? ( "compartment" | "species" )? identifier ("in" compartment_id)?
   public static boolean declaration_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration_body")) return false;
     boolean r, p;
@@ -363,8 +374,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, declaration_body_1(b, l + 1));
     r = p && report_error_(b, identifier(b, l + 1)) && r;
-    r = p && report_error_(b, declaration_body_3(b, l + 1)) && r;
-    r = p && declaration_body_4(b, l + 1) && r;
+    r = p && declaration_body_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -416,22 +426,6 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, IN);
     r = r && compartment_id(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (SEMI | EOL)?
-  private static boolean declaration_body_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_4")) return false;
-    declaration_body_4_0(b, l + 1);
-    return true;
-  }
-
-  // SEMI | EOL
-  private static boolean declaration_body_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "declaration_body_4_0")) return false;
-    boolean r;
-    r = consumeToken(b, SEMI);
-    if (!r) r = consumeToken(b, EOL);
     return r;
   }
 

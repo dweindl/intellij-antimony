@@ -13,7 +13,4 @@ public interface AntimonyDeclarationBody extends PsiElement {
   @Nullable
   AntimonyIdentifier getIdentifier();
 
-  @Nullable
-  PsiElement getEol();
-
 }
