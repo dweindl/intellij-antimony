@@ -58,6 +58,7 @@
     FLOAT='regexp:\d+\.\d*|\.\d+'
     SCIENTIFIC='regexp:(\d+(\.\d*)?|\.\d+)[eE][-+]?\d+'
     string="regexp:(\"([^\"\\]|\\.)*\")"
+    MULTILINE_STRING="regexp:(```([^`]|`[^`]|``[^`])*```)"
     BACKSLASH='\'
     DOT='.'
     DOLLAR='$'
@@ -109,7 +110,7 @@ assignment_rule ::= identifier ("in" compartment_id)? ":=" expr {pin=3}
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 compartment_id ::= identifier
-annotation ::= identifier ("notes" | "is" | "identity" | "part") string ("," EOL? string)* (SEMI | EOL) {pin=2}
+annotation ::= identifier ("notes" | "is" | "identity" | "part") (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL) {pin=2}
 unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
 unit_definition ::= "unit" identifier EQ expr (SEMI | EOL) {pin=1}

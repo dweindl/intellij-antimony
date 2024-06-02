@@ -10,4 +10,7 @@ public interface AntimonyAnnotation extends PsiElement {
   @NotNull
   AntimonyIdentifier getIdentifier();
 
+  @Nullable
+  PsiElement getMultilineString();
+
 }
