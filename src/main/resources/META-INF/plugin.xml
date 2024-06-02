@@ -2,8 +2,11 @@
 <idea-plugin>
     <id>com.github.dweindl.intellijantimony</id>
     <name>Antimony Language Support</name>
-    <vendor>dweindl</vendor>
-
+    <vendor
+            email="sci@danielweindl.de"
+            url="https://github.com/dweindl/intellij-antimony">
+        Daniel Weindl
+    </vendor>
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
