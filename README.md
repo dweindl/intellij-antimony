@@ -7,12 +7,14 @@
 -->
 
 <!-- Plugin description -->
-This IntelliJ Platform Plugin provides support for the
-[Antimony language](https://tellurium.readthedocs.io/en/latest/antimony.html).
+This IntelliJ Platform plugin provides basic support for the
+[Antimony](https://doi.org/10.1093/bioinformatics/btp401)
+[language](https://tellurium.readthedocs.io/en/latest/antimony.html).
 
 Files with the `.ant` extension will be recognized as Antimony files.
 
 **Features**:
+
 * Syntax highlighting
 * Rename refactoring
 * Find usages
@@ -20,6 +22,13 @@ Files with the `.ant` extension will be recognized as Antimony files.
 * (very basic) code completion
 * (very basic) structure view
 <!-- Plugin description end -->
+
+
+*Development is in a very early stage, so expect bugs and missing features.
+Code quality is also not great yet. This is my first IntelliJ plugin, so I'm still learning.
+Grammar is still incomplete, so some Antimony files may not be parsed correctly.
+Everything is subject to change. Contributions are welcome.*
+
 
 <!--
 ## Template ToDo list
@@ -49,7 +58,8 @@ Files with the `.ant` extension will be recognized as Antimony files.
 
 
 ---
-Plugin based on the [IntelliJ Platform Plugin Template][template].
+Plugin based on the [IntelliJ Platform Plugin Template][template] which was released under the
+[Apache-2.0 license](https://github.com/JetBrains/intellij-platform-plugin-template/blob/81206eb0c2c9af1336750a13e471155b4fd2bea8/LICENSE).
 
 [template]: https://github.com/JetBrains/intellij-platform-plugin-template
 [docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
