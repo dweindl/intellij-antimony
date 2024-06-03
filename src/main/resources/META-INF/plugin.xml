@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.dweindl.intellijantimony</id>
+    <id>com.github.dweindl.intellijAntimony</id>
     <name>Antimony Language Support</name>
     <vendor
             email="sci@danielweindl.de"
@@ -13,44 +13,44 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
-                factoryClass="com.github.dweindl.intellijantimony.toolWindow.MyToolWindowFactory"
+                factoryClass="com.github.dweindl.intellijAntimony.toolWindow.MyToolWindowFactory"
                 id="MyToolWindow"/>
         <fileType
                 name="Antimony File"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyFileType"
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyFileType"
                 fieldName="INSTANCE"
                 language="Antimony"
                 extensions="ant"/>
         <lang.parserDefinition
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyParserDefinition"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonySyntaxHighlighterFactory"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonySyntaxHighlighterFactory"/>
         <lang.braceMatcher
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyPairedBraceMatcher"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyPairedBraceMatcher"/>
         <colorSettingsPage
-                implementation="com.github.dweindl.intellijantimony.AntimonyColorSettingsPage"/>
+                implementation="com.github.dweindl.intellijAntimony.AntimonyColorSettingsPage"/>
         <lang.commenter
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyCommenter"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyCommenter"/>
         <completion.contributor
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyCompletionContributor"/>
-        <renamePsiElementProcessor implementation="com.github.dweindl.intellijantimony.AntimonyRenameProcessor"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyCompletionContributor"/>
+        <renamePsiElementProcessor implementation="com.github.dweindl.intellijAntimony.AntimonyRenameProcessor"/>
         <lang.findUsagesProvider
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyFindUsagesProvider"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyFindUsagesProvider"/>
         <lang.psiStructureViewFactory
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijantimony.AntimonyStructureViewFactory"/>
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyStructureViewFactory"/>
         <!-- TODO: code folding -->
         <!-- TODO: icon provider -->
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.dweindl.intellijantimony.listeners.MyApplicationActivationListener"
+        <listener class="com.github.dweindl.intellijAntimony.listeners.MyApplicationActivationListener"
                   topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>
