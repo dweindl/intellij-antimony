@@ -68,7 +68,7 @@ final class AntimonyFindUsagesProvider implements FindUsagesProvider {
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
         if (element instanceof AntimonyIdentifier) {
-            return ((AntimonyIdentifier) element).getText();
+            return element.getText();
         }
         return "TODO AntimonyFindUsagesProvider::getDescriptiveName()";
     }
