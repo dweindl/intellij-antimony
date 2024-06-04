@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Added
+
+* Additional tokens for syntax highlighting
+* Additional entries for color settings
+* Independent color settings for different types of identifiers
+
 ## [0.0.1] - 2024-06-03
 
 ### Added

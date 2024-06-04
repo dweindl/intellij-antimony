@@ -45,6 +45,9 @@
         <lang.psiStructureViewFactory
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijAntimony.AntimonyStructureViewFactory"/>
+        <annotator language="Antimony"
+                implementationClass="com.github.dweindl.intellijAntimony.AntimonyAnnotator"/>
+
         <!-- TODO: code folding -->
         <!-- TODO: icon provider -->
     </extensions>

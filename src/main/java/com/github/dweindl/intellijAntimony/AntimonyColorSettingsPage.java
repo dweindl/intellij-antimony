@@ -17,6 +17,16 @@ final class AntimonyColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Keyword", AntimonySyntaxHighlighter.KEYWORD),
             new AttributesDescriptor("Separator", AntimonySyntaxHighlighter.SEPARATOR),
             new AttributesDescriptor("ID", AntimonySyntaxHighlighter.ID),
+            new AttributesDescriptor("ID//Units", AntimonySyntaxHighlighter.UNITS),
+            new AttributesDescriptor("ID//Module ID", AntimonySyntaxHighlighter.MODULE_ID),
+            new AttributesDescriptor("ID//Reaction ID", AntimonySyntaxHighlighter.REACTION_ID),
+            new AttributesDescriptor("ID//Compartment ID", AntimonySyntaxHighlighter.COMPARTMENT_ID),
+            new AttributesDescriptor("String", AntimonySyntaxHighlighter.STRING),
+            new AttributesDescriptor("Number", AntimonySyntaxHighlighter.NUMBER),
+            new AttributesDescriptor("Line comment", AntimonySyntaxHighlighter.LINE_COMMENT),
+            new AttributesDescriptor("Block comment", AntimonySyntaxHighlighter.BLOCK_COMMENT),
+            new AttributesDescriptor("Parenthesis", AntimonySyntaxHighlighter.PARENTHESIS),
+            new AttributesDescriptor("Operator", AntimonySyntaxHighlighter.OPERATORS),
             new AttributesDescriptor("Bad value", AntimonySyntaxHighlighter.BAD_CHARACTER)
     };
 
@@ -39,14 +49,17 @@ final class AntimonyColorSettingsPage implements ColorSettingsPage {
         model test()
             // This is another comment
             x = 1 dimensionless
-            
+        
+            /*
+            This is a block comment
+            */
             y := 2
             y has litre
             species z = 3
         
             R: x -> y; 0.1
             R notes "some reaction"
-            
+        
             compartment compartment1
             rate_rule_target' = 1
         end
