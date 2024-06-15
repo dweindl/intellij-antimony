@@ -22,7 +22,7 @@ public class IconCreator {
 
         if(backgroundColor != null) {
             g.setColor(backgroundColor);
-            g.fillOval(0, 0, width, height);
+            g.drawOval(0, 0, width - 1, height - 1);
         }
 
         // Set the font and color
@@ -37,7 +37,7 @@ public class IconCreator {
 
         // Calculate the x and y coordinates where the text should be drawn
         int x = (width - textWidth) / 2;
-        int y = (height - textHeight) / 2 + fm.getAscent();
+        int y = (height - textHeight) / 2 + fm.getAscent() + 1;
 
         // Draw the text onto the image
         g.drawString(text, x, y);
