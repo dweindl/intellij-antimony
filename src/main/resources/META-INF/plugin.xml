@@ -53,8 +53,18 @@
         <!-- TODO: icon provider -->
     </extensions>
 
+    <actions>
+        <action id="RunAntimonyAction"
+                class="com.github.dweindl.intellijAntimony.RunAntimonyAction"
+                text="Run Antimony">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+
     <applicationListeners>
         <listener class="com.github.dweindl.intellijAntimony.listeners.MyApplicationActivationListener"
                   topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+
+    <depends>PythonCore</depends>
 </idea-plugin>
