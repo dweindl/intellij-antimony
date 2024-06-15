@@ -39,7 +39,9 @@ final class AntimonyCompletionContributor extends CompletionContributor {
                         // For each AntimonyIdentifier, add a completion option to the resultSet
                         for (PsiElement identifier : identifiers) {
                             resultSet.addElement(LookupElementBuilder.create(identifier.getText()).withIcon(
-                                    AntimonyIcons.getIcon(AntimonyUtil.getModelEntityType((AntimonyIdentifier) identifier))
+                                    // FIXME for now, we use getModelEntityTypeFromParent instead of getModelEntityType
+                                    //  because the latter is too slow
+                                    AntimonyIcons.getIcon(AntimonyUtil.getModelEntityTypeFromParent((AntimonyIdentifier) identifier))
                             ));
                         }
 

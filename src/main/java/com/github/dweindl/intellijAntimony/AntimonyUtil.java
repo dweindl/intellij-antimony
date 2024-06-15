@@ -6,15 +6,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.apache.maven.model.Model;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class AntimonyUtil {
     public enum ModelEntity {
@@ -27,9 +27,8 @@ public class AntimonyUtil {
         OTHER,
     }
 
-    public static ModelEntity getModelEntityType(AntimonyIdentifier identifier) {
-        // Guess type of model entity that this identifier refers to
-        // Only works for very few cases
+
+    public static ModelEntity getModelEntityTypeFromParent(AntimonyIdentifier identifier) {
         PsiElement parent = identifier.getParent();
         if (parent != null) {
             if (parent instanceof AntimonyModelId) {
@@ -50,9 +49,52 @@ public class AntimonyUtil {
             if (PsiTreeUtil.getParentOfType(identifier, AntimonyUnitDefinition.class) != null) {
                 return ModelEntity.UNIT;
             }
-
         }
         return ModelEntity.OTHER;
+    }
+
+    public static ModelEntity getModelEntityType(AntimonyIdentifier identifier) {
+        ModelEntity type = getModelEntityTypeFromParent(identifier);
+
+        if (type != ModelEntity.OTHER) {
+            return type;
+        }
+        //  find out whether there was any declaration of this identifier that clarifies its type
+        @Nullable AntimonyModuleBody moduleBody = PsiTreeUtil.getParentOfType(identifier, AntimonyModuleBody.class);
+        if (moduleBody == null) {
+            return ModelEntity.OTHER;
+        }
+
+        // FIXME: this is pretty expensive for larger models, because on every change,
+        //  we need to visit the AST of the entire module several times, this leads to slow
+        //  structure view updates and slow code completion
+        return new PsiRecursiveElementWalkingVisitor() {
+            ModelEntity type = ModelEntity.OTHER;
+            String id = null;
+
+            @Override
+            public void visitElement(@NotNull PsiElement element) {
+                super.visitElement(element);
+
+                if (element instanceof AntimonyIdentifier) {
+                    if (!Objects.equals(((AntimonyIdentifier) element).getName(), id)) {
+                        return;
+                    }
+                    ModelEntity type = getModelEntityTypeFromParent(identifier);
+
+                    if (type != ModelEntity.OTHER) {
+                        this.type = type;
+                        stopWalking();
+                    }
+                }
+            }
+
+            ModelEntity getType(PsiElement element, String id) {
+                this.id = id;
+                visitElement(element);
+                return type != ModelEntity.OTHER ? type : ModelEntity.PARAMETER;
+            }
+        }.getType(moduleBody, identifier.getName());
     }
 
     /**
