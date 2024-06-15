@@ -883,7 +883,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // number_literal unit ?
+  // number_literal unit_id ?
   public static boolean literal_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal_expr")) return false;
     boolean r;
@@ -894,10 +894,10 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // unit ?
+  // unit_id ?
   private static boolean literal_expr_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal_expr_1")) return false;
-    unit(b, l + 1);
+    unit_id(b, l + 1);
     return true;
   }
 
@@ -1835,19 +1835,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier
-  public static boolean unit(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "unit")) return false;
-    if (!nextTokenIs(b, ID)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
-    exit_section_(b, m, UNIT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // identifier "has" unit (SEMI | EOL)
+  // identifier "has" unit_id (SEMI | EOL)
   public static boolean unit_annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unit_annotation")) return false;
     if (!nextTokenIs(b, ID)) return false;
@@ -1856,7 +1844,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeToken(b, HAS);
     p = r; // pin = 2
-    r = r && report_error_(b, unit(b, l + 1));
+    r = r && report_error_(b, unit_id(b, l + 1));
     r = p && unit_annotation_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -1894,6 +1882,18 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier
+  public static boolean unit_id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "unit_id")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    exit_section_(b, m, UNIT_ID, r);
     return r;
   }
 

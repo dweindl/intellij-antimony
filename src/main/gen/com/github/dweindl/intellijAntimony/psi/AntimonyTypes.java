@@ -64,9 +64,9 @@ public interface AntimonyTypes {
   IElementType SPECIES_EXPR = new AntimonyElementType("SPECIES_EXPR");
   IElementType SPECIES_ID = new AntimonyElementType("SPECIES_ID");
   IElementType STOICHIOMETRY = new AntimonyElementType("STOICHIOMETRY");
-  IElementType UNIT = new AntimonyElementType("UNIT");
   IElementType UNIT_ANNOTATION = new AntimonyElementType("UNIT_ANNOTATION");
   IElementType UNIT_DEFINITION = new AntimonyElementType("UNIT_DEFINITION");
+  IElementType UNIT_ID = new AntimonyElementType("UNIT_ID");
 
   IElementType AND = new AntimonyTokenType("&&");
   IElementType ASSIGN_EQ = new AntimonyTokenType(":=");
@@ -287,14 +287,14 @@ public interface AntimonyTypes {
       else if (type == STOICHIOMETRY) {
         return new AntimonyStoichiometryImpl(node);
       }
-      else if (type == UNIT) {
-        return new AntimonyUnitImpl(node);
-      }
       else if (type == UNIT_ANNOTATION) {
         return new AntimonyUnitAnnotationImpl(node);
       }
       else if (type == UNIT_DEFINITION) {
         return new AntimonyUnitDefinitionImpl(node);
+      }
+      else if (type == UNIT_ID) {
+        return new AntimonyUnitIdImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

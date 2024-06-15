@@ -48,7 +48,7 @@ final class AntimonyCompletionContributor extends CompletionContributor {
                         PsiElement parent = position.getParent();
                         if (parent != null) {
                             PsiElement grandParent = parent.getParent();
-                            if (grandParent != null && grandParent.getNode().getElementType() == AntimonyTypes.UNIT) {
+                            if (grandParent != null && grandParent.getNode().getElementType() == AntimonyTypes.UNIT_ID) {
                                 Icon icon = AntimonyIcons.getIcon(AntimonyUtil.ModelEntity.UNIT);
 
                                 for (String unit : predefined_units_sbml) {

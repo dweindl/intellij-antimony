@@ -41,7 +41,7 @@ final class AntimonyFindUsagesProvider implements FindUsagesProvider {
                 return "Model module";
             }
 
-            if (parent instanceof AntimonyUnit) {
+            if (parent instanceof AntimonyUnitId) {
                 return "Unit";
             }
 

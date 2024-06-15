@@ -1,20 +1,24 @@
 // This is a generated file. Not intended for manual editing.
 package com.github.dweindl.intellijAntimony.psi.impl;
 
+import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static com.github.dweindl.intellijAntimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijAntimony.psi.*;
 
-public class AntimonyUnitImpl extends ASTWrapperPsiElement implements AntimonyUnit {
+public class AntimonyUnitIdImpl extends ASTWrapperPsiElement implements AntimonyUnitId {
 
-  public AntimonyUnitImpl(@NotNull ASTNode node) {
+  public AntimonyUnitIdImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitUnit(this);
+    visitor.visitUnitId(this);
   }
 
   @Override

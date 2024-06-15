@@ -90,7 +90,7 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
                 if(PsiTreeUtil.getParentOfType(identifier, AntimonyExpr.class) != null)
                     continue;
                 // skip units from "a has b" declarations
-                if(PsiTreeUtil.getParentOfType(identifier, AntimonyUnit.class) != null
+                if(PsiTreeUtil.getParentOfType(identifier, AntimonyUnitId.class) != null
                         && PsiTreeUtil.getParentOfType(identifier, AntimonyUnitAnnotation.class) != null)
                     continue;
                 treeElements.add(new AntimonyStructureViewElement((AntimonyIdentifierImpl) identifier));

@@ -35,7 +35,7 @@ public class AntimonyUtil {
             if (parent instanceof AntimonyModelId) {
                 return ModelEntity.MODULE;
             }
-            if (parent instanceof AntimonyUnit) {
+            if (parent instanceof AntimonyUnitId) {
                 return ModelEntity.UNIT;
             }
             if (parent instanceof AntimonyCompartmentId) {

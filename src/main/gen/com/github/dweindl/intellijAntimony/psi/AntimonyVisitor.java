@@ -231,15 +231,15 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitUnit(@NotNull AntimonyUnit o) {
-    visitPsiElement(o);
-  }
-
   public void visitUnitAnnotation(@NotNull AntimonyUnitAnnotation o) {
     visitPsiElement(o);
   }
 
   public void visitUnitDefinition(@NotNull AntimonyUnitDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnitId(@NotNull AntimonyUnitId o) {
     visitPsiElement(o);
   }
 

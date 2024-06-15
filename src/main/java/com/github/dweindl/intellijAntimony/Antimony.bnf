@@ -111,7 +111,7 @@ number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 compartment_id ::= identifier
 annotation ::= identifier ("notes" | "is" | "identity" | "part") (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL) {pin=2}
-unit_annotation ::= identifier "has" unit (SEMI | EOL) {pin=2}
+unit_annotation ::= identifier "has" unit_id (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
 unit_definition ::= "unit" identifier EQ expr (SEMI | EOL) {pin=1}
 modifier_annotation ::= (modifier_id ":")? species_id ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
@@ -137,8 +137,8 @@ left power_expr ::= '^' primary
 private primary_inner ::= ('+'|'-') ? (literal_expr | function_call | ref_expr | paren_expr)
 paren_expr ::= ('-(' | '(') expr ')' {pin=1}
 ref_expr ::= identifier
-literal_expr ::= number_literal unit ?
-unit ::= identifier
+literal_expr ::= number_literal unit_id ?
+unit_id ::= identifier
 function_call ::= function_id '(' function_arguments? ')' {pin=2}
 function_arguments ::= expr (',' expr)*
 function_id ::= identifier
