@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg1053"
+   sodipodi:docname="antimonyFileIcon.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1057" />
+  <sodipodi:namedview
+     id="namedview1055"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="49.762803"
+     inkscape:cx="9.7663308"
+     inkscape:cy="9.3543766"
+     inkscape:window-width="1920"
+     inkscape:window-height="1110"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1051" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g1051">
+    <polygon
+       fill="#62B543"
+       fill-opacity=".7"
+       points="1 16 16 16 16 9 1 9"
+       id="polygon1043" />
+    <polygon
+       fill="#9AA7B0"
+       fill-opacity=".8"
+       points="7 1 3 5 7 5"
+       id="polygon1045" />
+    <polygon
+       fill="#9AA7B0"
+       fill-opacity=".8"
+       points="8 1 8 6 3 6 3 8 13 8 13 1"
+       id="polygon1047" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6px;line-height:1;font-family:Arial;-inkscape-font-specification:Arial;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;opacity:1;vector-effect:none;fill:#304128;fill-opacity:0.909804;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+       x="8.4790001"
+       y="11.991222"
+       id="text1351"
+       transform="translate(-5.4790001,3.0195198)"><tspan
+         sodipodi:role="line"
+         id="tspan1349"
+         x="8.4790001"
+         y="11.991222"
+         style="font-weight:bold;font-size:6px;fill:#304128;fill-opacity:0.909804">ANT</tspan></text>
+  </g>
+</svg>
