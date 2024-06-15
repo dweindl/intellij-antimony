@@ -113,7 +113,7 @@ compartment_id ::= identifier
 annotation ::= identifier ("notes" | "is" | "identity" | "part") (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL) {pin=2}
 unit_annotation ::= identifier "has" unit_id (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
-unit_definition ::= "unit" identifier EQ expr (SEMI | EOL) {pin=1}
+unit_definition ::= "unit" unit_id EQ expr (SEMI | EOL) {pin=1}
 modifier_annotation ::= (modifier_id ":")? species_id ("-|" | "-o" | "-(") reaction_id (SEMI | EOL)
 modifier_id ::= identifier
 

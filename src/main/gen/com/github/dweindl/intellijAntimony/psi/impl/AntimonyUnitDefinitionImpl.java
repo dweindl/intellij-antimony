@@ -35,8 +35,8 @@ public class AntimonyUnitDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public AntimonyIdentifier getIdentifier() {
-    return findChildByClass(AntimonyIdentifier.class);
+  public AntimonyUnitId getUnitId() {
+    return findChildByClass(AntimonyUnitId.class);
   }
 
   @Override

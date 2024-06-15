@@ -1860,7 +1860,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "unit" identifier EQ expr (SEMI | EOL)
+  // "unit" unit_id EQ expr (SEMI | EOL)
   public static boolean unit_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unit_definition")) return false;
     if (!nextTokenIs(b, UNIT_KEYWORD)) return false;
@@ -1868,7 +1868,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, UNIT_DEFINITION, null);
     r = consumeToken(b, UNIT_KEYWORD);
     p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
+    r = r && report_error_(b, unit_id(b, l + 1));
     r = p && report_error_(b, consumeToken(b, EQ)) && r;
     r = p && report_error_(b, expr(b, l + 1)) && r;
     r = p && unit_definition_4(b, l + 1) && r;

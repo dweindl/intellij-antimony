@@ -11,7 +11,7 @@ public interface AntimonyUnitDefinition extends PsiElement {
   AntimonyExpr getExpr();
 
   @Nullable
-  AntimonyIdentifier getIdentifier();
+  AntimonyUnitId getUnitId();
 
   @Nullable
   PsiElement getEol();
