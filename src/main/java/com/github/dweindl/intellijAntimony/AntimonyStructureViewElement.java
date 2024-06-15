@@ -9,12 +9,13 @@ import com.intellij.ide.util.treeView.smartTree.SortableTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class AntimonyStructureViewElement implements StructureViewTreeElement, SortableTreeElement {
 
@@ -92,6 +93,24 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
                 // skip units from "a has b" declarations
                 if(PsiTreeUtil.getParentOfType(identifier, AntimonyUnitId.class) != null
                         && PsiTreeUtil.getParentOfType(identifier, AntimonyUnitAnnotation.class) != null)
+                    continue;
+                // skip compartment from "a in b" declarations
+                // check for "in" token just before the identifier
+                boolean is_assigned_compartment = false;
+                PsiElement sibling = identifier.getParent().getPrevSibling();
+                while (sibling != null) {
+                    // check for "in" token
+                    // get token text
+                    if (Objects.equals(sibling.getText(), "in")) {
+                        is_assigned_compartment = true;
+                        break;
+                    }
+                    sibling = sibling.getPrevSibling();
+                }
+                if (is_assigned_compartment)
+                    continue;
+                // don't repeat the previous element
+                if(!treeElements.isEmpty() && Objects.equals(((AntimonyIdentifier) ((AntimonyStructureViewElement) treeElements.get(treeElements.size() - 1)).getValue()).getName(), identifier.getName()))
                     continue;
                 treeElements.add(new AntimonyStructureViewElement((AntimonyIdentifierImpl) identifier));
             }
