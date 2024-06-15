@@ -13,6 +13,7 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Map;
 
 final class AntimonyAnnotator implements Annotator, DumbAware {
 
@@ -28,7 +29,17 @@ final class AntimonyAnnotator implements Annotator, DumbAware {
                 case COMPARTMENT -> AntimonySyntaxHighlighter.COMPARTMENT_ID;
                 default -> AntimonySyntaxHighlighter.ID;
             };
-            holder.newAnnotation(HighlightSeverity.INFORMATION, "")
+            Map<AntimonyUtil.ModelEntity, String> entityNames = Map.of(
+                    AntimonyUtil.ModelEntity.MODULE, "Module",
+                    AntimonyUtil.ModelEntity.UNIT, "Unit",
+                    AntimonyUtil.ModelEntity.REACTION, "Reaction",
+                    AntimonyUtil.ModelEntity.COMPARTMENT, "Compartment",
+                    AntimonyUtil.ModelEntity.PARAMETER, "Parameter",
+                    AntimonyUtil.ModelEntity.SPECIES, "Species"
+            );
+            // shown when hovering an identifier without CTRL pressed
+            String description = entityNames.getOrDefault(modelEntity, "Unknown entity") + " " + element.getText();
+            holder.newAnnotation(HighlightSeverity.INFORMATION, description)
                     .range(element)
                     .textAttributes(textAttributesKey)
                     .create();
