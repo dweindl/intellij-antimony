@@ -47,6 +47,10 @@ public class AntimonyUtil {
             if (parent instanceof AntimonyReactionId) {
                 return ModelEntity.REACTION;
             }
+            if (PsiTreeUtil.getParentOfType(identifier, AntimonyUnitDefinition.class) != null) {
+                return ModelEntity.UNIT;
+            }
+
         }
         return ModelEntity.OTHER;
     }
