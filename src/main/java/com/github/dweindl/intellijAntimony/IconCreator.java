@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class IconCreator {
 
-    public static Icon createIconFromString(String text) {
+    public static Icon createIconFromString(String text, Color backgroundColor) {
         int width = 16;
         int height = 16;
 
@@ -18,15 +18,30 @@ public class IconCreator {
         Image image = ImageUtil.createImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = (Graphics2D) image.getGraphics();
 
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        if(backgroundColor != null) {
+            g.setColor(backgroundColor);
+            g.fillOval(0, 0, width, height);
+        }
+
         // Set the font and color
         Font font = JBUI.Fonts.create(Font.SANS_SERIF, 10);
         g.setFont(font);
         g.setColor(JBColor.BLACK);
 
-        // Draw the text onto the image
-        g.drawString(text, 0, g.getFontMetrics().getAscent());
+        // Calculate the width and height of the text
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(text);
+        int textHeight = fm.getHeight();
 
-        // Create an icon from the image
+        // Calculate the x and y coordinates where the text should be drawn
+        int x = (width - textWidth) / 2;
+        int y = (height - textHeight) / 2 + fm.getAscent();
+
+        // Draw the text onto the image
+        g.drawString(text, x, y);
+
         return new ImageIcon(image);
     }
 }
