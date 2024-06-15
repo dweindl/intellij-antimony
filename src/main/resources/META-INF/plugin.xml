@@ -47,6 +47,7 @@
                 implementationClass="com.github.dweindl.intellijAntimony.AntimonyStructureViewFactory"/>
         <annotator language="Antimony"
                 implementationClass="com.github.dweindl.intellijAntimony.AntimonyAnnotator"/>
+        <documentationProvider implementation="com.github.dweindl.intellijAntimony.AntimonyDocumentationProvider"/>
 
         <!-- TODO: code folding -->
         <!-- TODO: icon provider -->
