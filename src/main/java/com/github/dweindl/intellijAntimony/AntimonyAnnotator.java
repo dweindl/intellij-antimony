@@ -9,7 +9,6 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.Map;
 
 final class AntimonyAnnotator implements Annotator, DumbAware {

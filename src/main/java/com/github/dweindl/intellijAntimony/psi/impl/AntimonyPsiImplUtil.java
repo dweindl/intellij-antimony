@@ -54,7 +54,7 @@ public class AntimonyPsiImplUtil {
         return new PsiReference[]{new AntimonyReference(element, new TextRange(0, element.getTextLength()))};
     }
 
-    public static @Nullable Icon getIcon(final AntimonyIdentifier element, int flags) {
+    public static Icon getIcon(final AntimonyIdentifier element, int flags) {
         return AntimonyIcons.getIcon(AntimonyUtil.getModelEntityType(element));
     }
 
