@@ -55,29 +55,7 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
             GeneralCommandLine commandLine = new GeneralCommandLine();
             commandLine.setExePath(interpreter);
             String file = e.getData(PlatformDataKeys.VIRTUAL_FILE).getPath();
-            String pycode = """
-            import antimony as ant
-            import sys
-            
-            def error(msg):
-                print(msg, file=sys.stderr)
-                sys.exit(1)
-            
-            status = ant.loadAntimonyFile('FILE');
-            
-            if status < 0:
-                error(f'Antimony model could not be loaded:\\n{ant.getLastError()}')
-            
-            if (main_module_name := ant.getMainModuleName()) is None:
-                error('There is no Antimony module.')
-            
-            sbml_str = ant.getSBMLString(main_module_name)
-            if not sbml_str:
-                error('Antimony model could not be converted to SBML.')
-            
-            print(sbml_str)
-            """;
-            pycode = pycode.replace("FILE", file);
+            String pycode = getPyCodeAntToSbml(file);
             commandLine.addParameter("-c");
             commandLine.addParameter(pycode);
 
@@ -101,13 +79,47 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
 
     }
 
+    private static @NotNull String getPyCodeAntToSbml(String file) {
+        String pycode = """
+        import antimony as ant
+        import sys
+        
+        def error(msg):
+            print(msg, file=sys.stderr)
+            sys.exit(1)
+        
+        status = ant.loadAntimonyFile('FILE')
+        
+        if status < 0:
+            error(f'Antimony model could not be loaded:\\n{ant.getLastError()}')
+        
+        if (main_module_name := ant.getMainModuleName()) is None:
+            error('There is no Antimony module.')
+        
+        sbml_str = ant.getSBMLString(main_module_name)
+        if not sbml_str:
+            error('Antimony model could not be converted to SBML.')
+        
+        print(sbml_str)
+        """;
+        pycode = pycode.replace("FILE", file);
+        return pycode;
+    }
+
     @Override
     public void update(AnActionEvent e) {
         // define when the action should be visible
+        boolean visible = false;
         Project project = e.getProject();
-        Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
-        PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        e.getPresentation().setEnabledAndVisible(psiFile instanceof AntimonyFile);
+        if (project != null) {
+            Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
+            if (editor != null) {
+                PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
+                visible = psiFile instanceof AntimonyFile;
+            }
+        }
+
+        e.getPresentation().setEnabledAndVisible(visible);
     }
 
     public static boolean isAntimonyAvailable(Project project) {
