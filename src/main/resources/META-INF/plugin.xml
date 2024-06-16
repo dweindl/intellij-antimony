@@ -55,8 +55,8 @@
 
     <actions>
         <action id="RunAntimonyAction"
-                class="com.github.dweindl.intellijAntimony.RunAntimonyAction"
-                text="Run Antimony">
+                class="com.github.dweindl.intellijAntimony.AntimonyToSbmlAction"
+                text="Convert to SBML">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>

@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public class RunAntimonyAction extends AnAction implements DumbAware {
+public class AntimonyToSbmlAction extends AnAction implements DumbAware {
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         return ActionUpdateThread.BGT;
@@ -46,7 +46,7 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
             return;
         }
 
-        Logger LOG = Logger.getInstance(RunAntimonyAction.class);
+        Logger LOG = Logger.getInstance(AntimonyToSbmlAction.class);
         LOG.info("Python interpreter: " + interpreter);
 
         ApplicationManager.getApplication().executeOnPooledThread(() -> {

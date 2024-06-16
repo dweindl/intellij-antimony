@@ -5,10 +5,10 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.github.dweindl.intellijAntimony.AntimonyBundle
 import com.github.dweindl.intellijAntimony.AntimonyLanguage
-import com.github.dweindl.intellijAntimony.RunAntimonyAction.getPythonInterpreterPath
-import com.github.dweindl.intellijAntimony.RunAntimonyAction.isAntimonyAvailable
-import com.github.dweindl.intellijAntimony.RunAntimonyAction.getPyCodeSbmlToAnt
-import com.github.dweindl.intellijAntimony.RunAntimonyAction.createAndOpenScratchFile
+import com.github.dweindl.intellijAntimony.AntimonyToSbmlAction.getPythonInterpreterPath
+import com.github.dweindl.intellijAntimony.AntimonyToSbmlAction.isAntimonyAvailable
+import com.github.dweindl.intellijAntimony.AntimonyToSbmlAction.getPyCodeSbmlToAnt
+import com.github.dweindl.intellijAntimony.AntimonyToSbmlAction.createAndOpenScratchFile
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.util.ExecUtil
