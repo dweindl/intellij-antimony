@@ -4,6 +4,7 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.process.ProcessOutput;
 import com.intellij.execution.util.ExecUtil;
 import com.intellij.ide.scratch.ScratchRootType;
+import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -27,6 +28,7 @@ import com.jetbrains.python.sdk.PythonSdkType;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 public class RunAntimonyAction extends AnAction implements DumbAware {
@@ -70,7 +72,7 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
                     return;
                 }
                 ApplicationManager.getApplication().invokeLater(() -> {
-                    createAndOpenScratchFile(e.getProject(), file + " converted to SBML.xml", output.getStdout());
+                    createAndOpenScratchFile(e.getProject(), file + " converted to SBML.xml", output.getStdout(), XMLLanguage.INSTANCE);
                 });
             } catch (ExecutionException ex) {
                 throw new RuntimeException(ex);
@@ -101,6 +103,31 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
             error('Antimony model could not be converted to SBML.')
         
         print(sbml_str)
+        """;
+        pycode = pycode.replace("FILE", file);
+        return pycode;
+    }
+
+    public static @NotNull String getPyCodeSbmlToAnt(String file) {
+        String pycode = """
+        import antimony as ant
+        import sys
+        
+        def error(msg):
+            print(msg, file=sys.stderr)
+            sys.exit(1)
+        
+        status = ant.loadSBMLFile('FILE')
+        
+        if status < 0:
+            error(f'SBML model could not be loaded:\\n{ant.getLastError()}')
+        
+        
+        ant_str = ant.getAntimonyString()
+        if not ant_str:
+            error('SBML model could not be converted to SBML: \\n{ant.getLastError()}')
+        
+        print(ant_str)
         """;
         pycode = pycode.replace("FILE", file);
         return pycode;
@@ -163,11 +190,11 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
         return null;
     }
 
-    public void createAndOpenScratchFile(Project project, String fileName, String fileContent) {
+    public static void createAndOpenScratchFile(Project project, String fileName, String fileContent, @Nullable Language language) {
         VirtualFile scratchFile = ScratchRootType.getInstance().createScratchFile(
                 project,
                 fileName,
-                XMLLanguage.INSTANCE,
+                language,
                 fileContent
         );
 

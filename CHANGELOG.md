@@ -6,6 +6,7 @@
 
 ### Added
 
+* Tool window for SBML -> Antimony conversion
 * Option run Antimony from the IDE to convert the Antimony code to SBML
 * Additional tokens for syntax highlighting
 * Additional entries for color settings
