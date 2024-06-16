@@ -94,6 +94,7 @@ private module_body_item ::=
     | function_definition
     | model_import
     | file_import
+    | current_model_annotation
 
 
 declaration ::= declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
@@ -169,6 +170,8 @@ event_assignment ::= identifier EQ expr
 model_annotation ::= model_id annotation_type string (SEMI | EOL)
 annotation_type ::= identifier "." identifier
 
+current_model_annotation ::= MODEL annotation_type string (SEMI | EOL)
+
 function_definition ::= "function" function_id "(" function_signature_arguments? ")" (SEMI | EOL) expr (SEMI | EOL) "end" {pin=1}
 function_signature_arguments ::= function_signature_argument ("," function_signature_argument)*
 function_signature_argument ::= identifier
@@ -187,4 +190,4 @@ filename ::= string
 // TODO: fbc, distrib, ...
 // TODO: ``` for multiline strings
 // TODO: "formula" keyword
-// TODO: model annotations following "model" keyword
+// TODO: recover from errors

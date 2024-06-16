@@ -358,6 +358,30 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // MODEL annotation_type string (SEMI | EOL)
+  public static boolean current_model_annotation(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "current_model_annotation")) return false;
+    if (!nextTokenIs(b, MODEL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, MODEL);
+    r = r && annotation_type(b, l + 1);
+    r = r && consumeToken(b, STRING);
+    r = r && current_model_annotation_3(b, l + 1);
+    exit_section_(b, m, CURRENT_MODEL_ANNOTATION, r);
+    return r;
+  }
+
+  // SEMI | EOL
+  private static boolean current_model_annotation_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "current_model_annotation_3")) return false;
+    boolean r;
+    r = consumeToken(b, SEMI);
+    if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
   // declaration_prefix? rule_or_assignment ("," rule_or_assignment)* (SEMI | EOL | LINE_COMMENT)
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
@@ -1240,6 +1264,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   //     | function_definition
   //     | model_import
   //     | file_import
+  //     | current_model_annotation
   static boolean module_body_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_body_item")) return false;
     boolean r;
@@ -1254,6 +1279,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     if (!r) r = function_definition(b, l + 1);
     if (!r) r = model_import(b, l + 1);
     if (!r) r = file_import(b, l + 1);
+    if (!r) r = current_model_annotation(b, l + 1);
     return r;
   }
 

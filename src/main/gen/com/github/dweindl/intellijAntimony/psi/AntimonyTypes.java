@@ -18,6 +18,7 @@ public interface AntimonyTypes {
   IElementType COMPARISON_OP = new AntimonyElementType("COMPARISON_OP");
   IElementType COMPARTMENT_DECLARATION_PREFIX = new AntimonyElementType("COMPARTMENT_DECLARATION_PREFIX");
   IElementType COMPARTMENT_ID = new AntimonyElementType("COMPARTMENT_ID");
+  IElementType CURRENT_MODEL_ANNOTATION = new AntimonyElementType("CURRENT_MODEL_ANNOTATION");
   IElementType DECLARATION = new AntimonyElementType("DECLARATION");
   IElementType EVENT_ASSIGNMENT = new AntimonyElementType("EVENT_ASSIGNMENT");
   IElementType EVENT_ASSIGNMENTS = new AntimonyElementType("EVENT_ASSIGNMENTS");
@@ -154,6 +155,9 @@ public interface AntimonyTypes {
       }
       else if (type == COMPARTMENT_ID) {
         return new AntimonyCompartmentIdImpl(node);
+      }
+      else if (type == CURRENT_MODEL_ANNOTATION) {
+        return new AntimonyCurrentModelAnnotationImpl(node);
       }
       else if (type == DECLARATION) {
         return new AntimonyDeclarationImpl(node);
