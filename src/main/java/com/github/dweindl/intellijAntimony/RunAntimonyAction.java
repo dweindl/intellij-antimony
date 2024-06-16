@@ -56,24 +56,28 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
 
             GeneralCommandLine commandLine = new GeneralCommandLine();
             commandLine.setExePath(interpreter);
-            String file = e.getData(PlatformDataKeys.VIRTUAL_FILE).getPath();
-            String pycode = getPyCodeAntToSbml(file);
+            VirtualFile virtualFile = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+            if (virtualFile == null) {
+                return;
+            }
+            String filePath = virtualFile.getPath();
+            String pythonCode = getPyCodeAntToSbml(filePath);
             commandLine.addParameter("-c");
-            commandLine.addParameter(pycode);
+            commandLine.addParameter(pythonCode);
 
             try {
                 ProcessOutput output = ExecUtil.execAndGetOutput(commandLine);
                 int exitCode = output.getExitCode();
                 if (exitCode != 0) {
                     LOG.info("Command: " + commandLine.getCommandLineString());
-                    ApplicationManager.getApplication().invokeLater(() -> {
-                        Messages.showErrorDialog(e.getProject(), output.getStderr(), "Antimony Error");
-                    });
+                    ApplicationManager.getApplication().invokeLater(
+                            () -> Messages.showErrorDialog(e.getProject(), output.getStderr(), "Antimony Error")
+                    );
                     return;
                 }
-                ApplicationManager.getApplication().invokeLater(() -> {
-                    createAndOpenScratchFile(e.getProject(), file + " converted to SBML.xml", output.getStdout(), XMLLanguage.INSTANCE);
-                });
+                ApplicationManager.getApplication().invokeLater(
+                        () -> createAndOpenScratchFile(e.getProject(), filePath + " converted to SBML.xml", output.getStdout(), XMLLanguage.INSTANCE)
+                );
             } catch (ExecutionException ex) {
                 throw new RuntimeException(ex);
             }
@@ -165,12 +169,11 @@ public class RunAntimonyAction extends AnAction implements DumbAware {
             int exitCode = output.getExitCode();
             if (exitCode != 0) {
                 String installCmd = interpreter + "-m pip install antimony";
-                ApplicationManager.getApplication().invokeLater(() -> {
-                    Messages.showErrorDialog(project,
-                            "Antimony is not available in the Python environment, consider running `"
-                            + installCmd + "`\n" + output.getStderr(), "Antimony Error"
-                    );
-                });
+                ApplicationManager.getApplication().invokeLater(
+                        () -> Messages.showErrorDialog(project,
+                        "Antimony is not available in the Python environment, consider running `"
+                        + installCmd + "`\n" + output.getStderr(), "Antimony Error"
+                ));
             }
             return exitCode == 0;
         } catch (ExecutionException ex) {

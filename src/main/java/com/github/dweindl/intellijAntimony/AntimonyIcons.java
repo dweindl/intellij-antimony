@@ -1,11 +1,7 @@
 package com.github.dweindl.intellijAntimony;
 
-// import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.ui.JBColor;
-
-import java.awt.Color;
-
 import javax.swing.*;
 
 public class AntimonyIcons {

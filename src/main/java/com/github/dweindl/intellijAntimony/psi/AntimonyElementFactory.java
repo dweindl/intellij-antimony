@@ -19,9 +19,4 @@ public class AntimonyElementFactory {
         return (AntimonyFile) PsiFileFactory.getInstance(project).createFileFromText(name, AntimonyFileType.INSTANCE, text);
     }
 
-    public static PsiElement createCRLF(Project project) {
-        final AntimonyFile file = createFile(project, "\n");
-        return file.getFirstChild();
-    }
-
 }

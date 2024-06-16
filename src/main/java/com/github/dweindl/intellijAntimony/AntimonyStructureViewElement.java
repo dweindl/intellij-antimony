@@ -100,7 +100,6 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
                 PsiElement sibling = identifier.getParent().getPrevSibling();
                 while (sibling != null) {
                     // check for "in" token
-                    // get token text
                     if (Objects.equals(sibling.getText(), "in")) {
                         is_assigned_compartment = true;
                         break;
@@ -114,7 +113,7 @@ public class AntimonyStructureViewElement implements StructureViewTreeElement, S
                     continue;
                 treeElements.add(new AntimonyStructureViewElement((AntimonyIdentifierImpl) identifier));
             }
-            // TODO add unnamed reactions
+            // TODO add unnamed reactions and events
             return treeElements.toArray(new TreeElement[0]);
         }
         return EMPTY_ARRAY;

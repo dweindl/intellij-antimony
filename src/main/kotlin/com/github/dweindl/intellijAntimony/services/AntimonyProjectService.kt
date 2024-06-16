@@ -33,13 +33,13 @@ class AntimonyProjectService(private val project: Project) {
             return
         }
 
-        val LOG = Logger.getInstance(AntimonyProjectService::class.java)
-        LOG.info("Python interpreter: $interpreter")
+        val logger = Logger.getInstance(AntimonyProjectService::class.java)
+        logger.info("Python interpreter: $interpreter")
 
 
         // show file selection dialog
         val descriptor = FileChooserDescriptor(true, false, false, false, false, false)
-        descriptor.title = "Select SBML file"
+        descriptor.title = "Select SBML File"
         descriptor.description = "Please select an SBML file"
         descriptor.withFileFilter { it.extension == "xml" }
 
@@ -58,15 +58,15 @@ class AntimonyProjectService(private val project: Project) {
 
             val commandLine = GeneralCommandLine()
             commandLine.exePath = interpreter
-            val pycode = getPyCodeSbmlToAnt(file!!.path)
+            val pythonCode = getPyCodeSbmlToAnt(file!!.path)
             commandLine.addParameter("-c")
-            commandLine.addParameter(pycode)
+            commandLine.addParameter(pythonCode)
 
             try {
                 val output = ExecUtil.execAndGetOutput(commandLine)
                 val exitCode = output.exitCode
                 if (exitCode != 0) {
-                    LOG.info("Command: ${commandLine.commandLineString}")
+                    logger.info("Command: ${commandLine.commandLineString}")
                     ApplicationManager.getApplication().invokeLater {
                         Messages.showErrorDialog(project, output.stderr, "Antimony Error")
                     }

@@ -55,19 +55,17 @@ public final class AntimonyReference extends PsiReferenceBase<PsiElement> implem
 
     @Override
     public Object @NotNull [] getVariants() {
-        // Project project = myElement.getProject();
-        // List<AntimonyIdentifier> properties = AntimonyUtil.findIdentifiers(project);
         AntimonyFile file = (AntimonyFile) myElement.getContainingFile();
-        final List<AntimonyIdentifier> properties = AntimonyUtil.findIdentifiers(file, identifier);
+        final List<AntimonyIdentifier> identifiers = AntimonyUtil.findIdentifiers(file, identifier);
         List<LookupElement> variants = new ArrayList<>();
-        for (final AntimonyIdentifier property : properties) {
-            if (property.getNameIdentifier() != null) {
+        for (final AntimonyIdentifier identifier : identifiers) {
+            if (identifier.getNameIdentifier() != null) {
                 variants.add(LookupElementBuilder
-                        .create(property)
+                        .create(identifier)
                         .withIcon(AntimonyIcons.FILE)
-                        .withPresentableText(property.getName())
-                        .withTypeText(property.getContainingFile().getName())
-                        .withTailText(" (" + property.getTextOffset() + ")", true)
+                        .withPresentableText(identifier.getName() == null ? "..." : identifier.getName())
+                        .withTypeText(identifier.getContainingFile().getName())
+                        .withTailText(" (" + identifier.getTextOffset() + ")", true)
                         .bold()
                 );
             }

@@ -16,7 +16,7 @@ import java.util.Collection;
 
 final class AntimonyCompletionContributor extends CompletionContributor {
     // Units that are predefined in SBML L3
-    String[] predefined_units_sbml = {
+    final String[] predefined_units_sbml = {
             "ampere", "coulomb", "gray", "joule", "litre", "mole", "radian", "steradian", "weber",
             "avogadro", "dimensionless", "henry", "katal", "lumen", "newton", "second", "tesla",
             "becquerel", "farad", "hertz", "kelvin", "lux", "ohm", "siemens", "volt",
