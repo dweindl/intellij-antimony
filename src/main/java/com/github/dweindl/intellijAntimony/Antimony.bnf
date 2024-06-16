@@ -105,9 +105,9 @@ other_declaration_prefix ::=  ("var" | "const")?
 
 rule_or_assignment ::= rate_rule | assignment | assignment_rule | just_declaration
 rate_rule ::= identifier "'" EQ expr {pin=2}
-assignment ::= identifier ("in" compartment_id)? "=" expr {pin=3}
-just_declaration ::= identifier ("in" compartment_id)?
-assignment_rule ::= identifier ("in" compartment_id)? ":=" expr {pin=3}
+assignment ::= "$"? identifier ("in" compartment_id)? "=" expr {pin=4}
+just_declaration ::= "$"? identifier ("in" compartment_id)?
+assignment_rule ::= "$"? identifier ("in" compartment_id)? ":=" expr {pin=4}
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 compartment_id ::= identifier

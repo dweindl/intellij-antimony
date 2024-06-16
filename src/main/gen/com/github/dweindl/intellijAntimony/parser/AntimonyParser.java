@@ -214,31 +214,39 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier ("in" compartment_id)? "=" expr
+  // "$"? identifier ("in" compartment_id)? "=" expr
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, "<assignment>", DOLLAR, ID)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, null);
-    r = identifier(b, l + 1);
-    r = r && assignment_1(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
+    r = assignment_0(b, l + 1);
+    r = r && identifier(b, l + 1);
+    r = r && assignment_2(b, l + 1);
     r = r && consumeToken(b, EQ);
-    p = r; // pin = 3
+    p = r; // pin = 4
     r = r && expr(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // "$"?
+  private static boolean assignment_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_0")) return false;
+    consumeToken(b, DOLLAR);
+    return true;
+  }
+
   // ("in" compartment_id)?
-  private static boolean assignment_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_1")) return false;
-    assignment_1_0(b, l + 1);
+  private static boolean assignment_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_2")) return false;
+    assignment_2_0(b, l + 1);
     return true;
   }
 
   // "in" compartment_id
-  private static boolean assignment_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_1_0")) return false;
+  private static boolean assignment_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, IN);
@@ -248,31 +256,39 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier ("in" compartment_id)? ":=" expr
+  // "$"? identifier ("in" compartment_id)? ":=" expr
   public static boolean assignment_rule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_rule")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, "<assignment rule>", DOLLAR, ID)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_RULE, null);
-    r = identifier(b, l + 1);
-    r = r && assignment_rule_1(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_RULE, "<assignment rule>");
+    r = assignment_rule_0(b, l + 1);
+    r = r && identifier(b, l + 1);
+    r = r && assignment_rule_2(b, l + 1);
     r = r && consumeToken(b, ASSIGN_EQ);
-    p = r; // pin = 3
+    p = r; // pin = 4
     r = r && expr(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // "$"?
+  private static boolean assignment_rule_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_rule_0")) return false;
+    consumeToken(b, DOLLAR);
+    return true;
+  }
+
   // ("in" compartment_id)?
-  private static boolean assignment_rule_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_1")) return false;
-    assignment_rule_1_0(b, l + 1);
+  private static boolean assignment_rule_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_rule_2")) return false;
+    assignment_rule_2_0(b, l + 1);
     return true;
   }
 
   // "in" compartment_id
-  private static boolean assignment_rule_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_rule_1_0")) return false;
+  private static boolean assignment_rule_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_rule_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, IN);
@@ -842,28 +858,36 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier ("in" compartment_id)?
+  // "$"? identifier ("in" compartment_id)?
   public static boolean just_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "just_declaration")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, "<just declaration>", DOLLAR, ID)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
-    r = r && just_declaration_1(b, l + 1);
-    exit_section_(b, m, JUST_DECLARATION, r);
+    Marker m = enter_section_(b, l, _NONE_, JUST_DECLARATION, "<just declaration>");
+    r = just_declaration_0(b, l + 1);
+    r = r && identifier(b, l + 1);
+    r = r && just_declaration_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // "$"?
+  private static boolean just_declaration_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration_0")) return false;
+    consumeToken(b, DOLLAR);
+    return true;
+  }
+
   // ("in" compartment_id)?
-  private static boolean just_declaration_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "just_declaration_1")) return false;
-    just_declaration_1_0(b, l + 1);
+  private static boolean just_declaration_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration_2")) return false;
+    just_declaration_2_0(b, l + 1);
     return true;
   }
 
   // "in" compartment_id
-  private static boolean just_declaration_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "just_declaration_1_0")) return false;
+  private static boolean just_declaration_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "just_declaration_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, IN);
@@ -1758,14 +1782,14 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   // rate_rule | assignment | assignment_rule | just_declaration
   public static boolean rule_or_assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rule_or_assignment")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, "<rule or assignment>", DOLLAR, ID)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, RULE_OR_ASSIGNMENT, "<rule or assignment>");
     r = rate_rule(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = assignment_rule(b, l + 1);
     if (!r) r = just_declaration(b, l + 1);
-    exit_section_(b, m, RULE_OR_ASSIGNMENT, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

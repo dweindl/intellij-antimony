@@ -12,6 +12,7 @@
 * Additional entries for color settings
 * Independent color settings for different types of identifiers
 * Nicer file type icon
+* Extended grammar for Antimony code
 
 ## [0.0.1] - 2024-06-03
 
