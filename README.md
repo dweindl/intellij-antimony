@@ -19,8 +19,9 @@ Files with the `.ant` extension will be recognized as Antimony files.
 * Rename refactoring
 * Find usages
 * Go to declaration
+* Conversion between SBML and Antimony
+* structure view
 * (very basic) code completion
-* (very basic) structure view
 <!-- Plugin description end -->
 
 
