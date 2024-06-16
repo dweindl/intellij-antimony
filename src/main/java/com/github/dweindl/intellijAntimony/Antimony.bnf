@@ -79,7 +79,7 @@
 
 antimonyFile ::= root_item * <<eof>>
 private root_item ::= (EOL | module | module_body | model_annotation)
-module       ::= MODEL model_id ("(" function_signature_arguments? ")")? module_body? END {pin=1}
+module       ::= MODEL "*"? model_id ("(" function_signature_arguments? ")")? module_body? END {pin=1}
 model_id     ::= identifier
 module_body  ::= module_body_item +
 private module_body_item ::=

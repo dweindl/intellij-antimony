@@ -1155,7 +1155,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MODEL model_id ("(" function_signature_arguments? ")")? module_body? END
+  // MODEL "*"? model_id ("(" function_signature_arguments? ")")? module_body? END
   public static boolean module(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module")) return false;
     if (!nextTokenIs(b, MODEL)) return false;
@@ -1163,43 +1163,51 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, MODULE, null);
     r = consumeToken(b, MODEL);
     p = r; // pin = 1
-    r = r && report_error_(b, model_id(b, l + 1));
-    r = p && report_error_(b, module_2(b, l + 1)) && r;
+    r = r && report_error_(b, module_1(b, l + 1));
+    r = p && report_error_(b, model_id(b, l + 1)) && r;
     r = p && report_error_(b, module_3(b, l + 1)) && r;
+    r = p && report_error_(b, module_4(b, l + 1)) && r;
     r = p && consumeToken(b, END) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // "*"?
+  private static boolean module_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_1")) return false;
+    consumeToken(b, MUL);
+    return true;
+  }
+
   // ("(" function_signature_arguments? ")")?
-  private static boolean module_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_2")) return false;
-    module_2_0(b, l + 1);
+  private static boolean module_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_3")) return false;
+    module_3_0(b, l + 1);
     return true;
   }
 
   // "(" function_signature_arguments? ")"
-  private static boolean module_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_2_0")) return false;
+  private static boolean module_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPAREN);
-    r = r && module_2_0_1(b, l + 1);
+    r = r && module_3_0_1(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // function_signature_arguments?
-  private static boolean module_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_2_0_1")) return false;
+  private static boolean module_3_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_3_0_1")) return false;
     function_signature_arguments(b, l + 1);
     return true;
   }
 
   // module_body?
-  private static boolean module_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_3")) return false;
+  private static boolean module_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_4")) return false;
     module_body(b, l + 1);
     return true;
   }
