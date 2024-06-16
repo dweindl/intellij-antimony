@@ -1,8 +1,8 @@
-package com.github.dweindl.intellijAntimony;
+package com.github.dweindl.intellijAntimony.psi;
 
 
-import com.github.dweindl.intellijAntimony.psi.AntimonyFile;
-import com.github.dweindl.intellijAntimony.psi.AntimonyIdentifier;
+import com.github.dweindl.intellijAntimony.AntimonyIcons;
+import com.github.dweindl.intellijAntimony.AntimonyUtil;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.util.TextRange;

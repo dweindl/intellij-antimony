@@ -1,7 +1,7 @@
 package com.github.dweindl.intellijAntimony.psi.impl;
 
 import com.github.dweindl.intellijAntimony.AntimonyIcons;
-import com.github.dweindl.intellijAntimony.AntimonyReference;
+import com.github.dweindl.intellijAntimony.psi.AntimonyReference;
 import com.github.dweindl.intellijAntimony.AntimonyUtil;
 import com.github.dweindl.intellijAntimony.psi.AntimonyElementFactory;
 import com.github.dweindl.intellijAntimony.psi.AntimonyIdentifier;

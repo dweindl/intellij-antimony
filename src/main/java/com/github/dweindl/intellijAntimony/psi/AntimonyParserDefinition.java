@@ -1,9 +1,8 @@
-package com.github.dweindl.intellijAntimony;
+package com.github.dweindl.intellijAntimony.psi;
+import com.github.dweindl.intellijAntimony.AntimonyLanguage;
+import com.github.dweindl.intellijAntimony.AntimonyLexerAdapter;
 import com.github.dweindl.intellijAntimony.parser.AntimonyParser;
-import com.github.dweindl.intellijAntimony.psi.AntimonyTypes;
 
-import com.github.dweindl.intellijAntimony.psi.AntimonyFile;
-import com.github.dweindl.intellijAntimony.psi.AntimonyTokenSets;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;

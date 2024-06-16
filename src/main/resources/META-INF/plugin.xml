@@ -23,7 +23,7 @@
                 extensions="ant"/>
         <lang.parserDefinition
                 language="Antimony"
-                implementationClass="com.github.dweindl.intellijAntimony.AntimonyParserDefinition"/>
+                implementationClass="com.github.dweindl.intellijAntimony.psi.AntimonyParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="Antimony"
                 implementationClass="com.github.dweindl.intellijAntimony.AntimonySyntaxHighlighterFactory"/>
