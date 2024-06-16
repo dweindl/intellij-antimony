@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface AntimonyEventTrigger extends PsiElement {
 
-  @NotNull
+  @Nullable
   AntimonyExpr getExpr();
 
 }

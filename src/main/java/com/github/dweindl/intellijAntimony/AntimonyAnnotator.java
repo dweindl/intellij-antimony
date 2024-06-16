@@ -35,7 +35,8 @@ final class AntimonyAnnotator implements Annotator, DumbAware {
                     AntimonyUtil.ModelEntity.REACTION, "Reaction",
                     AntimonyUtil.ModelEntity.COMPARTMENT, "Compartment",
                     AntimonyUtil.ModelEntity.PARAMETER, "Parameter",
-                    AntimonyUtil.ModelEntity.SPECIES, "Species"
+                    AntimonyUtil.ModelEntity.SPECIES, "Species",
+                    AntimonyUtil.ModelEntity.EVENT, "Event"
             );
             // shown when hovering an identifier without CTRL pressed
             String description = entityNames.getOrDefault(modelEntity, "Unknown entity") + " " + element.getText();

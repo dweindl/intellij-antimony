@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AntimonyEventDefinition extends PsiElement {
+public interface AntimonyEventId extends PsiElement {
 
   @NotNull
-  AntimonyEventAssignments getEventAssignments();
-
-  @Nullable
-  AntimonyEventId getEventId();
-
-  @NotNull
-  AntimonyEventTrigger getEventTrigger();
+  AntimonyIdentifier getIdentifier();
 
 }

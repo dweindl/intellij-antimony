@@ -161,11 +161,11 @@ stoichiometry ::= number_literal
 species_id ::= identifier
 rate_expr ::= expr
 
-event_definition ::= event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
-event_trigger ::= "at" expr
+event_definition ::= (event_id ":")? event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
+event_trigger ::= "at" expr {pin=1}
 event_assignments ::= event_assignment ("," (BACKSLASH EOL)* event_assignment)*
 event_assignment ::= identifier EQ expr
-
+event_id ::= identifier
 
 model_annotation ::= model_id annotation_type string (SEMI | EOL)
 annotation_type ::= identifier "." identifier

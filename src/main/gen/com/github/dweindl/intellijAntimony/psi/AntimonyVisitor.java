@@ -67,6 +67,10 @@ public class AntimonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEventId(@NotNull AntimonyEventId o) {
+    visitPsiElement(o);
+  }
+
   public void visitEventTrigger(@NotNull AntimonyEventTrigger o) {
     visitPsiElement(o);
   }

@@ -533,35 +533,54 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
+  // (event_id ":")? event_trigger ":" (BACKSLASH EOL)* event_assignments (SEMI | EOL)
   public static boolean event_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "event_definition")) return false;
-    if (!nextTokenIs(b, AT)) return false;
+    if (!nextTokenIs(b, "<event definition>", AT, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, EVENT_DEFINITION, "<event definition>");
+    r = event_definition_0(b, l + 1);
+    r = r && event_trigger(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && event_definition_3(b, l + 1);
+    r = r && event_assignments(b, l + 1);
+    r = r && event_definition_5(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (event_id ":")?
+  private static boolean event_definition_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_definition_0")) return false;
+    event_definition_0_0(b, l + 1);
+    return true;
+  }
+
+  // event_id ":"
+  private static boolean event_definition_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_definition_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = event_trigger(b, l + 1);
+    r = event_id(b, l + 1);
     r = r && consumeToken(b, COLON);
-    r = r && event_definition_2(b, l + 1);
-    r = r && event_assignments(b, l + 1);
-    r = r && event_definition_4(b, l + 1);
-    exit_section_(b, m, EVENT_DEFINITION, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   // (BACKSLASH EOL)*
-  private static boolean event_definition_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "event_definition_2")) return false;
+  private static boolean event_definition_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_definition_3")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!event_definition_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "event_definition_2", c)) break;
+      if (!event_definition_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "event_definition_3", c)) break;
     }
     return true;
   }
 
   // BACKSLASH EOL
-  private static boolean event_definition_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "event_definition_2_0")) return false;
+  private static boolean event_definition_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_definition_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, BACKSLASH, EOL);
@@ -570,11 +589,23 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   // SEMI | EOL
-  private static boolean event_definition_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "event_definition_4")) return false;
+  private static boolean event_definition_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_definition_5")) return false;
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier
+  public static boolean event_id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "event_id")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    exit_section_(b, m, EVENT_ID, r);
     return r;
   }
 
@@ -583,12 +614,13 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   public static boolean event_trigger(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "event_trigger")) return false;
     if (!nextTokenIs(b, AT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, EVENT_TRIGGER, null);
     r = consumeToken(b, AT);
+    p = r; // pin = 1
     r = r && expr(b, l + 1);
-    exit_section_(b, m, EVENT_TRIGGER, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

@@ -24,6 +24,7 @@ public class AntimonyUtil {
         MODULE,
         REACTION,
         UNIT,
+        EVENT,
         OTHER,
     }
 
@@ -45,6 +46,9 @@ public class AntimonyUtil {
             }
             if (parent instanceof AntimonyReactionId) {
                 return ModelEntity.REACTION;
+            }
+            if (parent instanceof AntimonyEventId) {
+                return ModelEntity.EVENT;
             }
             if (PsiTreeUtil.getParentOfType(identifier, AntimonyUnitDefinition.class) != null) {
                 return ModelEntity.UNIT;

@@ -23,6 +23,7 @@ public interface AntimonyTypes {
   IElementType EVENT_ASSIGNMENT = new AntimonyElementType("EVENT_ASSIGNMENT");
   IElementType EVENT_ASSIGNMENTS = new AntimonyElementType("EVENT_ASSIGNMENTS");
   IElementType EVENT_DEFINITION = new AntimonyElementType("EVENT_DEFINITION");
+  IElementType EVENT_ID = new AntimonyElementType("EVENT_ID");
   IElementType EVENT_TRIGGER = new AntimonyElementType("EVENT_TRIGGER");
   IElementType EXPR = new AntimonyElementType("EXPR");
   IElementType FILENAME = new AntimonyElementType("FILENAME");
@@ -170,6 +171,9 @@ public interface AntimonyTypes {
       }
       else if (type == EVENT_DEFINITION) {
         return new AntimonyEventDefinitionImpl(node);
+      }
+      else if (type == EVENT_ID) {
+        return new AntimonyEventIdImpl(node);
       }
       else if (type == EVENT_TRIGGER) {
         return new AntimonyEventTriggerImpl(node);

@@ -28,9 +28,9 @@ public class AntimonyEventTriggerImpl extends ASTWrapperPsiElement implements An
   }
 
   @Override
-  @NotNull
+  @Nullable
   public AntimonyExpr getExpr() {
-    return findNotNullChildByClass(AntimonyExpr.class);
+    return findChildByClass(AntimonyExpr.class);
   }
 
 }

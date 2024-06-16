@@ -19,6 +19,7 @@ public class AntimonyIcons {
             case COMPARTMENT -> IconCreator.createIconFromString("C", JBColor.BLUE);
             case PARAMETER -> IconCreator.createIconFromString("P", JBColor.MAGENTA);
             case REACTION -> IconCreator.createIconFromString("R", JBColor.GREEN);
+            case EVENT -> IconCreator.createIconFromString("E", JBColor.RED);
             case UNIT -> IconCreator.createIconFromString("U", JBColor.GRAY);
             default -> IconCreator.createIconFromString("?", null);
         };
