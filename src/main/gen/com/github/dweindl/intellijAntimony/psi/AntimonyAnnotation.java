@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface AntimonyAnnotation extends PsiElement {
 
   @NotNull
+  AntimonyAnnotationKeywords getAnnotationKeywords();
+
+  @NotNull
   AntimonyIdentifier getIdentifier();
 
   @Nullable

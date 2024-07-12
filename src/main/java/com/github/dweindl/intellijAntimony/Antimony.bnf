@@ -111,7 +111,45 @@ assignment_rule ::= "$"? identifier ("in" compartment_id)? ":=" expr {pin=4}
 number_literal ::= ('+'|'-') ? (INT | FLOAT | SCIENTIFIC)
 
 compartment_id ::= identifier
-annotation ::= identifier ("notes" | "is" | "identity" | "part") (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL) {pin=2}
+annotation ::= identifier annotation_keywords (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL) {pin=2}
+annotation_keywords ::=
+    "notes"
+    | "is"
+    | "identity"
+    | "part"
+    | "hasPart"
+    | "biological_entity_is"
+    | "isPartOf"
+    | "parthood"
+    | "isVersionOf"
+    | "hypernym"
+    | "hasVersion"
+    | "version"
+    | "isHomologTo"
+    | "homolog"
+    | "isDescribedBy"
+    | "description"
+    | "isEncodedBy"
+    | "encoder"
+    | "encodes"
+    | "encodement"
+    | "occursIn"
+    | "container"
+    | "hasProperty"
+    | "property"
+    | "isPropertyOf"
+    | "propertyBearer"
+    | "hasTaxon"
+    | "taxon"
+    | "created"  // TODO: date
+    | "modified" // TODO: date
+    | "creator.name"
+    | "creator.givenName"
+    | "creator.familyName"
+    | "creator.organization"
+    | "creator.email"
+    // TOOD multiple creators, multiple modifications, created.*
+
 unit_annotation ::= identifier "has" unit_id (SEMI | EOL) {pin=2}
 // TODO: needs to have a unit included
 unit_definition ::= "unit" unit_id EQ expr (SEMI | EOL) {pin=1}

@@ -66,7 +66,7 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   }
 
   @Override
-  public @Nullable Icon getIcon(int flags) {
+  public Icon getIcon(int flags) {
     return AntimonyPsiImplUtil.getIcon(this, flags);
   }
 

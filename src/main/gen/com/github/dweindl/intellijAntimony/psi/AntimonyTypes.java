@@ -10,6 +10,7 @@ public interface AntimonyTypes {
 
   IElementType AND_EXPR = new AntimonyElementType("AND_EXPR");
   IElementType ANNOTATION = new AntimonyElementType("ANNOTATION");
+  IElementType ANNOTATION_KEYWORDS = new AntimonyElementType("ANNOTATION_KEYWORDS");
   IElementType ANNOTATION_TYPE = new AntimonyElementType("ANNOTATION_TYPE");
   IElementType ARITHMETIC_EXPR = new AntimonyElementType("ARITHMETIC_EXPR");
   IElementType ASSIGNMENT = new AntimonyElementType("ASSIGNMENT");
@@ -132,6 +133,9 @@ public interface AntimonyTypes {
       }
       else if (type == ANNOTATION) {
         return new AntimonyAnnotationImpl(node);
+      }
+      else if (type == ANNOTATION_KEYWORDS) {
+        return new AntimonyAnnotationKeywordsImpl(node);
       }
       else if (type == ANNOTATION_TYPE) {
         return new AntimonyAnnotationTypeImpl(node);

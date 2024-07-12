@@ -56,31 +56,20 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier ("notes" | "is" | "identity" | "part") (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL)
+  // identifier annotation_keywords (string | MULTILINE_STRING) ("," EOL? string)* (SEMI | EOL)
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ANNOTATION, null);
     r = identifier(b, l + 1);
-    r = r && annotation_1(b, l + 1);
+    r = r && annotation_keywords(b, l + 1);
     p = r; // pin = 2
     r = r && report_error_(b, annotation_2(b, l + 1));
     r = p && report_error_(b, annotation_3(b, l + 1)) && r;
     r = p && annotation_4(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
-  }
-
-  // "notes" | "is" | "identity" | "part"
-  private static boolean annotation_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "annotation_1")) return false;
-    boolean r;
-    r = consumeToken(b, NOTES);
-    if (!r) r = consumeToken(b, IS);
-    if (!r) r = consumeToken(b, IDENTITY);
-    if (!r) r = consumeToken(b, PART);
-    return r;
   }
 
   // string | MULTILINE_STRING
@@ -128,6 +117,85 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, SEMI);
     if (!r) r = consumeToken(b, EOL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "notes"
+  //     | "is"
+  //     | "identity"
+  //     | "part"
+  //     | "hasPart"
+  //     | "biological_entity_is"
+  //     | "isPartOf"
+  //     | "parthood"
+  //     | "isVersionOf"
+  //     | "hypernym"
+  //     | "hasVersion"
+  //     | "version"
+  //     | "isHomologTo"
+  //     | "homolog"
+  //     | "isDescribedBy"
+  //     | "description"
+  //     | "isEncodedBy"
+  //     | "encoder"
+  //     | "encodes"
+  //     | "encodement"
+  //     | "occursIn"
+  //     | "container"
+  //     | "hasProperty"
+  //     | "property"
+  //     | "isPropertyOf"
+  //     | "propertyBearer"
+  //     | "hasTaxon"
+  //     | "taxon"
+  //     | "created"  // TODO: date
+  //     | "modified" // TODO: date
+  //     | "creator.name"
+  //     | "creator.givenName"
+  //     | "creator.familyName"
+  //     | "creator.organization"
+  //     | "creator.email"
+  public static boolean annotation_keywords(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_keywords")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ANNOTATION_KEYWORDS, "<annotation keywords>");
+    r = consumeToken(b, NOTES);
+    if (!r) r = consumeToken(b, IS);
+    if (!r) r = consumeToken(b, IDENTITY);
+    if (!r) r = consumeToken(b, PART);
+    if (!r) r = consumeToken(b, "hasPart");
+    if (!r) r = consumeToken(b, "biological_entity_is");
+    if (!r) r = consumeToken(b, "isPartOf");
+    if (!r) r = consumeToken(b, "parthood");
+    if (!r) r = consumeToken(b, "isVersionOf");
+    if (!r) r = consumeToken(b, "hypernym");
+    if (!r) r = consumeToken(b, "hasVersion");
+    if (!r) r = consumeToken(b, "version");
+    if (!r) r = consumeToken(b, "isHomologTo");
+    if (!r) r = consumeToken(b, "homolog");
+    if (!r) r = consumeToken(b, "isDescribedBy");
+    if (!r) r = consumeToken(b, "description");
+    if (!r) r = consumeToken(b, "isEncodedBy");
+    if (!r) r = consumeToken(b, "encoder");
+    if (!r) r = consumeToken(b, "encodes");
+    if (!r) r = consumeToken(b, "encodement");
+    if (!r) r = consumeToken(b, "occursIn");
+    if (!r) r = consumeToken(b, "container");
+    if (!r) r = consumeToken(b, "hasProperty");
+    if (!r) r = consumeToken(b, "property");
+    if (!r) r = consumeToken(b, "isPropertyOf");
+    if (!r) r = consumeToken(b, "propertyBearer");
+    if (!r) r = consumeToken(b, "hasTaxon");
+    if (!r) r = consumeToken(b, "taxon");
+    if (!r) r = consumeToken(b, "created");
+    if (!r) r = consumeToken(b, "modified");
+    if (!r) r = consumeToken(b, "creator.name");
+    if (!r) r = consumeToken(b, "creator.givenName");
+    if (!r) r = consumeToken(b, "creator.familyName");
+    if (!r) r = consumeToken(b, "creator.organization");
+    if (!r) r = consumeToken(b, "creator.email");
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

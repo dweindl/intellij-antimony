@@ -25,6 +25,6 @@ public interface AntimonyIdentifier extends AntimonyNamedElement {
 
   ItemPresentation getPresentation();
 
-  @Nullable Icon getIcon(int flags);
+  Icon getIcon(int flags);
 
 }

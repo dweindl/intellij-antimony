@@ -11,38 +11,20 @@ import static com.github.dweindl.intellijAntimony.psi.AntimonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dweindl.intellijAntimony.psi.*;
 
-public class AntimonyAnnotationImpl extends ASTWrapperPsiElement implements AntimonyAnnotation {
+public class AntimonyAnnotationKeywordsImpl extends ASTWrapperPsiElement implements AntimonyAnnotationKeywords {
 
-  public AntimonyAnnotationImpl(@NotNull ASTNode node) {
+  public AntimonyAnnotationKeywordsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AntimonyVisitor visitor) {
-    visitor.visitAnnotation(this);
+    visitor.visitAnnotationKeywords(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AntimonyVisitor) accept((AntimonyVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public AntimonyAnnotationKeywords getAnnotationKeywords() {
-    return findNotNullChildByClass(AntimonyAnnotationKeywords.class);
-  }
-
-  @Override
-  @NotNull
-  public AntimonyIdentifier getIdentifier() {
-    return findNotNullChildByClass(AntimonyIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getMultilineString() {
-    return findChildByType(MULTILINE_STRING);
   }
 
 }

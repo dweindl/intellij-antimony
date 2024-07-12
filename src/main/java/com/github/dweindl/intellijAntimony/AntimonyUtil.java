@@ -52,6 +52,10 @@ public class AntimonyUtil {
             if (PsiTreeUtil.getParentOfType(identifier, AntimonyUnitDefinition.class) != null) {
                 return ModelEntity.UNIT;
             }
+            // TODO check if parent is a declaration and has "in" keyword -> species
+            // TODO check if parent is a declaration and has "species" keyword -> species
+            // TODO check if parent is a declaration and has "compartment" keyword -> compartment
+            // not checking for "formula", because that can later be overridden
         }
         return ModelEntity.OTHER;
     }
