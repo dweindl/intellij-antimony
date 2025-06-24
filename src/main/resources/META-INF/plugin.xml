@@ -7,7 +7,6 @@
             url="https://github.com/dweindl/intellij-antimony">
         Daniel Weindl
     </vendor>
-    <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.AntimonyBundle</resource-bundle>
 
