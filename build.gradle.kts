@@ -91,7 +91,11 @@ intellijPlatform {
 
         ideaVersion {
             sinceBuild = providers.gradleProperty("pluginSinceBuild")
-            untilBuild = providers.gradleProperty("pluginUntilBuild")
+            // A blank pluginUntilBuild in gradle.properties means "no upper bound", so the plugin
+            // keeps working with future IDE releases without needing a re-release.
+            untilBuild = providers.gradleProperty("pluginUntilBuild").flatMap {
+                if (it.isBlank()) provider { null } else providers.gradleProperty("pluginUntilBuild")
+            }
         }
     }
 
@@ -111,7 +115,13 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            recommended()
+            // Not recommended(): its default IDE-selection range is derived from this plugin's declared
+            // ideaVersion.untilBuild, which is intentionally left unbounded. Bound the verifier's own
+            // range explicitly via pluginVerifierUntilBuild instead, so it only targets already-resolvable
+            // IDE builds.
+            select {
+                untilBuild = providers.gradleProperty("pluginVerifierUntilBuild")
+            }
         }
     }
 }
