@@ -91,7 +91,11 @@ intellijPlatform {
 
         ideaVersion {
             sinceBuild = providers.gradleProperty("pluginSinceBuild")
-            untilBuild = providers.gradleProperty("pluginUntilBuild")
+            // A blank pluginUntilBuild in gradle.properties means "no upper bound", so the plugin
+            // keeps working with future IDE releases without needing a re-release.
+            untilBuild = providers.gradleProperty("pluginUntilBuild").flatMap {
+                if (it.isBlank()) provider { null } else providers.gradleProperty("pluginUntilBuild")
+            }
         }
     }
 
