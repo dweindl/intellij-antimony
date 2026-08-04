@@ -126,8 +126,17 @@ jobs:
           cache-read-only: true
 
       # Run tests
+      # Retries on failure: instrumentCode/instrumentTestCode intermittently fail on cold-cache
+      # CI runs with a bare "1 >= 1" error (no useful stack trace without --stacktrace), tracing
+      # back to a shared Ant ClassLoader race in intellij-platform-gradle-plugin's
+      # InstrumentCodeTask / the IDE-bundled instrumenter - not something in this repo's control.
+      # See: https://github.com/JetBrains/intellij-platform-gradle-plugin/issues/2068
       - name: Run Tests
-        run: ./gradlew check
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 2
+          command: ./gradlew check --stacktrace
 
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
