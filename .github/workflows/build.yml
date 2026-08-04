@@ -132,7 +132,7 @@ jobs:
       # InstrumentCodeTask / the IDE-bundled instrumenter - not something in this repo's control.
       # See: https://github.com/JetBrains/intellij-platform-gradle-plugin/issues/2068
       - name: Run Tests
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 15
           max_attempts: 2
