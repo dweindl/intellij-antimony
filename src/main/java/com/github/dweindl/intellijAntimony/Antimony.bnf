@@ -205,17 +205,17 @@ event_assignments ::= event_assignment ("," (BACKSLASH EOL)* event_assignment)*
 event_assignment ::= identifier EQ expr
 event_id ::= identifier
 
-model_annotation ::= model_id annotation_type string (SEMI | EOL)
+model_annotation ::= model_id annotation_type string (SEMI | EOL | <<eof>>)
 annotation_type ::= identifier "." identifier
 
-current_model_annotation ::= MODEL annotation_type string (SEMI | EOL)
+current_model_annotation ::= MODEL annotation_type string (SEMI | EOL | <<eof>>)
 
 function_definition ::= "function" function_id "(" function_signature_arguments? ")" (SEMI | EOL) expr (SEMI | EOL) "end" {pin=1}
 function_signature_arguments ::= function_signature_argument ("," function_signature_argument)*
 function_signature_argument ::= identifier
 
-model_import ::= (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL)
-file_import ::= "import" filename (SEMI | EOL)
+model_import ::= (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL | <<eof>>)
+file_import ::= "import" filename (SEMI | EOL | <<eof>>)
 filename ::= string
 
 // TODO predefined units

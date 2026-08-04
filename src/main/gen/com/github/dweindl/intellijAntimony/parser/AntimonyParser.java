@@ -442,7 +442,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MODEL annotation_type string (SEMI | EOL)
+  // MODEL annotation_type string (SEMI | EOL | <<eof>>)
   public static boolean current_model_annotation(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "current_model_annotation")) return false;
     if (!nextTokenIs(builder_, MODEL)) return false;
@@ -456,12 +456,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // SEMI | EOL
+  // SEMI | EOL | <<eof>>
   private static boolean current_model_annotation_3(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "current_model_annotation_3")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, SEMI);
     if (!result_) result_ = consumeToken(builder_, EOL);
+    if (!result_) result_ = eof(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -749,7 +752,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "import" filename (SEMI | EOL)
+  // "import" filename (SEMI | EOL | <<eof>>)
   public static boolean file_import(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "file_import")) return false;
     if (!nextTokenIs(builder_, IMPORT)) return false;
@@ -762,12 +765,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // SEMI | EOL
+  // SEMI | EOL | <<eof>>
   private static boolean file_import_2(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "file_import_2")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, SEMI);
     if (!result_) result_ = consumeToken(builder_, EOL);
+    if (!result_) result_ = eof(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -1096,7 +1102,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // model_id annotation_type string (SEMI | EOL)
+  // model_id annotation_type string (SEMI | EOL | <<eof>>)
   public static boolean model_annotation(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "model_annotation")) return false;
     if (!nextTokenIs(builder_, ID)) return false;
@@ -1110,12 +1116,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // SEMI | EOL
+  // SEMI | EOL | <<eof>>
   private static boolean model_annotation_3(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "model_annotation_3")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, SEMI);
     if (!result_) result_ = consumeToken(builder_, EOL);
+    if (!result_) result_ = eof(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -1132,7 +1141,7 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL)
+  // (model_id ":")? model_id ("(" function_signature_arguments? ")")? ("," "timeconv" "=" expr)? ("," "extentconv" "=" expr)? (SEMI | EOL | <<eof>>)
   public static boolean model_import(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "model_import")) return false;
     if (!nextTokenIs(builder_, ID)) return false;
@@ -1228,12 +1237,15 @@ public class AntimonyParser implements PsiParser, LightPsiParser {
     return result_;
   }
 
-  // SEMI | EOL
+  // SEMI | EOL | <<eof>>
   private static boolean model_import_5(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "model_import_5")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, SEMI);
     if (!result_) result_ = consumeToken(builder_, EOL);
+    if (!result_) result_ = eof(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
