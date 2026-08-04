@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+### Added
+
+- Extended annotation grammar to support many more standard biological annotation keywords (`hasPart`, `isPartOf`, `isVersionOf`, `isHomologTo`, `isDescribedBy`, `isEncodedBy`, `occursIn`, `hasProperty`, `hasTaxon`, `creator.*` fields, and more)
+
+### Fixed
+
+- Fixed a parsing bug where an Antimony file whose last statement has no trailing newline failed to parse entirely, losing syntax highlighting, references, and rename support for the whole file
+
+### Changed
+
+- Removed the plugin's upper IDE-version compatibility bound, so it keeps working with newer IntelliJ Platform releases without requiring a new plugin release
+- Renamed the plugin id from `intellij-antimony` to `antimony-language` (JetBrains Marketplace naming requirement)
+
 ## [0.0.2] - 2024-06-16
 
 - Tool window for SBML -> Antimony conversion
