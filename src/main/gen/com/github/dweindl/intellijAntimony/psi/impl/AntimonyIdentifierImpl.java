@@ -46,8 +46,8 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   }
 
   @Override
-  public PsiElement setName(String newName) {
-    return AntimonyPsiImplUtil.setName(this, newName);
+  public PsiElement setName(String p1) {
+    return AntimonyPsiImplUtil.setName(this, p1);
   }
 
   @Override
@@ -66,8 +66,8 @@ public class AntimonyIdentifierImpl extends AntimonyNamedElementImpl implements 
   }
 
   @Override
-  public Icon getIcon(int flags) {
-    return AntimonyPsiImplUtil.getIcon(this, flags);
+  public Icon getIcon(int p1) {
+    return AntimonyPsiImplUtil.getIcon(this, p1);
   }
 
 }

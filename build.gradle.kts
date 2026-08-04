@@ -1,12 +1,15 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.tasks.GenerateLexerTask
+import org.jetbrains.intellij.platform.gradle.tasks.GenerateParserTask
 import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 
 plugins {
     id("java") // Java support
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
+    alias(libs.plugins.grammarKit) // Grammar-Kit/JFlex parser & lexer generation
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
 }
@@ -147,6 +150,34 @@ tasks {
 
     publishPlugin {
         dependsOn(patchChangelog)
+    }
+
+    // Regenerate the lexer/parser/PSI classes checked into src/main/gen after editing
+    // Antimony.bnf / _AntimonyLexer.flex. Run `./gradlew generateLexer generateParser`,
+    // review the diff, then commit the regenerated output alongside the grammar change.
+    named<GenerateLexerTask>("generateLexer") {
+        sourceFile = file("src/main/java/com/github/dweindl/intellijAntimony/_AntimonyLexer.flex")
+        targetRootOutputDir = file("src/main/gen")
+        packageName = "com.github.dweindl.intellijAntimony"
+        pathToClass = "com/github/dweindl/intellijAntimony/_AntimonyLexer.java"
+        purgeOldFiles = true
+    }
+
+    named<GenerateParserTask>("generateParser") {
+        // Needs the project's own compiled classes on the classpath so the generator can detect
+        // the psiImplUtilClass mixin method signatures (e.g. AntimonyPsiImplUtil.getName(...));
+        // otherwise it silently skips declaring them on the generated PSI interfaces. Deliberately
+        // NOT sourceSets.main.output: that FileCollection carries an implicit build dependency on
+        // compileJava/compileKotlin, which read src/main/gen as a source dir that this task also
+        // writes to - Gradle rejects that as a cyclic implicit dependency. Plain paths avoid it.
+        // Run `./gradlew compileJava` (or a full build) at least once first.
+        mustRunAfter(":compileJava")
+        classpath += files("build/classes/java/main", "build/classes/kotlin/main")
+        sourceFile = file("src/main/java/com/github/dweindl/intellijAntimony/Antimony.bnf")
+        targetRootOutputDir = file("src/main/gen")
+        pathToParser = "com/github/dweindl/intellijAntimony/parser/AntimonyParser.java"
+        pathToPsiRoot = "com/github/dweindl/intellijAntimony/psi"
+        purgeOldFiles = true
     }
 }
 
