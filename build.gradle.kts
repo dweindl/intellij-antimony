@@ -1,5 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.tasks.GenerateLexerTask
 import org.jetbrains.intellij.platform.gradle.tasks.GenerateParserTask
@@ -130,7 +131,11 @@ intellijPlatform {
             // ideaVersion.untilBuild, which is intentionally left unbounded. Bound the verifier's own
             // range explicitly via pluginVerifierUntilBuild instead, so it only targets already-resolvable
             // IDE builds.
+            // IntelliJ IDEA / PyCharm Community releases end with 2025.3 (unified distributions since then),
+            // so verify against the unified products. PyCharm bundles the Python plugin this plugin depends on.
             select {
+                types = listOf(IntelliJPlatformType.IntellijIdea, IntelliJPlatformType.PyCharm)
+                sinceBuild = providers.gradleProperty("pluginVerifierSinceBuild").orElse(providers.gradleProperty("pluginSinceBuild"))
                 untilBuild = providers.gradleProperty("pluginVerifierUntilBuild")
             }
         }
