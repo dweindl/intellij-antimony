@@ -14,6 +14,7 @@
 
 ### Changed
 
+- Raised the minimum supported IDE version from 2024.1 to 2025.1
 - Removed the plugin's upper IDE-version compatibility bound, so it keeps working with newer IntelliJ Platform releases without requiring a new plugin release
 - Renamed the plugin id from `intellij-antimony` to `antimony-language` (JetBrains Marketplace naming requirement)
 
