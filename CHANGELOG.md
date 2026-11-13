@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.0.3] - 2026-11-13
+
 ### Added
 
 - Extended annotation grammar to support many more standard biological annotation keywords (`hasPart`, `isPartOf`, `isVersionOf`, `isHomologTo`, `isDescribedBy`, `isEncodedBy`, `occursIn`, `hasProperty`, `hasTaxon`, `creator.*` fields, and more)
@@ -40,6 +42,7 @@
 - (very basic) structure view
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-[Unreleased]: https://github.com/dweindl/intellij-antimony/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/dweindl/intellij-antimony/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/dweindl/intellij-antimony/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/dweindl/intellij-antimony/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/dweindl/intellij-antimony/commits/v0.0.1
